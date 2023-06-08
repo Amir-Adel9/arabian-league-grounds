@@ -7,6 +7,27 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        'accent-blue': 'var(--color-accent-blue)',
+        'accent-gold': 'var(--color-accent-gold)',
+        text: 'var(--color-text)',
+      },
+      fontFamily: {
+        kanit: ['var(--font-kanit)'],
+        inter: ['var(--font-inter)'],
+      },
+      keyframes: {
+        arrow: {
+          '0%': {
+            height: '0',
+          },
+          '100%': {
+            height: '100%',
+          },
+        },
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -15,4 +36,4 @@ module.exports = {
     },
   },
   plugins: [],
-}
+};
