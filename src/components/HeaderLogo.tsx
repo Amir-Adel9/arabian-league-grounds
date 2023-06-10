@@ -16,7 +16,6 @@ import {
   Euler,
 } from 'three';
 import { STLLoader } from 'three/examples/jsm/loaders/STLLoader';
-import * as TWEEN from '@tweenjs/tween.js';
 
 export default function STLViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,8 +25,6 @@ export default function STLViewer() {
   const mouseRef = useRef<Vector2>(new Vector2());
   const raycasterRef = useRef<Raycaster>(new Raycaster());
   const isHoveredRef = useRef<boolean>(false);
-  const rotationTweenRef = useRef<TWEEN.Tween<Euler> | null>(null);
-  const scaleTweenRef = useRef<TWEEN.Tween<Vector3> | null>(null);
 
   useEffect(() => {
     let camera: PerspectiveCamera;
@@ -103,30 +100,19 @@ export default function STLViewer() {
     const handleMouseEnter = () => {
       isHoveredRef.current = true;
 
-      // Start the scale-up animation if not already running
-      if (!scaleTweenRef.current && meshRef.current) {
-        scaleTweenRef.current = new TWEEN.Tween(meshRef.current.scale)
-          .to({ x: 0.16, y: 0.16, z: 0.16 }, 300)
-          .easing(TWEEN.Easing.Quadratic.Out)
-          .start();
+      // Store the initial rotation of the mesh
+      if (meshRef.current) {
+        meshRef.current.userData.initialRotation =
+          meshRef.current.rotation.clone();
       }
     };
 
     const handleMouseLeave = () => {
       isHoveredRef.current = false;
 
-      // Start the scale-down animation if not already running
-      if (scaleTweenRef.current && meshRef.current) {
-        scaleTweenRef.current.stop();
-        scaleTweenRef.current = null;
-
-        scaleTweenRef.current = new TWEEN.Tween(meshRef.current.scale)
-          .to({ x: 0.13, y: 0.13, z: 0.13 }, 300) // Adjust the original scale as needed
-          .easing(TWEEN.Easing.Quadratic.Out)
-          .onComplete(() => {
-            scaleTweenRef.current = null; // Reset the scaleTweenRef
-          })
-          .start();
+      // Reset the rotation when not hovered
+      if (meshRef.current) {
+        meshRef.current.rotation.copy(meshRef.current.userData.initialRotation);
       }
     };
 
@@ -148,23 +134,8 @@ export default function STLViewer() {
 
       // Rotate the mesh if hovered
       if (isHoveredRef.current && meshRef.current) {
-        if (!rotationTweenRef.current) {
-          rotationTweenRef.current = new TWEEN.Tween(meshRef.current.rotation)
-            .to({ y: meshRef.current.rotation.y + Math.PI * 2 }, 2000)
-            .repeat(Infinity)
-            .start();
-        }
-      } else if (!isHoveredRef.current && meshRef.current) {
-        // Reset the rotation
-        if (rotationTweenRef.current) {
-          rotationTweenRef.current.stop();
-          rotationTweenRef.current = null;
-          meshRef.current.rotation.set(0, 0, 0); // Reset the rotation to zero
-        }
+        meshRef.current.rotation.y += 0.01;
       }
-
-      // Update the TWEEN animations
-      TWEEN.update();
 
       // Render the scene
       if (sceneRef.current && camera && rendererRef.current) {

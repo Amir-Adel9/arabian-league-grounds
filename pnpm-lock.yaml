@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@react-three/fiber': ^8.13.0
-  '@tweenjs/tween.js': ^20.0.3
   '@types/node': 20.2.5
   '@types/react': 18.2.7
   '@types/react-dom': 18.2.4
@@ -22,7 +21,6 @@ specifiers:
 
 dependencies:
   '@react-three/fiber': 8.13.0_n6dprpn3rmprwi5di5qol3dh4y
-  '@tweenjs/tween.js': 20.0.3
   '@types/node': 20.2.5
   '@types/react': 18.2.7
   '@types/react-dom': 18.2.4
@@ -316,10 +314,6 @@ packages:
 
   /@tweenjs/tween.js/18.6.4:
     resolution: {integrity: sha512-lB9lMjuqjtuJrx7/kOkqQBtllspPIN+96OvTCeJ2j5FEzinoAXTdAMFnDAQT1KVPRlnYfBrqxtqP66vDM40xxQ==}
-    dev: false
-
-  /@tweenjs/tween.js/20.0.3:
-    resolution: {integrity: sha512-SYUe1UgY5HM05EB4+0B4arq2IPjvyzKXoklXKxSYrc2IFxGm1cBrqg5XbiB5uwbs0xY5j+rj986NAJMM0KZaUw==}
     dev: false
 
   /@types/createjs-lib/0.0.29:
