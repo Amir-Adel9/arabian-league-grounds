@@ -7,7 +7,7 @@ const CompletedMatch = React.forwardRef(
     console.log(event);
     return (
       <div
-        className='flex items-center font-inter justify-center space-x-4 w-full border-y border-accent-gold bg-accent-blue text-primary p-4'
+        className='flex items-center font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'
         key={event.match.id}
         ref={ref}
       >
@@ -102,7 +102,7 @@ const UnstartedMatch = ({
 }) => {
   return (
     <div
-      className='flex items-center justify-center space-x-4 w-full border-y border-accent-gold bg-accent-blue text-primary p-4'
+      className='flex items-center justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'
       key={event.match.id}
     >
       <div className='flex w-full justify-center'>
@@ -247,7 +247,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
 
         return (
           <div
-            className='relative  mb-7 flex flex-col items-center justify-center space-y-4 w-full border- border-accent-gold bg-secondary text-primary p-4'
+            className='relative mb-7 flex flex-col items-center justify-center space-y-4 w-full bg-primary text-secondary p-4'
             key={startingDay}
             ref={
               index === eventsWithCompletedMatches.length - 1

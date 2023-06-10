@@ -23,12 +23,10 @@ async function Schedule() {
       mode: 'cors',
     }
   ).then((res) => res.json());
-  console.log(schedule);
   return (
-    <main className='relative bg-secondary flex min-h-screen flex-col items-center'>
+    <main className='relative flex min-h-screen flex-col items-center '>
       <section className='w-[80%] min-h-screen relative flex flex-col justify-center items-center mt-28 '>
         <div className='w-full '>
-          {/* <h1 className='text-5xl font-bold text-center'>Schedule</h1> */}
           <ScheduleTable schedule={schedule} />
         </div>
       </section>
