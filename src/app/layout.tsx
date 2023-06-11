@@ -28,18 +28,25 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await currentUser();
-  if (user) {
-    const { id, username } = user;
-    const existingUser = await prisma.user.findUnique({
-      where: { id: id },
-    });
-    console.log(existingUser);
-    if (!existingUser) {
-      const res = await prisma.user.create({
-        data: { id: id, username: username },
+  try {
+    // Code that triggers the error in the Server Components render
+    if (user) {
+      const { id, username } = user;
+      const existingUser = await prisma.user.findUnique({
+        where: { id: id },
       });
-      console.log(res);
+      console.log(existingUser);
+      if (!existingUser) {
+        const res = await prisma.user.create({
+          data: { id: id, username: username },
+        });
+        console.log(res);
+      }
     }
+  } catch (error: any) {
+    console.error('Error:', error.message);
+    console.log('Digest:', error.digest);
+    // Handle the error or display an error message to the user
   }
 
   return (
@@ -82,7 +89,7 @@ export default async function RootLayout({
                 <li>
                   {!user ? (
                     <div className='bg-accent-gold p-2 px-6 border border-accent-gold cursor-pointer rounded font-bold font-kanit duration-200 hover:bg-secondary'>
-                      <SignInButton />{' '}
+                      <SignInButton />
                     </div>
                   ) : (
                     <UserButton />
