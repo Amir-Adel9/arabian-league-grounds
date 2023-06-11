@@ -6,10 +6,13 @@
     "dev": "next dev  --port 3002",
     "build": "next build",
     "start": "next start --port 3002",
-    "lint": "next lint"
+    "lint": "next lint",
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.20.0",
+    "@planetscale/database": "^1.7.0",
+    "@prisma/client": "^4.15.0",
     "@react-three/fiber": "^8.13.0",
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
@@ -28,6 +31,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@types/node": "20.2.5"
+    "@types/node": "20.2.5",
+    "prisma": "^4.15.0"
   }
 }

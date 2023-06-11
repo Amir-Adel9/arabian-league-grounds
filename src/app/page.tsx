@@ -47,7 +47,6 @@ export default async function Home() {
         });
       return unStartedMatchesWithin7Days;
     });
-  console.log(upcomingMatches);
 
   return (
     <main className='relative flex min-h-screen flex-col items-center'>

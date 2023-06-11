@@ -13,7 +13,7 @@ const HeroNavArrow = () => {
       onClick={(e) => {
         e.preventDefault();
         const elementToView = document.getElementById('upcoming-matches');
-        console.log(elementToView);
+
         elementToView?.scrollIntoView();
       }}
     >

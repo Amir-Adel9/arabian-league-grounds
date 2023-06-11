@@ -4,7 +4,6 @@ import Image from 'next/image';
 
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
-    console.log(event);
     return (
       <div
         className='flex items-center font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'
