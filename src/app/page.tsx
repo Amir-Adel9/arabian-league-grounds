@@ -11,10 +11,34 @@ import ViewSchedule from '@/components/ViewSchedule';
 import TalentsSlider from '@/components/TalentsSilder';
 import { talentsArray } from '@/utils/talents';
 
+import { currentUser } from '@clerk/nextjs';
+import { createContext } from '@/db/prismaContext';
+
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 export default async function Home() {
+  const { prisma } = createContext();
+  const user = await currentUser();
+  console.log(user);
+
+  if (user) {
+    const { id, username } = user;
+    console.log(id, username);
+
+    const existingUser = await prisma.user.findUnique({
+      where: { id: id },
+    });
+
+    console.log(existingUser);
+    if (!existingUser) {
+      const res = await prisma.user.create({
+        data: { id: id, username: username },
+      });
+      console.log(res);
+    }
+  }
+
   const upcomingMatches = await fetch(
     'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
     {

@@ -5,9 +5,6 @@ import { Inter, Kanit } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { currentUser } from '@clerk/nextjs';
-import { createContext } from '@/db/prismaContext';
-
-const { prisma } = createContext();
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -28,27 +25,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await currentUser();
-  try {
-    // Code that triggers the error in the Server Components render
-    if (user) {
-      const { id, username } = user;
-      const existingUser = await prisma.user.findUnique({
-        where: { id: id },
-      });
-      console.log(existingUser);
-      if (!existingUser) {
-        const res = await prisma.user.create({
-          data: { id: id, username: username },
-        });
-        console.log(res);
-      }
-    }
-  } catch (error: any) {
-    console.error('Error:', error.message);
-    console.log('Digest:', error.digest);
-    // Handle the error or display an error message to the user
-  }
-
   return (
     <ClerkProvider>
       <html
