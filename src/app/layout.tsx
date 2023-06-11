@@ -1,5 +1,6 @@
 import './globals.css';
 import { ClerkProvider, SignInButton, UserButton } from '@clerk/nextjs';
+import { Analytics } from '@vercel/analytics/react';
 import { Inter, Kanit } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -27,26 +28,18 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await currentUser();
-  try {
-    // Code that triggers the error in the Server Components render
-
-    if (user) {
-      const { id, username } = user;
-      const existingUser = await prisma.user.findUnique({
-        where: { id: id },
+  if (user) {
+    const { id, username } = user;
+    const existingUser = await prisma.user.findUnique({
+      where: { id: id },
+    });
+    console.log(existingUser);
+    if (!existingUser) {
+      const res = await prisma.user.create({
+        data: { id: id, username: username },
       });
-      console.log(existingUser);
-      if (!existingUser) {
-        const res = await prisma.user.create({
-          data: { id: id, username: username },
-        });
-        console.log(res);
-      }
+      console.log(res);
     }
-  } catch (error: any) {
-    console.error('Error:', error.message);
-    console.log('Digest:', error.digest);
-    // Handle the error or display an error message to the user
   }
 
   return (
@@ -99,6 +92,7 @@ export default async function RootLayout({
             </nav>
           </header>
           {children}
+          <Analytics />
         </body>
       </html>
     </ClerkProvider>

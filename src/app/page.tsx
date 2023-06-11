@@ -15,13 +15,6 @@ dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 export default async function Home() {
-  try {
-    // Code that triggers the error in the Server Components render
-  } catch (error: any) {
-    console.error('Error:', error.message);
-    console.log('Digest:', error.digest);
-    // Handle the error or display an error message to the user
-  }
   const upcomingMatches = await fetch(
     'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
     {
