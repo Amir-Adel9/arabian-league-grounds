@@ -18,25 +18,30 @@ dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 export default async function Home() {
-  const { prisma } = createContext();
-  const user = await currentUser();
-  console.log(user);
+  try {
+    const { prisma } = createContext();
+    const user = await currentUser();
+    console.log(user);
 
-  if (user) {
-    const { id, username } = user;
-    console.log(id, username);
+    if (user) {
+      const { id, username } = user;
+      console.log(id, username);
 
-    const existingUser = await prisma.user.findUnique({
-      where: { id: id },
-    });
-
-    console.log(existingUser);
-    if (!existingUser) {
-      const res = await prisma.user.create({
-        data: { id: id, username: username },
+      const existingUser = await prisma.user.findUnique({
+        where: { id: id },
       });
-      console.log(res);
+
+      console.log(existingUser);
+      if (!existingUser) {
+        const res = await prisma.user.create({
+          data: { id: id, username: username },
+        });
+        console.log(res);
+      }
     }
+  } catch (error: any) {
+    console.error('Error:', error.message);
+    console.log('Digest:', error.digest);
   }
 
   const upcomingMatches = await fetch(
