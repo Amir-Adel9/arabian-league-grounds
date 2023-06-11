@@ -1,6 +1,5 @@
 // 'use client';
 import ScheduleTable from '@/components/Schedule';
-import Image from 'next/image';
 
 async function Schedule() {
   const schedule = await fetch(

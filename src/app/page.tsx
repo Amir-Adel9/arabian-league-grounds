@@ -43,7 +43,7 @@ export default async function Home() {
           const targetDate = dayjs.utc(event.startTime);
           const duration = dayjs.duration(targetDate.diff(now));
 
-          return event.state === 'unstarted' && duration.asDays() < 10;
+          return event.state === 'unstarted' && duration.asDays() < 8;
         });
       return unStartedMatchesWithin7Days;
     });

@@ -155,6 +155,7 @@ const LiveMatch = ({
       <div className='flex w-full justify-center'>
         <div className='flex w-1/3 items-center justify-end space-x-4'>
           <h3 className='text-xl font-bold'>
+            LIVEEE
             {windowWidth < 768
               ? event.match.teams[0].code
               : event.match.teams[0].name}
@@ -275,7 +276,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                     windowWidth={windowWidth}
                   />
                 );
-              } else if (match.state === 'live') {
+              } else if (match.state === 'inProgress') {
                 return (
                   <LiveMatch
                     event={match}
