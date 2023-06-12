@@ -10,32 +10,34 @@ import TalentsSlider from '@/components/TalentsSilder';
 import { talentsArray } from '@/utils/talents';
 
 import { currentUser } from '@clerk/nextjs';
-import { prisma } from '@/db/prisma';
+import { db } from '@/db';
+
+import { user } from '@/db/schema';
+import { eq } from 'drizzle-orm';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
-export default async function Home() {
-  const user = await currentUser();
-  console.log(user);
 
-  if (user) {
-    const { id, username } = user;
+export default async function Home() {
+  const loggedInUser = await currentUser();
+
+  if (loggedInUser) {
+    const { id, username } = loggedInUser;
     console.log(id, username);
 
-    const existingUser = await prisma.user.findUnique({
-      where: { id: id },
-    });
+    const existingUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.clerkId, id));
+    console.log('existingUser', existingUser);
 
-    console.log(existingUser);
-    if (!existingUser) {
-      const res = await prisma.user.create({
-        data: { id: id, username: username },
-      });
-      console.log(res);
+    if (existingUser.length === 0) {
+      const newUser = await db
+        .insert(user)
+        .values({ clerkId: id, username: username });
+      console.log('newUser', newUser);
     }
   }
-
-  const allUsers = await prisma.user.findMany();
 
   const upcomingMatches = await fetch(
     'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
@@ -103,9 +105,6 @@ export default async function Home() {
         id='upcoming-matches'
       >
         <div className='w-full flex flex-col items-center justify-center'>
-          {allUsers.map((user) => {
-            return <p key={user.id}>{user.username}</p>;
-          })}
           <h2 className='text-accent-gold font-bold text-3xl mb-4'>
             Upcoming Matches
           </h2>

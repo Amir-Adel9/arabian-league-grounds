@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev  --port 3002",
     "build": "next build",
-    "postinstall": "prisma generate",
     "start": "next start --port 3002",
     "lint": "next lint",
-    "studio": "prisma studio"
+    "migrations:generate": "drizzle-kit generate:mysql",
+    "migrations:push": "node -r esbuild-register src/db/migrate.ts",
+    "migrations:drop": "drizzle-kit drop --config=drizzle.config.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.20.0",
@@ -22,18 +23,23 @@
     "autoprefixer": "10.4.14",
     "crypto-browserify": "^3.12.0",
     "dayjs": "^1.11.8",
+    "dotenv": "^16.1.4",
+    "drizzle-orm": "^0.26.5",
+    "esbuild-register": "^3.4.2",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "next": "13.4.4",
     "postcss": "8.4.24",
+    "postgres": "^3.3.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.2",
     "three": "^0.153.0",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "undici": "^5.22.1"
   },
   "devDependencies": {
     "@types/node": "20.2.5",
-    "prisma": "^4.15.0"
+    "drizzle-kit": "^0.18.1"
   }
 }

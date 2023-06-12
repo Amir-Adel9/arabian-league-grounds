@@ -1,0 +1,1 @@
+ALTER TABLE `user` MODIFY COLUMN `points` int DEFAULT 0;

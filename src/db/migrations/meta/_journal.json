@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1686594998245,
+      "tag": "0000_real_nitro",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1686598040848,
+      "tag": "0001_talented_gamma_corps",
+      "breakpoints": true
+    }
+  ]
+}
