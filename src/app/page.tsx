@@ -1,4 +1,3 @@
-'use client';
 import STLViewer from '@/components/HeaderLogo';
 import Image from 'next/image';
 
@@ -11,71 +10,65 @@ import TalentsSlider from '@/components/TalentsSilder';
 import { talentsArray } from '@/utils/talents';
 
 import { currentUser } from '@clerk/nextjs';
-import { createContext } from '@/db/prismaContext';
+import { prisma } from '@/db/prisma';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
-
 export default async function Home() {
-  const { prisma } = createContext();
-  try {
-    const user = await currentUser();
-    console.log(user);
+  const user = await currentUser();
+  console.log(user);
 
-    if (user) {
-      const { id, username } = user;
-      console.log(id, username);
+  if (user) {
+    const { id, username } = user;
+    console.log(id, username);
 
-      const existingUser = await prisma.user.findUnique({
-        where: { id: id },
+    const existingUser = await prisma.user.findUnique({
+      where: { id: id },
+    });
+
+    console.log(existingUser);
+    if (!existingUser) {
+      const res = await prisma.user.create({
+        data: { id: id, username: username },
       });
-
-      console.log(existingUser);
-      if (!existingUser) {
-        const res = await prisma.user.create({
-          data: { id: id, username: username },
-        });
-        console.log(res);
-      }
+      console.log(res);
     }
-  } catch (error: any) {
-    console.error('Error:', error.message);
-    console.log('Digest:', error.digest);
   }
-  // const allUsers = await prisma.user.findMany();
 
-  // const upcomingMatches = await fetch(
-  //   'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
-  //   {
-  //     headers: {
-  //       'x-api-key': `${process.env.API_KEY}`,
-  //       'User-Agent':
-  //         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0',
-  //       Accept: '*/*',
-  //       'Accept-Language': 'en-US,en;q=0.5',
-  //       'Access-Control-Allow-Origin': '*',
-  //       'Access-Control-Allow-Headers': 'X-Requested-With',
-  //       'Sec-Fetch-Dest': 'empty',
-  //       'Sec-Fetch-Mode': 'cors',
-  //       'Sec-Fetch-Site': 'same-site',
-  //     },
-  //     referrer: 'https://lolesports.com/',
-  //     method: 'GET',
-  //     mode: 'cors',
-  //   }
-  // )
-  //   .then((res) => res.json())
-  //   .then((upcomingMatches) => {
-  //     const unStartedMatchesWithin7Days =
-  //       upcomingMatches.data.schedule.events.filter((event: any) => {
-  //         const now = dayjs.utc();
-  //         const targetDate = dayjs.utc(event.startTime);
-  //         const duration = dayjs.duration(targetDate.diff(now));
+  const allUsers = await prisma.user.findMany();
 
-  //         return event.state === 'unstarted' && duration.asDays() < 8;
-  //       });
-  //     return unStartedMatchesWithin7Days;
-  //   });
+  const upcomingMatches = await fetch(
+    'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
+    {
+      headers: {
+        'x-api-key': `${process.env.API_KEY}`,
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0',
+        Accept: '*/*',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'X-Requested-With',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-site',
+      },
+      referrer: 'https://lolesports.com/',
+      method: 'GET',
+      mode: 'cors',
+    }
+  )
+    .then((res) => res.json())
+    .then((upcomingMatches) => {
+      const unStartedMatchesWithin7Days =
+        upcomingMatches.data.schedule.events.filter((event: any) => {
+          const now = dayjs.utc();
+          const targetDate = dayjs.utc(event.startTime);
+          const duration = dayjs.duration(targetDate.diff(now));
+
+          return event.state === 'unstarted' && duration.asDays() < 8;
+        });
+      return unStartedMatchesWithin7Days;
+    });
 
   return (
     <main className='relative flex min-h-screen flex-col items-center'>
@@ -110,16 +103,16 @@ export default async function Home() {
         id='upcoming-matches'
       >
         <div className='w-full flex flex-col items-center justify-center'>
-          {/* {allUsers.map((user) => {
+          {allUsers.map((user) => {
             return <p key={user.id}>{user.username}</p>;
-          })} */}
+          })}
           <h2 className='text-accent-gold font-bold text-3xl mb-4'>
             Upcoming Matches
           </h2>
           <div className='relative w-[85%] bg-secondary text-primary p-8 rounded-lg shadow-lg'>
             <ViewSchedule />
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
-              {/* {upcomingMatches.map((event: any) => {
+              {upcomingMatches.map((event: any) => {
                 const now = dayjs.utc();
                 const targetDate = dayjs.utc(event.startTime);
                 const duration = dayjs.duration(targetDate.diff(now));
@@ -186,7 +179,7 @@ export default async function Home() {
                     </div>
                   </div>
                 );
-              })} */}
+              })}
             </div>
           </div>
         </div>

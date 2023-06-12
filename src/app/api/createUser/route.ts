@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { createContext } from '@/db/prismaContext';
+import { prisma } from '@/db/prisma';
 import { currentUser } from '@clerk/nextjs';
 
 export async function POST() {
   // assuming your body has json data
-  const { prisma } = createContext();
+
   const user = await currentUser();
   console.log(user);
 
