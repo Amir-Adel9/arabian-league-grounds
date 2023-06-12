@@ -41,7 +41,7 @@ export default async function Home() {
     console.error('Error:', error.message);
     console.log('Digest:', error.digest);
   }
-  const allUsers = await prisma.user.findMany();
+  // const allUsers = await prisma.user.findMany();
 
   const upcomingMatches = await fetch(
     'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
@@ -109,9 +109,9 @@ export default async function Home() {
         id='upcoming-matches'
       >
         <div className='w-full flex flex-col items-center justify-center'>
-          {allUsers.map((user) => {
+          {/* {allUsers.map((user) => {
             return <p key={user.id}>{user.username}</p>;
-          })}
+          })} */}
           <h2 className='text-accent-gold font-bold text-3xl mb-4'>
             Upcoming Matches
           </h2>
