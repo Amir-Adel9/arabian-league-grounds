@@ -19,15 +19,19 @@ module.exports = {
         inter: ['var(--font-inter)'],
       },
       keyframes: {
-        arrow: {
-          '0%': {
-            height: '0',
+        'bounce-y': {
+          '0%, 100%': {
+            transform: 'translateY(0)',
           },
-          '100%': {
-            height: '100%',
+          '50%': {
+            transform: 'translateY(20px)',
           },
         },
       },
+      animation: {
+        'bounce-y': 'bounce-y 2s infinite ease-in-out',
+      },
+
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

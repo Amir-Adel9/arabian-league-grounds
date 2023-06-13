@@ -1,4 +1,3 @@
-import STLViewer from '@/components/HeaderLogo';
 import Image from 'next/image';
 
 import dayjs from 'dayjs';
@@ -86,8 +85,14 @@ export default async function Home() {
           objectFit='cover'
           objectPosition='center'
         />
-        <STLViewer />
-        <div className='flex flex-col gap-5 items-center justify-center bg-transparent rounded-[20px]  '>
+        <Image
+          src='/al_logo_black.png'
+          alt='Arabian League Logo'
+          width={160}
+          height={160}
+          className='z-[10] duration-200 animate-bounce-y mt-20'
+        />
+        <div className='flex flex-col gap-5 items-center justify-center bg-transparent rounded-[20px]  mt-20'>
           <h1 className='text-5xl font-bold text-center leading-tight'>
             Welcome to the
             <span className='text-accent-blue'> Arabian League</span> Grounds!

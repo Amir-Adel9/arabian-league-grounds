@@ -16,7 +16,8 @@ const kanit = Kanit({
 
 export const metadata = {
   title: 'Arabian League Grounds',
-  description: 'Arabian League Grounds',
+  description:
+    'Your all-in-one Arabian League companion. Teams, Schedule, Standings, Rewards, and more!',
 };
 
 export default async function RootLayout({
