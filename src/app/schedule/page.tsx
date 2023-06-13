@@ -20,6 +20,7 @@ async function Schedule() {
       referrer: 'https://lolesports.com/',
       method: 'GET',
       mode: 'cors',
+      next: { revalidate: 30 },
     }
   ).then((res) => res.json());
   return (
