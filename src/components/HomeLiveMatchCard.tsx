@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const HomeLiveMatchCard = ({ event }: { event: any }) => {
   return (
@@ -42,15 +43,7 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
           </h3>
         </div>
       </div>
-      <div className='flex flex-row items-center justify-center mb-2 z-20'>
-        {/* <h3 className='text-lg font-bold'>
-      {daysUntilMatch.toFixed(0) === '1'
-        ? 'Match in 1 day'
-        : daysUntilMatch.toFixed(0) === '0'
-        ? 'Match starting soon'
-        : `Match in ${daysUntilMatch.toFixed(0)} days`}
-    </h3> */}
-      </div>
+      <div className='flex flex-row items-center justify-center mb-2 z-20'></div>
       <div className='flex flex-row items-center justify-center z-20'>
         <p className=' flex items-center justify-center gap-x-2'>
           <span className='font-bold text-2xl'>Live</span>
@@ -68,26 +61,31 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
         </p>
       </div>
       <div className='flex justify-center mt-4 z-20'>
-        <button className='bg-accent-gold text-white py-2 px-4 rounded flex items-center justify-center gap-x-2'>
-          <span> Watch Now</span>
+        <Link
+          href='https://lolesports.com/schedule?leagues=arabian_league'
+          target={'_blank'}
+        >
+          <button className='bg-accent-gold text-white py-2 px-4 rounded flex items-center justify-center gap-x-2'>
+            <span> Watch Now</span>
 
-          <svg
-            width=''
-            height=''
-            viewBox='0 0 24 20'
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth={2}
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='w-[12px] h-[12px] md:w-[16px] md:h-[16px]'
-          >
-            <path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6' />
-            <polyline points='15 3 21 3 21 9' />
-            <line x1={10} y1={14} x2={21} y2={3} />
-          </svg>
-        </button>
+            <svg
+              width=''
+              height=''
+              viewBox='0 0 24 20'
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth={2}
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              className='w-[12px] h-[12px] md:w-[16px] md:h-[16px]'
+            >
+              <path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6' />
+              <polyline points='15 3 21 3 21 9' />
+              <line x1={10} y1={14} x2={21} y2={3} />
+            </svg>
+          </button>
+        </Link>
       </div>
     </div>
   );
