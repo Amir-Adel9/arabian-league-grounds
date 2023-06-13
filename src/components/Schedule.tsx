@@ -1,6 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
@@ -151,37 +152,42 @@ const LiveMatch = ({
       className='flex items-center justify-center space-x-4 w-full border-y-4 border-red-700 animate-scale bg-secondary text-primary p-4'
       key={event.match.id}
     >
-      <div className='flex w-full justify-center'>
-        <div className='flex w-1/3 items-center justify-end space-x-4'>
-          <h3 className='text-xl font-bold'>
-            {windowWidth < 768
-              ? event.match.teams[0].code
-              : event.match.teams[0].name}
-          </h3>
-          <Image
-            src={event.match.teams[0].image}
-            alt={event.match.teams[0].name}
-            width={80}
-            height={80}
-          />
+      <Link
+        href='https://lolesports.com/schedule?leagues=arabian_league'
+        target={'_blank'}
+      >
+        <div className='flex w-full justify-center'>
+          <div className='flex w-1/3 items-center justify-end space-x-4'>
+            <h3 className='text-xl font-bold'>
+              {windowWidth < 768
+                ? event.match.teams[0].code
+                : event.match.teams[0].name}
+            </h3>
+            <Image
+              src={event.match.teams[0].image}
+              alt={event.match.teams[0].name}
+              width={80}
+              height={80}
+            />
+          </div>
+          <div className='flex flex-col w-1/8 items-center justify-center'>
+            <h3 className='text-xl font-bold px-10'>VS</h3>
+          </div>
+          <div className='flex items-center w-1/3 justify-start space-x-4'>
+            <Image
+              src={event.match.teams[1].image}
+              alt={event.match.teams[1].name}
+              width={80}
+              height={80}
+            />
+            <h3 className='text-xl font-bold'>
+              {windowWidth < 768
+                ? event.match.teams[1].code
+                : event.match.teams[1].name}
+            </h3>
+          </div>
         </div>
-        <div className='flex flex-col w-1/8 items-center justify-center'>
-          <h3 className='text-xl font-bold px-10'>VS</h3>
-        </div>
-        <div className='flex items-center w-1/3 justify-start space-x-4'>
-          <Image
-            src={event.match.teams[1].image}
-            alt={event.match.teams[1].name}
-            width={80}
-            height={80}
-          />
-          <h3 className='text-xl font-bold'>
-            {windowWidth < 768
-              ? event.match.teams[1].code
-              : event.match.teams[1].name}
-          </h3>
-        </div>
-      </div>
+      </Link>
     </div>
   );
 };
@@ -267,6 +273,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                   />
                 );
               } else if (match.state === 'unstarted') {
+                console.log('match', match);
                 return (
                   <UnstartedMatch
                     event={match}
@@ -275,6 +282,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                   />
                 );
               } else if (match.state === 'inProgress') {
+                console.log('match', match);
                 return (
                   <LiveMatch
                     event={match}
