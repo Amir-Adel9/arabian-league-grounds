@@ -30,7 +30,7 @@ const HomeMatchCard = ({ event }: { event: any }) => {
 
   return (
     <div
-      className='relative border  border-accent-gold flex  flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
+      className='relative border border-accent-gold flex  flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
       onClick={predictionHandler}
       key={event.id}
     >
@@ -74,9 +74,9 @@ const HomeMatchCard = ({ event }: { event: any }) => {
         <h3 className='text-lg font-bold'>
           {daysUntilMatch.toFixed(0) === '1'
             ? 'Match in 1 day'
-            : daysUntilMatch > 0
-            ? `Match in ${daysUntilMatch.toFixed(0)} days`
-            : 'Match happening soon'}
+            : daysUntilMatch.toFixed(0) === '0'
+            ? 'Match happening soon'
+            : `Match in ${daysUntilMatch.toFixed(0)} days`}
         </h3>
       </div>
       <div className='flex flex-row items-center justify-center z-20'>
