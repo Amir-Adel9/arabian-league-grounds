@@ -61,10 +61,7 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
         </p>
       </div>
       <div className='flex justify-center mt-4 z-20'>
-        <Link
-          href='https://lolesports.com/schedule?leagues=arabian_league'
-          target={'_blank'}
-        >
+        <Link href='https://www.twitch.tv/lolesports_ar' target={'_blank'}>
           <button className='bg-accent-gold text-white py-2 px-4 rounded flex items-center justify-center gap-x-2'>
             <span> Watch Now</span>
 
