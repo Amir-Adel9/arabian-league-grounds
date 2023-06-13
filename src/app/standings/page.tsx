@@ -24,7 +24,7 @@ async function Standings() {
   ).then((res) => res.json());
 
   return (
-    <main className='relative flex min-h-screen flex-col items-center bg-secondary'>
+    <main className='relative flex min-h-screen flex-col items-center bg-primary'>
       <section className=' w-full min-h-screen relative flex flex-col justify-center items-center mt-28 '>
         <div className='w-[80%]  p-12'>
           <h1 className='text-5xl font-bold text-center'>Standings</h1>
