@@ -14,6 +14,7 @@ import { db } from '@/db';
 import { user } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import HomeMatchCard from '@/components/HomeMatchCard';
+import HomeLiveMatchCard from '@/components/HomeLiveMatchCard';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
@@ -119,8 +120,14 @@ export default async function Home() {
             <ViewSchedule />
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
               {upcomingMatches.map((event: any) => {
-                console.log(event);
-                return <HomeMatchCard event={event} key={event.match.id} />;
+                const matchState = event.state;
+                if (matchState === 'unstarted' || matchState === 'completed') {
+                  return <HomeMatchCard event={event} key={event.match.id} />;
+                } else if (matchState === 'inProgress') {
+                  return (
+                    <HomeLiveMatchCard event={event} key={event.match.id} />
+                  );
+                }
               })}
             </div>
           </div>

@@ -148,13 +148,12 @@ const LiveMatch = ({
 }) => {
   return (
     <div
-      className='flex items-center justify-center space-x-4 w-full border-y border-accent-gold bg-secondary text-primary p-4'
+      className='flex items-center justify-center space-x-4 w-full border-y-4 border-red-700 animate-scale bg-secondary text-primary p-4'
       key={event.match.id}
     >
       <div className='flex w-full justify-center'>
         <div className='flex w-1/3 items-center justify-end space-x-4'>
           <h3 className='text-xl font-bold'>
-            LIVEEE
             {windowWidth < 768
               ? event.match.teams[0].code
               : event.match.teams[0].name}
