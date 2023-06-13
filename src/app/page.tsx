@@ -64,11 +64,13 @@ export default async function Home() {
     .then((upcomingMatches) => {
       const unStartedMatchesWithin7Days = upcomingMatches.data.schedule.events
         .filter((event: any) => {
-          const now = dayjs.utc();
-          const targetDate = dayjs.utc(event.startTime);
-          const duration = dayjs.duration(targetDate.diff(now));
+          // const now = dayjs.utc();
+          // const targetDate = dayjs.utc(event.startTime);
+          // const duration = dayjs.duration(targetDate.diff(now));
+          // const isInPast = targetDate.isBefore(now);
+          const matchState = event.state;
 
-          return event.state === 'unstarted' && duration.asDays() < 8;
+          return matchState === 'unstarted' || matchState === 'inProgress';
         })
         .slice(0, 8);
       return unStartedMatchesWithin7Days;
@@ -121,7 +123,7 @@ export default async function Home() {
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
               {upcomingMatches.map((event: any) => {
                 const matchState = event.state;
-                if (matchState === 'unstarted' || matchState === 'completed') {
+                if (matchState === 'unstarted') {
                   return <HomeMatchCard event={event} key={event.match.id} />;
                 } else if (matchState === 'inProgress') {
                   return (
