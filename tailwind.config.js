@@ -27,9 +27,18 @@ module.exports = {
             transform: 'translateY(20px)',
           },
         },
+        scale: {
+          '0%, 100%': {
+            transform: 'scale(1)',
+          },
+          '50%': {
+            transform: 'scale(1.01)',
+          },
+        },
       },
       animation: {
         'bounce-y': 'bounce-y 2s infinite ease-in-out',
+        scale: 'scale 2s infinite ease-in-out',
       },
 
       backgroundImage: {

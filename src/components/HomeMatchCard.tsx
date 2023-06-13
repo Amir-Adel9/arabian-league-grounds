@@ -75,7 +75,7 @@ const HomeMatchCard = ({ event }: { event: any }) => {
           {daysUntilMatch.toFixed(0) === '1'
             ? 'Match in 1 day'
             : daysUntilMatch.toFixed(0) === '0'
-            ? 'Match happening soon'
+            ? 'Match starting soon'
             : `Match in ${daysUntilMatch.toFixed(0)} days`}
         </h3>
       </div>
