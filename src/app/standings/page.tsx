@@ -20,7 +20,7 @@ async function Standings() {
       referrer: 'https://lolesports.com/',
       method: 'GET',
       mode: 'cors',
-      next: { revalidate: 30 },
+      next: { revalidate: 10 },
     }
   ).then((res) => res.json());
 

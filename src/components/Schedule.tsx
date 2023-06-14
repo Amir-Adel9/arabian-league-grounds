@@ -152,7 +152,10 @@ const LiveMatch = ({
       className='flex items-center justify-center space-x-4 w-full border-y-4 border-red-700 animate-scale bg-secondary text-primary p-4'
       key={event.match.id}
     >
-      <Link href='https://www.twitch.tv/lolesports_ar' target={'_blank'}>
+      <Link
+        href='https://lolesports.com/live/arabian_league/lolesports_ar'
+        target={'_blank'}
+      >
         <div className='flex w-full justify-center'>
           <div className='flex w-1/3 items-center justify-end space-x-4'>
             <h3 className='text-xl font-bold'>
