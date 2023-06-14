@@ -148,11 +148,29 @@ const LiveMatch = ({
   windowWidth: any;
 }) => {
   return (
-    <div
-      className='flex items-center justify-center space-x-4 w-full border-y-4 border-red-700 animate-scale bg-secondary text-primary p-4'
-      key={event.match.id}
+    <Link
+      href='https://lolesports.com/live/arabian_league/lolesports_ar'
+      className='w-full'
+      target={'_blank'}
     >
-      <Link href='https://www.twitch.tv/lolesports_ar' target={'_blank'}>
+      <div
+        className='flex relative items-center justify-center space-x-4 w-full border-y-4 border-red-700 animate-scale bg-secondary text-primary p-4'
+        key={event.match.id}
+      >
+        <div className='absolute top-1 left-0 ml-2 flex items-center justify-center gap-x-1'>
+          <svg
+            width='16px'
+            height='16px'
+            viewBox='0 0 15 15'
+            version='1.1'
+            id='circle'
+            xmlns='http://www.w3.org/2000/svg'
+            className='fill-red-700'
+          >
+            <path d='M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z' />
+          </svg>
+          <span className='font-bold text-xl'>Live</span>
+        </div>
         <div className='flex w-full justify-center'>
           <div className='flex w-1/3 items-center justify-end space-x-4'>
             <h3 className='text-xl font-bold'>
@@ -184,8 +202,8 @@ const LiveMatch = ({
             </h3>
           </div>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 

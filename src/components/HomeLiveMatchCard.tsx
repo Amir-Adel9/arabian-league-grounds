@@ -3,65 +3,69 @@ import Link from 'next/link';
 
 const HomeLiveMatchCard = ({ event }: { event: any }) => {
   return (
-    <div
-      className='relative border border-red-700 flex animate-scale flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
-      key={event.id}
+    <Link
+      href='https://lolesports.com/live/arabian_league/lolesports_ar'
+      className='h-full'
+      target={'_blank'}
     >
-      <div className='absolute w-full h-full bg-secondary opacity-80 z-[10] top-0 left-0 rounded-lg '></div>
-      <Image
-        src='/background.jpg'
-        alt='Background Image'
-        className='w-full h-full z-[5] rounded-lg'
-        layout='fill'
-        objectFit='cover'
-        objectPosition='center'
-      />
-      <div className='flex flex-row items-center justify-center mb-4 z-20'>
-        <div className='flex flex-col items-center'>
-          <Image
-            src={event.match.teams[0].image}
-            alt={event.match.teams[0].name}
-            width={100}
-            height={100}
-            draggable={false}
-          />
-          <h3 className='text-xl font-bold mt-2 text-center'>
-            {event.match.teams[0].name}
-          </h3>
+      <div
+        className='relative border h-full border-red-700 flex animate-scale flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
+        key={event.id}
+      >
+        <div className='absolute w-full h-full bg-secondary opacity-80 z-[10] top-0 left-0 rounded-lg '></div>
+        <Image
+          src='/background.jpg'
+          alt='Background Image'
+          className='w-full h-full z-[5] rounded-lg'
+          layout='fill'
+          objectFit='cover'
+          objectPosition='center'
+        />
+        <div className='flex flex-row items-center justify-center mb-4 z-20'>
+          <div className='flex flex-col items-center'>
+            <Image
+              src={event.match.teams[0].image}
+              alt={event.match.teams[0].name}
+              width={100}
+              height={100}
+              draggable={false}
+            />
+            <h3 className='text-xl font-bold mt-2 text-center'>
+              {event.match.teams[0].name}
+            </h3>
+          </div>
+          <h3 className='text-xl font-bold text-center'>VS</h3>
+          <div className='flex flex-col items-center'>
+            <Image
+              src={event.match.teams[1].image}
+              alt={event.match.teams[1].name}
+              width={100}
+              height={100}
+              draggable={false}
+            />
+            <h3 className='text-xl font-bold mt-2 text-center'>
+              {event.match.teams[1].name}
+            </h3>
+          </div>
         </div>
-        <h3 className='text-xl font-bold text-center'>VS</h3>
-        <div className='flex flex-col items-center'>
-          <Image
-            src={event.match.teams[1].image}
-            alt={event.match.teams[1].name}
-            width={100}
-            height={100}
-            draggable={false}
-          />
-          <h3 className='text-xl font-bold mt-2 text-center'>
-            {event.match.teams[1].name}
-          </h3>
+        <div className='flex flex-row items-center justify-center mb-2 z-20'></div>
+        <div className='flex flex-row items-center justify-center z-20'>
+          <p className=' flex items-center justify-center gap-x-1'>
+            <svg
+              width='20px'
+              height='20px'
+              viewBox='0 0 15 15'
+              version='1.1'
+              id='circle'
+              xmlns='http://www.w3.org/2000/svg'
+              className='fill-red-700'
+            >
+              <path d='M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z' />
+            </svg>
+            <span className='font-bold text-2xl'>Live</span>
+          </p>
         </div>
-      </div>
-      <div className='flex flex-row items-center justify-center mb-2 z-20'></div>
-      <div className='flex flex-row items-center justify-center z-20'>
-        <p className=' flex items-center justify-center gap-x-2'>
-          <span className='font-bold text-2xl'>Live</span>
-          <svg
-            width='20px'
-            height='20px'
-            viewBox='0 0 15 15'
-            version='1.1'
-            id='circle'
-            xmlns='http://www.w3.org/2000/svg'
-            className='fill-red-700'
-          >
-            <path d='M14,7.5c0,3.5899-2.9101,6.5-6.5,6.5S1,11.0899,1,7.5S3.9101,1,7.5,1S14,3.9101,14,7.5z' />
-          </svg>
-        </p>
-      </div>
-      <div className='flex justify-center mt-4 z-20'>
-        <Link href='https://www.twitch.tv/lolesports_ar' target={'_blank'}>
+        <div className='flex justify-center mt-4 z-20'>
           <button className='bg-accent-gold text-white py-2 px-4 rounded flex items-center justify-center gap-x-2'>
             <span> Watch Now</span>
 
@@ -82,9 +86,9 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
               <line x1={10} y1={14} x2={21} y2={3} />
             </svg>
           </button>
-        </Link>
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
