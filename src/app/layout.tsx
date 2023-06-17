@@ -5,6 +5,7 @@ import { Inter, Kanit } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { currentUser } from '@clerk/nextjs';
+import NavMenu from '@/components/NavMenu';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -35,23 +36,26 @@ export default async function RootLayout({
       >
         <body className={kanit.variable}>
           <header
-            className='h-24 fixed w-screen bg-secondary text-primary font-inter flex items-center justify-between px-10 z-50 border-b-[6px] border-b-accent-gold'
+            className='h-24 fixed w-full bg-secondary text-primary font-inter flex items-center justify-between px-2 xs:px-6 lg:px-10 z-[70] border-b-[6px] border-b-accent-gold'
             id='header'
           >
-            <div className='flex justify-center items-center'>
-              <Image
-                src='/al_logo.png'
-                alt=''
-                width={52}
-                height={52}
-                draggable={false}
-              />
-              <h1 className='font-bold duration-300 cursor-pointer  hover:text-accent-gold'>
-                <Link href='/'>Arabian League Grounds</Link>
-              </h1>
+            <div className='flex justify-center items-center mr-2'>
+              <div className='relative w-8 h-8 sm:w-12 sm:h-12 mr-1'>
+                <Image
+                  src='/al_logo.png'
+                  alt=''
+                  fill={true}
+                  draggable={false}
+                />
+              </div>
+              <Link href='/'>
+                <h1 className='font-bold duration-300 cursor-pointer hover:text-accent-gold text-xs xs:text-base md:text-base'>
+                  Arabian League Grounds
+                </h1>
+              </Link>
             </div>
-            <nav className='flex justify-center items-center pr-[5%]'>
-              <ul className='flex items-center gap-10'>
+            <nav className='hidden lg:flex justify-center items-center pr-[5%]'>
+              <ul className='flex items-center gap-6'>
                 <li className='relative mr-5 duration-300 cursor-pointer hover:text-accent-gold after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-1 after:md:-bottom-2 hover:after:w-full'>
                   <Link href='/schedule'>Schedule</Link>
                 </li>
@@ -75,6 +79,7 @@ export default async function RootLayout({
                 </li>
               </ul>
             </nav>
+            <NavMenu />
           </header>
           {children}
           <Analytics />

@@ -80,7 +80,7 @@ const HomeMatchCard = ({ event }: { event: any }) => {
         </h3>
       </div>
       <div className='flex flex-row items-center justify-center z-20'>
-        <p className='text-accent-gold'>Date: {formattedDate}</p>
+        <p className='text-accent-gold text-center'>Date: {formattedDate}</p>
       </div>
       <div className='flex justify-center mt-4 z-20'>
         <button className='bg-accent-gold text-white py-2 px-4 rounded'>
