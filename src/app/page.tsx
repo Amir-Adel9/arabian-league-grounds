@@ -65,10 +65,6 @@ export default async function Home() {
     .then((upcomingMatches) => {
       const unStartedMatchesWithin7Days = upcomingMatches.data.schedule.events
         .filter((event: any) => {
-          // const now = dayjs.utc();
-          // const targetDate = dayjs.utc(event.startTime);
-          // const duration = dayjs.duration(targetDate.diff(now));
-          // const isInPast = targetDate.isBefore(now);
           const matchState = event.state;
 
           return matchState === 'unstarted' || matchState === 'inProgress';
@@ -87,6 +83,7 @@ export default async function Home() {
           className='w-full h-full z-[-20]'
           layout='fill'
           objectFit='cover'
+          draggable={false}
           objectPosition='center'
         />
         <Image
@@ -94,20 +91,20 @@ export default async function Home() {
           alt='Arabian League Logo'
           width={160}
           height={160}
-          className='z-[10] duration-200 animate-bounce-y mt-20'
+          className='z-[10] duration-200 animate-bounce-y mt-24 sm:mt-20'
         />
         <div className='flex flex-col gap-5 items-center justify-center bg-transparent rounded-[20px]  mt-20'>
-          <h1 className='text-5xl font-bold text-center leading-tight'>
+          <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-center leading-tight'>
             Welcome to the
             <span className='text-accent-blue'> Arabian League</span> Grounds!
           </h1>
-          <h2 className='text-3xl font-bold text-center'>
+          <h2 className='text-xl md:text-2xl lg:text-3xl font-bold text-center'>
             Your all-in-one
             <span className='text-accent-gold'> Arabian League </span>
             companion.
           </h2>
         </div>
-        <div className='mt-28'>
+        <div className='mt-10 sm:mt-28'>
           <HeroNavArrow />
         </div>
       </section>
@@ -119,7 +116,7 @@ export default async function Home() {
           <h2 className='text-accent-gold font-bold text-3xl mb-4'>
             Upcoming Matches
           </h2>
-          <div className='relative w-[85%] bg-secondary text-primary p-8 rounded-lg shadow-lg'>
+          <div className='relative w-[85%] bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg'>
             <ViewSchedule />
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
               {upcomingMatches.map((event: any) => {
