@@ -6,14 +6,17 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const NavMenu = () => {
-  const user = useUser();
+  const { user } = useUser();
+
   const [menuOpen, setMenuOpen] = useState(false);
+
+  console.log(user);
 
   return (
     <nav className='flex lg:hidden '>
       <div
-        className={`fixed w-full h-full bg-secondary z-[50] top-0 left-0 rounded-lg ${
-          !menuOpen ? 'opacity-0' : 'opacity-80'
+        className={`fixed w-full h-full bg-secondary  top-0 left-0 rounded-lg ${
+          !menuOpen ? 'opacity-0 z-[-50]' : 'opacity-80 z-[50]'
         } duration-500 `}
       ></div>
       <div
@@ -25,25 +28,44 @@ const NavMenu = () => {
           <Image src='/al_logo.png' alt='' fill={true} draggable={false} />
         </div>
         <ul className='flex flex-col items-start justify-between h-1/2 gap-6 w-full'>
-          <li className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'>
+          <li
+            onClick={() => setMenuOpen(false)}
+            className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
+          >
             <Link href='/schedule'>Schedule</Link>
           </li>
-          <li className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'>
+          <li
+            onClick={() => setMenuOpen(false)}
+            className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
+          >
             <Link href='/standings'>Standings</Link>
           </li>
-          <li className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'>
+          <li
+            onClick={() => setMenuOpen(false)}
+            className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
+          >
             Rewards
           </li>
-          <li className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'>
+          <li
+            onClick={() => setMenuOpen(false)}
+            className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
+          >
             About
           </li>
-          <li>
+          <li className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'>
             {!user ? (
-              <div className='bg-accent-gold p-2 px-6 border border-accent-gold cursor-pointer rounded font-bold font-kanit duration-200 hover:bg-secondary'>
-                <SignInButton />
-              </div>
+              <SignInButton />
             ) : (
-              <UserButton />
+              <div className='flex gap-1'>
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userPreviewTextContainer__userButton: 'capitalize',
+                    },
+                  }}
+                />
+                <span className='capitalize'>{user.username}</span>
+              </div>
             )}
           </li>
         </ul>

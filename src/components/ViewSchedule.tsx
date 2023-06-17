@@ -3,15 +3,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 const ViewSchedule = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   return (
     <Link href='/schedule'>
       <div
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={() => setIsActive(true)}
+        onMouseLeave={() => setIsActive(false)}
+        onClick={() => setIsActive(!isActive)}
         className='cursor-pointer overflow-hidden flex justify-center items-center left-[calc(50%-20px)] hover:left-[calc(50%-96px)] hover: absolute w-10 h-10 bg-accent-blue text-primary text-center font-bold rounded-full z-20 -bottom-5 border border-accent-gold hover:w-48 hover:rounded-xl  duration-1000'
       >
-        {!isHovered ? (
+        {!isActive ? (
           <svg
             width='800px'
             height='800px'
