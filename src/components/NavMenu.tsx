@@ -16,18 +16,20 @@ const NavMenu = () => {
     <nav className='flex lg:hidden '>
       <div
         className={`fixed w-full h-full bg-secondary  top-0 left-0 rounded-lg ${
-          !menuOpen ? 'opacity-0 z-[-50]' : 'opacity-80 z-[50]'
+          !menuOpen
+            ? 'opacity-0 translate-x-[50rem]'
+            : 'opacity-80 translate-x-0'
         } duration-500 `}
       ></div>
       <div
         className={` bg-secondary top-0 z-[80] fixed h-screen w-full md:w-1/2 right-0 duration-500 ${
           !menuOpen ? 'translate-x-[96rem]' : 'translate-x-0'
-        } flex flex-col justify-center items-start gap-6 text-primary font-bold text-2xl px-6 py-10 overflow-hidden`}
+        } flex flex-col justify-start items-start gap-6 text-primary font-bold text-2xl px-6 py-10 overflow-hidden`}
       >
         <div className='absolute w-12 h-12 z-[150] top-6 left-5'>
           <Image src='/al_logo.png' alt='' fill={true} draggable={false} />
         </div>
-        <ul className='flex flex-col items-start justify-between h-1/2 gap-6 w-full'>
+        <ul className='flex flex-col items-start justify-around h-1/2 w-full mt-[25%]'>
           <li
             onClick={() => setMenuOpen(false)}
             className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
