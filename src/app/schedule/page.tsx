@@ -3,7 +3,7 @@ import ScheduleTable from '@/components/Schedule';
 
 async function Schedule() {
   const schedule = await fetch(
-    'https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=109545772895506419',
+    `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
     {
       headers: {
         'x-api-key': `${process.env.API_KEY}`,
