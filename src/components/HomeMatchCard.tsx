@@ -14,7 +14,7 @@ const HomeMatchCard = ({ event }: { event: any }) => {
   const targetDate = dayjs.utc(event.startTime);
   const duration = dayjs.duration(targetDate.diff(now));
   const daysUntilMatch = duration.asDays();
-  const formattedDate = dayjs(targetDate).format('DD/MM/YYYY HH:mm:ss');
+  const formattedDate = dayjs(targetDate).format('DD/MM/YYYY HH:mm');
 
   const [matchId, setMatchId] = useState(event.match.id);
 

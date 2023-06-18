@@ -1,88 +1,108 @@
 import Image from 'next/image';
 
 import { currentUser } from '@clerk/nextjs';
+import { requestParams } from '@/utils/requestParams';
+
+import dayjs from 'dayjs';
+import utcPlugin from 'dayjs/plugin/utc';
+import durationPlugin from 'dayjs/plugin/duration';
+import EventPredictionModule from '@/components/EventPredictionModule';
+import { db } from '@/db';
+import { prediction } from '@/db/schema';
+import { and, eq } from 'drizzle-orm';
+
+dayjs.extend(utcPlugin);
+dayjs.extend(durationPlugin);
 
 async function Predict(props: any) {
   const { searchParams } = props;
+
   const matchId = searchParams.matchId;
 
-  const user = await currentUser();
+  async function checkPredictionStatus() {
+    const loggedInUser = await currentUser();
 
-  if (user) {
-    const { id, username } = user;
-    console.log(id, username);
-  }
+    if (loggedInUser) {
+      const existingPrediction = await db
+        .select()
+        .from(prediction)
+        .where(
+          and(
+            eq(prediction.matchId, matchId),
+            eq(prediction.userId, loggedInUser.id)
+          )
+        );
 
-  const match = await fetch(
-    `https://esports-api.lolesports.com/persisted/gw/getEventDetails?hl=en-US&id=${matchId}`,
-    {
-      headers: {
-        'x-api-key': `${process.env.API_KEY}`,
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0',
-        Accept: '*/*',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'X-Requested-With',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-site',
-      },
-      referrer: 'https://lolesports.com/',
-      method: 'GET',
-      mode: 'cors',
-      next: { revalidate: 10 },
+      console.log(
+        matchId,
+        existingPrediction.map((prediction) => prediction.matchId)
+      );
+
+      if (existingPrediction.length > 0) {
+        return {
+          status: 'lockedIn',
+          prediction: existingPrediction,
+        };
+      }
+      if (existingPrediction.length === 0) {
+        return {
+          status: 'notLockedIn',
+          prediction: [
+            {
+              matchId: matchId,
+              userId: loggedInUser.id,
+              winningTeamId: '',
+            },
+          ],
+        };
+      }
+    } else {
+      return {
+        status: 'notLoggedIn',
+        prediction: [
+          {
+            matchId: matchId,
+            winningTeamId: '',
+          },
+        ],
+      };
     }
-  ).then((res) => res.json());
+  }
+  const predictionStatus = await checkPredictionStatus();
+
+  const eventData = await fetch(
+    `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
+    requestParams
+  )
+    .then((res) => res.json())
+
+    .then((data) => {
+      return {
+        event: data.data.schedule.events.filter(
+          (event: any) => event.match.id === matchId
+        )[0],
+      };
+    });
 
   return (
     <main className='relative flex min-h-screen flex-col items-center'>
-      <section className='w-full min-h-screen relative flex flex-col justify-start items-center'>
-        {/* {user ? (
-          <h1>
-            {user.username}
-
-            {user.id}
-          </h1>
-        ) : (
-          <h1>Not logged in</h1>
-        )} */}
-        <div className='flex w-full justify-between items-center px-[25%] bg-accent-blue mt-24 h-96'>
-          <div
-            className='flex flex-col items-center justify-center'
-            key={match.data.event.match.id}
-          >
-            <Image
-              src={match.data.event.match.teams[0].image}
-              alt={match.data.event.match.teams[0].name}
-              width={140}
-              height={140}
-              draggable={false}
-            />
-            <h1 className='text-2xl mt-4 text-accent-gold'>
-              {match.data.event.match.teams[0].name}
-            </h1>
-          </div>
-          <div className='text-2xl text-primary flex flex-col'>
-            {match.data.event.match.teams[0].result.gameWins} -{' '}
-            {match.data.event.match.teams[1].result.gameWins}
-          </div>
-          <div
-            className='flex flex-col items-center justify-center'
-            key={match.data.event.match.id}
-          >
-            <Image
-              src={match.data.event.match.teams[1].image}
-              alt={match.data.event.match.teams[1].name}
-              width={140}
-              height={140}
-              draggable={false}
-            />
-            <h1 className='text-2xl mt-4 text-accent-gold'>
-              {match.data.event.match.teams[1].name}
-            </h1>
+      <section className='w-full h-[calc(100vh-5.625rem)] mt-[calc(5.625rem)] border-t-[6px] z-[120] relative flex justify-center items-center flex-col lg:flex-row'>
+        <div className='w-full relative lg:w-1/2 h-full bg-transparent duration-500 group cursor-pointer flex flex-col items-center p-16 lg:p-32 text-accent-gold'>
+          <div className='absolute w-full h-full bg-accent-blue opacity-90 group-hover:bg-accent-blue group-hover:opacity-90 duration-500 z-[-5] top-0'></div>
+          <div className='absolute w-full h-full z-[-10] top-0'>
+            <Image src='/rivenbg.jpg' alt='' fill={true} draggable={false} />
           </div>
         </div>
+        <div className='w-full relative lg:w-1/2 h-full bg-transparent duration-500 group cursor-pointer flex flex-col items-center p-16 lg:p-32 text-accent-blue'>
+          <div className='absolute w-full h-full bg-accent-gold opacity-90 group-hover:bg-accent-gold group-hover:opacity-90 duration-500 z-[-5] top-0'></div>
+          <div className='absolute w-full h-full z-[-10] top-0'>
+            <Image src='/yasuobg.jpg' alt='' fill={true} draggable={false} />
+          </div>
+        </div>
+        <EventPredictionModule
+          eventData={eventData}
+          predictionStatus={predictionStatus}
+        />
       </section>
     </main>
   );

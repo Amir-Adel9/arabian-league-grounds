@@ -1,6 +1,11 @@
 'use client';
 
-import { SignInButton, UserButton, useUser } from '@clerk/nextjs';
+import {
+  SignInButton,
+  SignOutButton,
+  UserButton,
+  useUser,
+} from '@clerk/nextjs';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -9,8 +14,6 @@ const NavMenu = () => {
   const { user } = useUser();
 
   const [menuOpen, setMenuOpen] = useState(false);
-
-  console.log(user);
 
   return (
     <nav className='flex lg:hidden '>
@@ -22,12 +25,14 @@ const NavMenu = () => {
         } duration-500 `}
       ></div>
       <div
-        className={` bg-secondary top-0 z-[80] fixed h-screen w-full md:w-1/2 right-0 duration-500 ${
+        className={` bg-secondary top-0 z-[200] fixed h-screen w-full md:w-1/2 right-0 duration-500 ${
           !menuOpen ? 'translate-x-[96rem]' : 'translate-x-0'
         } flex flex-col justify-start items-start gap-6 text-primary font-bold text-2xl px-6 py-10 overflow-hidden`}
       >
-        <div className='absolute w-12 h-12 z-[150] top-6 left-5'>
-          <Image src='/al_logo.png' alt='' fill={true} draggable={false} />
+        <div className='absolute w-12 h-12 z-[200] top-6 left-5'>
+          <Link href='/'>
+            <Image src='/al_logo.png' alt='' fill={true} draggable={false} />
+          </Link>
         </div>
         <ul className='flex flex-col items-start justify-around h-1/2 w-full mt-[25%]'>
           <li
@@ -54,23 +59,33 @@ const NavMenu = () => {
           >
             About
           </li>
-          <li className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'>
-            {!user ? (
-              <SignInButton />
-            ) : (
-              <div className='flex gap-1'>
-                <UserButton
-                  appearance={{
-                    elements: {
-                      userPreviewTextContainer__userButton: 'capitalize',
-                    },
-                  }}
-                />
-                <span className='capitalize'>{user.username}</span>
-              </div>
-            )}
+          <li
+            onClick={() => setMenuOpen(false)}
+            className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
+          >
+            <SignOutButton />
           </li>
         </ul>
+        <div className='absolute bottom-10 mr-5 duration-300 cursor-pointer bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1  after:left-0 after:absolute after:-bottom-4 after:w-full'>
+          {!user ? (
+            <SignInButton />
+          ) : (
+            <div className='flex gap-1'>
+              <UserButton
+                showName={true}
+                appearance={{
+                  elements: {
+                    userButtonBox: 'flex-row-reverse ',
+                    userButtonTrigger: 'bg-red-500 w-full',
+                    userButtonOuterIdentifier:
+                      'capitalize text-primary font-bold',
+                    userPreviewTextContainer__userButton: 'capitalize',
+                  },
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
 
       {!menuOpen ? (
@@ -78,7 +93,7 @@ const NavMenu = () => {
           width='42px'
           height='42px'
           viewBox='0 0 1024 1024'
-          className='fill-primary z-[90] cursor-pointer hover:bg-[#222] rounded p-2'
+          className='fill-primary z-[200] cursor-pointer hover:bg-[#222] rounded p-2'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => setMenuOpen(!menuOpen)}
         >
@@ -89,7 +104,7 @@ const NavMenu = () => {
           width='42px'
           height='42px'
           viewBox='0 0 24 24'
-          className='fill-primary z-[90] cursor-pointer hover:bg-[#222] rounded p-2'
+          className='fill-primary z-[200] cursor-pointer hover:bg-[#222] rounded p-2'
           xmlns='http://www.w3.org/2000/svg'
           onClick={() => setMenuOpen(!menuOpen)}
         >
@@ -101,7 +116,7 @@ const NavMenu = () => {
                   y1='4.8'
                   x2='19'
                   y2='19.2'
-                  className='stroke-primary z-[90]'
+                  className='stroke-primary z-[200]'
                   stroke-linecap='round'
                   stroke-linejoin='round'
                   stroke-width='2'
@@ -111,7 +126,7 @@ const NavMenu = () => {
                   y1='4.8'
                   x2='5'
                   y2='19.2'
-                  className='stroke-primary z-[90]'
+                  className='stroke-primary z-[200]'
                   stroke-linecap='round'
                   stroke-linejoin='round'
                   stroke-width='2'

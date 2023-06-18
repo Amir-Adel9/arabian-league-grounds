@@ -36,24 +36,25 @@ export default async function RootLayout({
       >
         <body className={kanit.variable}>
           <header
-            className='h-24 fixed w-full bg-secondary text-primary font-inter flex items-center justify-between px-2 xs:px-6 lg:px-10 z-[70] border-b-[6px] border-b-accent-gold'
+            className='h-24 fixed w-full bg-secondary text-primary font-inter flex items-center justify-between px-2 xs:px-6 lg:px-10 z-[500] border-b-[6px] border-b-accent-gold'
             id='header'
           >
-            <div className='flex justify-center items-center mr-2'>
-              <div className='relative w-8 h-8 sm:w-12 sm:h-12 mr-1'>
-                <Image
-                  src='/al_logo.png'
-                  alt=''
-                  fill={true}
-                  draggable={false}
-                />
-              </div>
-              <Link href='/'>
+            <Link href='/'>
+              <div className='flex justify-center items-center mr-2'>
+                <div className='relative w-8 h-8 sm:w-12 sm:h-12 mr-1'>
+                  <Image
+                    src='/al_logo.png'
+                    alt=''
+                    fill={true}
+                    draggable={false}
+                  />
+                </div>
+
                 <h1 className='font-bold duration-300 cursor-pointer hover:text-accent-gold text-xs xs:text-base md:text-base'>
                   Arabian League Grounds
                 </h1>
-              </Link>
-            </div>
+              </div>
+            </Link>
             <nav className='hidden lg:flex justify-center items-center pr-[5%]'>
               <ul className='flex items-center gap-6'>
                 <li className='relative mr-5 duration-300 cursor-pointer hover:text-accent-gold after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-1 after:md:-bottom-2 hover:after:w-full'>
