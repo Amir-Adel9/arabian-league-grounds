@@ -25,8 +25,8 @@ async function Schedule() {
   ).then((res) => res.json());
   return (
     <main className='relative flex min-h-screen flex-col items-center '>
-      <section className='w-[80%] min-h-screen relative flex flex-col justify-center items-center mt-28 '>
-        <div className='w-full '>
+      <section className='w-full min-h-screen relative flex flex-col justify-center items-center mt-28 '>
+        <div className=' w-[80%] '>
           <ScheduleTable schedule={schedule} />
         </div>
       </section>
