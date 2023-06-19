@@ -64,10 +64,10 @@ export default async function RootLayout({
                   <Link href='/standings'>Standings</Link>
                 </li>
                 <li className='relative mr-5 duration-300 cursor-pointer hover:text-accent-gold after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-1 after:md:-bottom-2 hover:after:w-full'>
-                  Rewards
+                  <Link href='/leaderboard'>Leaderboard</Link>
                 </li>
                 <li className='relative mr-5 duration-300 cursor-pointer hover:text-accent-gold after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-1 after:md:-bottom-2 hover:after:w-full'>
-                  About
+                  <Link href='/about'>About</Link>
                 </li>
                 <li>
                   {!user ? (
@@ -75,7 +75,15 @@ export default async function RootLayout({
                       <SignInButton />
                     </div>
                   ) : (
-                    <UserButton />
+                    <UserButton
+                      appearance={{
+                        elements: {
+                          userButtonOuterIdentifier:
+                            'capitalize text-primary font-bold',
+                          userPreviewTextContainer__userButton: 'capitalize',
+                        },
+                      }}
+                    />
                   )}
                 </li>
               </ul>
@@ -84,6 +92,11 @@ export default async function RootLayout({
           </header>
           {children}
           <Analytics />
+          <footer className='h-24 w-full bg-secondary text-primary font-inter flex items-center justify-center px-2 xs:px-6 lg:px-10 z-[500] border-t-[6px] border-t-accent-gold'>
+            <p className='text-xs xs:text-base md:text-base'>
+              &copy; 2023 Arabian League Grounds
+            </p>
+          </footer>
         </body>
       </html>
     </ClerkProvider>

@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
 import { handleLockIn } from '@/utils/actions/handleLockIn';
-import { useUser } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
 dayjs.extend(utcPlugin);
@@ -51,53 +51,109 @@ const EventPredictionModule = ({
 
   const LockInButton = () => {
     return (
-      <button
-        onClick={async () => {
-          if (!isSignedIn) {
-            router.push('/sign-in');
-            return;
-          }
+      <>
+        <SignedIn>
+          <button
+            onClick={async () => {
+              if (!isSignedIn) {
+                router.push('/sign-in');
+                return;
+              }
 
-          if (!selectedTeam || status === 'lockedIn') return;
-          handleLockIn({
-            matchId: eventData.event.match.id,
-            winningTeam: selectedTeam.code,
-            userId: user?.id,
-          });
-        }}
-        className={`absolute bottom-0 sm: h-full lg:h-auto text-base font-mono shadow-lg font-bold p-1 px-8 duration-500 rounded cursor-pointer ${
-          selectedTeam === eventData.event.match.teams[0] ||
-          prediction[0].winningTeamId === eventData.event.match.teams[0].code
-            ? 'bg-accent-blue text-accent-gold border border-accent-gold hover:bg-secondary hover:text-primary hover:opacity-90'
-            : selectedTeam === eventData.event.match.teams[1] ||
+              if (!selectedTeam || status === 'lockedIn') return;
+              handleLockIn({
+                matchId: eventData.event.match.id,
+                winningTeam: selectedTeam.code,
+                userId: user?.id,
+              });
+            }}
+            className={`absolute bottom-0 sm: h-full lg:h-auto text-base font-mono shadow-lg font-bold p-1 px-8 duration-500 rounded cursor-pointer ${
+              selectedTeam === eventData.event.match.teams[0] ||
               prediction[0].winningTeamId ===
-                eventData.event.match.teams[1].code
-            ? 'bg-accent-gold text-accent-blue border border-accent-blue hover:bg-secondary hover:text-primary hover:opacity-90'
-            : 'text-primary'
-        } `}
-        style={{
-          background: `${
-            !selectedTeam && status !== 'lockedIn'
-              ? 'linear-gradient(-45deg, #bea85d 50%, #19485a 50%)'
-              : ''
-          } `,
-          transition: 'background-color 0.5s ease-in-out',
-        }}
-      >
-        <h1>
-          {!selectedTeam && status !== 'lockedIn'
-            ? 'Select a Team'
-            : `#${
-                prediction[0].winningTeamId
-                  ? prediction[0].winningTeamId
-                  : selectedTeam?.code
-              }_WIN${status !== 'lockedIn' ? '?' : ''}`}
-        </h1>
+                eventData.event.match.teams[0].code
+                ? 'bg-accent-blue text-accent-gold border border-accent-gold hover:bg-secondary hover:text-primary hover:opacity-90'
+                : selectedTeam === eventData.event.match.teams[1] ||
+                  prediction[0].winningTeamId ===
+                    eventData.event.match.teams[1].code
+                ? 'bg-accent-gold text-accent-blue border border-accent-blue hover:bg-secondary hover:text-primary hover:opacity-90'
+                : 'text-primary'
+            } `}
+            style={{
+              background: `${
+                !selectedTeam && status !== 'lockedIn'
+                  ? 'linear-gradient(-45deg, #bea85d 50%, #19485a 50%)'
+                  : ''
+              } `,
+              transition: 'background-color 0.5s ease-in-out',
+            }}
+          >
+            <h1>
+              {!selectedTeam && status !== 'lockedIn'
+                ? '(Select a Team)'
+                : `#${
+                    prediction[0].winningTeamId
+                      ? prediction[0].winningTeamId
+                      : selectedTeam?.code
+                  }_WIN${status !== 'lockedIn' ? '?' : ''}`}
+            </h1>
 
-        <span className='hidden lg:inline'>
-          {status == 'lockedIn' ? '(Locked In)' : '(Click to Lock In)'}
-        </span>
-      </button>
+            <span className='hidden lg:inline'>
+              {status == 'lockedIn'
+                ? '(Locked In)'
+                : selectedTeam
+                ? '(Click to Lock In)'
+                : ''}
+            </span>
+          </button>
+        </SignedIn>
+        <SignedOut>
+          <button
+            className={`absolute bottom-0 sm: h-full lg:h-auto text-base font-mono shadow-lg font-bold p-1 px-8 duration-500 rounded cursor-pointer ${
+              selectedTeam === eventData.event.match.teams[0] ||
+              prediction[0].winningTeamId ===
+                eventData.event.match.teams[0].code
+                ? 'bg-accent-blue text-accent-gold border border-accent-gold hover:bg-secondary hover:text-primary hover:opacity-90'
+                : selectedTeam === eventData.event.match.teams[1] ||
+                  prediction[0].winningTeamId ===
+                    eventData.event.match.teams[1].code
+                ? 'bg-accent-gold text-accent-blue border border-accent-blue hover:bg-secondary hover:text-primary hover:opacity-90'
+                : 'text-primary'
+            } `}
+            style={{
+              background: `${
+                !selectedTeam && status !== 'lockedIn'
+                  ? 'linear-gradient(-45deg, #bea85d 50%, #19485a 50%)'
+                  : ''
+              } `,
+              transition: 'background-color 0.5s ease-in-out',
+            }}
+          >
+            <SignInButton
+              redirectUrl={`/predict?matchId=${eventData.event.match.id}`}
+            >
+              <div>
+                <h1>
+                  {!selectedTeam && status !== 'lockedIn'
+                    ? '(Select a Team)'
+                    : `#${
+                        prediction[0].winningTeamId
+                          ? prediction[0].winningTeamId
+                          : selectedTeam?.code
+                      }_WIN${status !== 'lockedIn' ? '?' : ''}`}
+                </h1>
+
+                <span className='hidden lg:inline'>
+                  {status == 'lockedIn'
+                    ? '(Locked In)'
+                    : selectedTeam
+                    ? '(Click to Lock In)'
+                    : ''}
+                </span>
+              </div>
+            </SignInButton>
+          </button>
+        </SignedOut>
+      </>
     );
   };
 
@@ -125,13 +181,14 @@ const EventPredictionModule = ({
               : ''
           } hover:bg-accent-blue hover:opacity-80 duration-500 cursor-pointer`}
         >
-          <Image
-            src={eventData.event.match.teams[0].image}
-            alt={eventData.event.match.teams[0].name}
-            width={140}
-            height={140}
-            draggable={false}
-          />
+          <div className='relative w-20 h-20 md:w-40 md:h-40 '>
+            <Image
+              src={eventData.event.match.teams[0].image}
+              alt={eventData.event.match.teams[0].name}
+              fill
+              draggable={false}
+            />
+          </div>
           <h1 className='text-2xl mt-4 text-center'>
             {eventData.event.match.teams[0].name}
           </h1>
@@ -148,13 +205,14 @@ const EventPredictionModule = ({
               : ''
           } hover:bg-accent-gold hover:opacity-80 duration-500 cursor-pointer`}
         >
-          <Image
-            src={eventData.event.match.teams[1].image}
-            alt={eventData.event.match.teams[1].name}
-            width={140}
-            height={140}
-            draggable={false}
-          />
+          <div className='relative w-20 h-20 md:w-40 md:h-40 '>
+            <Image
+              src={eventData.event.match.teams[1].image}
+              alt={eventData.event.match.teams[1].name}
+              fill
+              draggable={false}
+            />
+          </div>
           <h1 className='text-2xl mt-4 text-center'>
             {eventData.event.match.teams[1].name}
           </h1>

@@ -76,7 +76,6 @@ const NavMenu = () => {
                 appearance={{
                   elements: {
                     userButtonBox: 'flex-row-reverse ',
-                    userButtonTrigger: 'bg-red-500 w-full',
                     userButtonOuterIdentifier:
                       'capitalize text-primary font-bold',
                     userPreviewTextContainer__userButton: 'capitalize',
