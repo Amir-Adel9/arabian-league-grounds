@@ -75,9 +75,10 @@ export default async function Home() {
           alt='Arabian League Logo'
           width={160}
           height={160}
+          draggable={false}
           className='z-[10] duration-200 animate-bounce-y mt-24 sm:mt-20'
         />
-        <div className='flex flex-col gap-5 items-center justify-center bg-transparent rounded-[20px]  mt-20'>
+        <div className='flex flex-col gap-5 items-center justify-center bg-transparent rounded-[20px] mt-20 animate-opacity'>
           <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-center leading-tight'>
             Welcome to the
             <span className='text-accent-blue'> Arabian League</span> Grounds!

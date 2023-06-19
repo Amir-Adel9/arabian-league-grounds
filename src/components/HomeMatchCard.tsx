@@ -30,6 +30,7 @@ const HomeMatchCard = ({ event }: { event: any }) => {
           className='w-full h-full z-[5] rounded-lg'
           layout='fill'
           objectFit='cover'
+          draggable={false}
           objectPosition='center'
         />
         <div className='flex flex-row items-center justify-center mb-4 z-20'>

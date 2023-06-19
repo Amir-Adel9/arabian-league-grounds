@@ -164,6 +164,7 @@ const EventPredictionModule = ({
         alt='Background Image'
         className='w-full h-full z-[5] rounded-lg'
         layout='fill'
+        draggable={false}
         objectFit='cover'
         objectPosition='center'
       />

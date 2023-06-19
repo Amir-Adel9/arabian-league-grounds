@@ -17,6 +17,7 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
           src='/background.jpg'
           alt='Background Image'
           className='w-full h-full z-[5] rounded-lg'
+          draggable={false}
           layout='fill'
           objectFit='cover'
           objectPosition='center'

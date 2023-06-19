@@ -108,9 +108,9 @@ const CompletedMatch = React.forwardRef(
             </h3>
           </div>
         </div>
-        <div className='w-36 flex-col hidden xs:flex'>
+        <div className='font-bold placeholder:w-36 flex-col hidden xs:flex'>
           <span> {event.league.name} </span>
-          <span className='hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
+          <span className=' hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
         </div>
       </div>
     );
@@ -156,6 +156,7 @@ const UnstartedMatch = ({
               <Image
                 src={event.match.teams[0].image}
                 alt={event.match.teams[0].name}
+                draggable={false}
                 fill={true}
               />
             </div>
@@ -171,6 +172,7 @@ const UnstartedMatch = ({
               <Image
                 src={event.match.teams[1].image}
                 alt={event.match.teams[1].name}
+                draggable={false}
                 fill={true}
               />
             </div>
@@ -181,9 +183,9 @@ const UnstartedMatch = ({
             </h3>
           </div>
         </div>
-        <div className='w-36 flex-col hidden xs:flex'>
+        <div className='font-bold w-36 flex-col hidden xs:flex'>
           <span> {event.league.name} </span>
-          <span className='hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
+          <span className=' hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
         </div>
       </div>
     </Link>
@@ -233,7 +235,7 @@ const LiveMatch = ({
                 src={event.match.teams[0].image}
                 alt={event.match.teams[0].name}
                 fill={true}
-                draggable
+                draggable={false}
               />
             </div>
           </div>
@@ -246,7 +248,7 @@ const LiveMatch = ({
                 src={event.match.teams[1].image}
                 alt={event.match.teams[1].name}
                 fill={true}
-                draggable
+                draggable={false}
               />
             </div>
             <h3 className='text-xl font-bold'>
@@ -256,9 +258,9 @@ const LiveMatch = ({
             </h3>
           </div>
         </div>
-        <div className=' flex-col hidden xs:flex'>
+        <div className=' font-bold flex-col hidden xs:flex'>
           <span> {event.league.name} </span>
-          <span className='hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
+          <span className=' hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
         </div>
       </div>
     </Link>

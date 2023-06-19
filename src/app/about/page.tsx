@@ -21,6 +21,7 @@ function About() {
             alt='Arabian League Logo'
             width={160}
             height={160}
+            draggable={false}
             className='z-[10] duration-200 animate-bounce-y mt-24 sm:mt-20'
           />
           <div className='relative z-10 flex flex-col gap-2 items-center justify-center'>
