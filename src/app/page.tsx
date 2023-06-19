@@ -118,7 +118,7 @@ export default async function Home() {
         </div>
       </section>
       <section
-        className='w-full min-h-[70vh] relative flex flex-col justify-start items-center bg-gradient-to-b from-accent-gold to-primary'
+        className='w-full min-h-[70vh] relative flex flex-col justify-start items-center bg-gradient-to-b from-accent-gold to-primary mb-10 lg:mb-0'
         id='talents'
       >
         <h2 className='text-primary font-bold text-3xl mb-4 mt-20 lg:mt-0 '>

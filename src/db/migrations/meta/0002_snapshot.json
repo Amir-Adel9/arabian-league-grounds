@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "0e25bd30-2cf0-4b03-8c67-e7c3036f37c9",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "b87c1d22-99b3-4358-85ec-d4874d6a5d2a",
+  "prevId": "c20177b4-d0d5-4f92-817a-3ae8d4d35938",
   "tables": {
     "prediction": {
       "name": "prediction",
@@ -21,6 +21,13 @@
           "notNull": false,
           "autoincrement": false
         },
+        "username": {
+          "name": "username",
+          "type": "varchar(3)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "matchId": {
           "name": "matchId",
           "type": "text",
@@ -34,6 +41,14 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "fulfilled": {
+          "name": "fulfilled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
         }
       },
       "indexes": {},
@@ -69,7 +84,8 @@
           "type": "int",
           "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "autoincrement": false,
+          "default": 0
         }
       },
       "indexes": {},
