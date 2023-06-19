@@ -55,7 +55,15 @@ export default async function PredictLayout({
                   <SignInButton />
                 </div>
               ) : (
-                <UserButton />
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonOuterIdentifier:
+                        'capitalize text-primary font-bold',
+                      userPreviewTextContainer__userButton: 'capitalize',
+                    },
+                  }}
+                />
               )}
             </li>
           </ul>

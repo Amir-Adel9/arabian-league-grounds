@@ -14,6 +14,13 @@ export const talentsArray = [
     twitterUrl: 'https://twitter.com/EsportsAdham',
   },
   {
+    name: 'Dattura',
+    role: 'Analyst',
+    imageUrl:
+      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/334122223_714916666762469_1988393306685080214_n.jpg?stp=cp6_dst-jpg&_nc_cat=105&ccb=1-7&_nc_sid=174925&_nc_ohc=wuDsPNzwKbUAX9VQS-U&_nc_ht=scontent.fcai19-8.fna&oh=00_AfCpTQjikGBpKppwUpaU1UHCRzQ7s62LG-Npcnx0RZZ3vw&oe=6493E55B',
+    twitterUrl: 'https://twitter.com/Dattura6',
+  },
+  {
     name: 'Raiizow',
     role: 'Caster',
     imageUrl:
@@ -30,8 +37,7 @@ export const talentsArray = [
   {
     name: 'Paralyze',
     role: 'Caster',
-    // imageUrl:
-    //   'https://i.imgur.com/3https://pbs.twimg.com/media/FXepDsmXgAAHpGL?format=jpg&name=largeQbqZ9I.jpg',
+    imageUrl: '/paralyze.jpg',
     twitterUrl: 'https://twitter.com/Paralyzelol',
   },
 ];

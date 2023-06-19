@@ -1,53 +1,32 @@
-'use client';
-import { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 
 const Slider = ({ talentsArray }: { talentsArray: any }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? talentsArray.length - 1 : prevIndex - 1
-    );
-  };
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === talentsArray.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
   return (
-    <div className='flex items-center justify-center'>
-      <div className='flex overflow-x-auto space-x-4'>
-        {talentsArray.map((talent: any, index: any) => (
-          <div key={index} className='bg-white rounded-lg shadow p-4'>
-            <Image
-              src={talent.imageUrl}
-              alt={talent.name}
-              width={160}
-              height={160}
-              className='w-40 h-40 mx-auto rounded-full object-cover mb-4'
-            />
-            <h2 className='text-secondary text-lg font-medium text-center'>
-              {talent.name}
-            </h2>
-            <p className='text-sm text-accent-gold text-center'>
-              {talent.role}
-            </p>
-            <div className='flex justify-center mt-4'>
-              <a
-                href={talent.twitterUrl}
-                target='_blank'
-                rel='noopener noreferrer'
-                className=' text-accent-blue px-4 py-2 rounded-md text-sm hover:underline transition-colors duration-200'
-              >
-                Twitter
-              </a>
-            </div>
+    <div className='flex flex-col lg:flex-row items-center justify-center gap-5'>
+      {talentsArray.map((talent: any, index: any) => (
+        <Link
+          key={index}
+          href={talent.twitterUrl}
+          target='_blank'
+          className=' relative border-2 w-[90%] bg-primary border-accent-gold flex  flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
+        >
+          <Image
+            src={talent.imageUrl}
+            alt={talent.name}
+            width={160}
+            height={160}
+            className='w-40 h-40 mx-auto rounded-full object-cover mb-4 border-2 border-accent-gold'
+          />
+          <h2 className='text-secondary text-lg font-medium text-center'>
+            {talent.name}
+          </h2>
+          <p className='text-sm text-accent-gold text-center'>{talent.role}</p>
+          <div className='text-accent-blue p-4 rounded-md text-sm hover:underline transition-colors duration-200 text-center'>
+            Twitter
           </div>
-        ))}
-      </div>
+        </Link>
+      ))}
     </div>
   );
 };

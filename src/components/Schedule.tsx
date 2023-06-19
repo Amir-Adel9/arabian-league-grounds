@@ -5,14 +5,16 @@ import Link from 'next/link';
 
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
+    console.log('event', event);
+
     return (
       <div
-        className='flex items-center font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'
+        className='flex items-center  font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
         key={event.match.id}
         ref={ref}
       >
-        <div className='flex w-full justify-center'>
-          <div className='flex w-1/3 items-center justify-end space-x-4'>
+        <div className='flex w-full justify-center items-center flex-col md:flex-row'>
+          <div className='flex flex-row-reverse md:flex-row w-24 md:w-1/3 items-center justify-end md:justify-end space-x-0 md:space-x-4'>
             <h3
               className={`text-lg font-bold ${
                 event.match.teams[0].result.outcome === 'win'
@@ -20,25 +22,26 @@ const CompletedMatch = React.forwardRef(
                   : ''
               } `}
             >
-              {windowWidth < 768
+              {windowWidth < 1024
                 ? event.match.teams[0].code
                 : event.match.teams[0].name}
             </h3>
-            <Image
-              src={event.match.teams[0].image}
-              alt={event.match.teams[0].name}
-              className={`${
-                event.match.teams[0].result.outcome === 'loss'
-                  ? 'opacity-30 '
-                  : ''
-              }`}
-              draggable={false}
-              width={80}
-              height={80}
-            />
+            <div className='relative w-10 h-10 md:w-20 md:h-20'>
+              <Image
+                src={event.match.teams[0].image}
+                alt={event.match.teams[0].name}
+                className={`${
+                  event.match.teams[0].result.outcome === 'loss'
+                    ? 'opacity-30 '
+                    : ''
+                }`}
+                draggable={false}
+                fill={true}
+              />
+            </div>
           </div>
           <div className='flex flex-col w-1/8 items-center justify-center'>
-            <span className='text-xl font-bold px-10'>
+            <span className='text-xl font-bold px-14'>
               <span
                 className={`relative ${
                   event.match.teams[0].result.outcome === 'win'
@@ -60,19 +63,20 @@ const CompletedMatch = React.forwardRef(
               </span>
             </span>
           </div>
-          <div className='flex items-center w-1/3 justify-start space-x-4'>
-            <Image
-              src={event.match.teams[1].image}
-              alt={event.match.teams[1].name}
-              className={`${
-                event.match.teams[1].result.outcome === 'loss'
-                  ? 'opacity-30 '
-                  : ''
-              }`}
-              draggable={false}
-              width={80}
-              height={80}
-            />
+          <div className='flex items-center w-24 md:w-1/3 justify-start  space-x-0'>
+            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+              <Image
+                src={event.match.teams[1].image}
+                alt={event.match.teams[1].name}
+                className={`${
+                  event.match.teams[1].result.outcome === 'loss'
+                    ? 'opacity-30 '
+                    : ''
+                }`}
+                draggable={false}
+                fill={true}
+              />
+            </div>
             <h3
               className={`text-lg font-bold ${
                 event.match.teams[1].result.outcome === 'win'
@@ -80,7 +84,7 @@ const CompletedMatch = React.forwardRef(
                   : ''
               } `}
             >
-              {windowWidth < 768
+              {windowWidth < 1024
                 ? event.match.teams[1].code
                 : event.match.teams[1].name}
             </h3>
@@ -101,42 +105,49 @@ const UnstartedMatch = ({
   windowWidth: any;
 }) => {
   return (
-    <div
-      className='flex items-center justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'
-      key={event.match.id}
-    >
-      <div className='flex w-full justify-center'>
-        <div className='flex w-1/3 items-center justify-end space-x-4'>
-          <h3 className='text-xl font-bold'>
-            {windowWidth < 768
-              ? event.match.teams[0].code
-              : event.match.teams[0].name}
-          </h3>
-          <Image
-            src={event.match.teams[0].image}
-            alt={event.match.teams[0].name}
-            width={80}
-            height={80}
-          />
-        </div>
-        <div className='flex flex-col w-1/8 items-center justify-center'>
-          <h3 className='text-xl font-bold px-10'>VS</h3>
-        </div>
-        <div className='flex items-center w-1/3 justify-start space-x-4'>
-          <Image
-            src={event.match.teams[1].image}
-            alt={event.match.teams[1].name}
-            width={80}
-            height={80}
-          />
-          <h3 className='text-xl font-bold'>
-            {windowWidth < 768
-              ? event.match.teams[1].code
-              : event.match.teams[1].name}
-          </h3>
+    <Link href={`/predict?matchId=${event.match.id}`} className='w-full'>
+      <div
+        className='flex items-center  font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
+        key={event.match.id}
+      >
+        <div className='flex w-full justify-center items-center flex-col md:flex-row'>
+          <div className='flex flex-row-reverse md:flex-row w-24 md:w-1/3 items-center justify-end md:justify-end space-x-0 md:space-x-4'>
+            <h3 className='text-xl font-bold'>
+              {windowWidth < 1024
+                ? event.match.teams[0].code
+                : event.match.teams[0].name}
+            </h3>
+            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+              <Image
+                src={event.match.teams[0].image}
+                alt={event.match.teams[0].name}
+                fill={true}
+              />
+            </div>
+          </div>
+          <div className='flex flex-col w-1/8 items-center justify-center px-10'>
+            <h3 className='text-xl font-bold px-10'>VS</h3>
+            <button className='bg-accent-gold text-white py-1 px-2 rounded duration-200 hover:bg-[#a08b47]'>
+              Predict Now
+            </button>
+          </div>
+          <div className='flex items-center w-24 md:w-1/3 justify-start  space-x-0'>
+            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+              <Image
+                src={event.match.teams[1].image}
+                alt={event.match.teams[1].name}
+                fill={true}
+              />
+            </div>
+            <h3 className='text-xl font-bold'>
+              {windowWidth < 1024
+                ? event.match.teams[1].code
+                : event.match.teams[1].name}
+            </h3>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -174,7 +185,7 @@ const LiveMatch = ({
         <div className='flex w-full justify-center'>
           <div className='flex w-1/3 items-center justify-end space-x-4'>
             <h3 className='text-xl font-bold'>
-              {windowWidth < 768
+              {windowWidth < 1024
                 ? event.match.teams[0].code
                 : event.match.teams[0].name}
             </h3>
@@ -196,7 +207,7 @@ const LiveMatch = ({
               height={80}
             />
             <h3 className='text-xl font-bold'>
-              {windowWidth < 768
+              {windowWidth < 1024
                 ? event.match.teams[1].code
                 : event.match.teams[1].name}
             </h3>
