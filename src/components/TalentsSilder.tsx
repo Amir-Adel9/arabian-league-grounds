@@ -16,6 +16,7 @@ const Slider = ({ talentsArray }: { talentsArray: any }) => {
             alt={talent.name}
             width={160}
             height={160}
+            draggable={false}
             className='w-40 h-40 mx-auto rounded-full object-cover mb-4 border-2 border-accent-gold'
           />
           <h2 className='text-secondary text-lg font-medium text-center'>

@@ -38,10 +38,19 @@ module.exports = {
             transform: 'scale(1.01)',
           },
         },
+        opacity: {
+          '0%': {
+            opacity: '0',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
       },
       animation: {
         'bounce-y': 'bounce-y 2s infinite ease-in-out',
         scale: 'scale 2s infinite ease-in-out',
+        opacity: 'opacity 1.5s ease-in-out',
       },
 
       backgroundImage: {
