@@ -9,10 +9,12 @@ export async function handleLockIn({
   matchId,
   winningTeam,
   userId,
+  username,
 }: {
   matchId: string;
   winningTeam: string;
   userId: string | undefined;
+  username: string | undefined;
 }) {
   if (!matchId || !winningTeam || !userId) {
     throw new Error('Missing parameters');
@@ -29,7 +31,12 @@ export async function handleLockIn({
 
   const newPrediction = await db
     .insert(prediction)
-    .values({ matchId: matchId, winningTeamId: winningTeam, userId: userId });
+    .values({
+      matchId: matchId,
+      winningTeamId: winningTeam,
+      userId: userId,
+      username: username,
+    });
   console.log(newPrediction);
   revalidatePath(`/predict?matchId=${matchId}`);
 }

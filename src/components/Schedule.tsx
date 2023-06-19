@@ -3,16 +3,34 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import dayjs from 'dayjs';
+import utcPlugin from 'dayjs/plugin/utc';
+import durationPlugin from 'dayjs/plugin/duration';
+
+dayjs.extend(utcPlugin);
+dayjs.extend(durationPlugin);
+
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
     console.log('event', event);
 
+    const targetDate = dayjs.utc(event.startTime);
+    const startingHour = dayjs(targetDate).format('HH');
+    const startingMinute = dayjs(targetDate).format('mm');
     return (
       <div
         className='flex items-center  font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
         key={event.match.id}
         ref={ref}
       >
+        <div className=' relative w-36 flex-col hidden xs:flex font-kanit'>
+          <span>
+            <span className='text-xl sm:text-3xl'>{startingHour}</span>
+            <span className='absolute text-xs sm:text-sm top-1 ml-1'>
+              {startingMinute}
+            </span>
+          </span>
+        </div>
         <div className='flex w-full justify-center items-center flex-col md:flex-row'>
           <div className='flex flex-row-reverse md:flex-row w-24 md:w-1/3 items-center justify-end md:justify-end space-x-0 md:space-x-4'>
             <h3
@@ -26,7 +44,7 @@ const CompletedMatch = React.forwardRef(
                 ? event.match.teams[0].code
                 : event.match.teams[0].name}
             </h3>
-            <div className='relative w-10 h-10 md:w-20 md:h-20'>
+            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 '>
               <Image
                 src={event.match.teams[0].image}
                 alt={event.match.teams[0].name}
@@ -41,7 +59,7 @@ const CompletedMatch = React.forwardRef(
             </div>
           </div>
           <div className='flex flex-col w-1/8 items-center justify-center'>
-            <span className='text-xl font-bold px-14'>
+            <span className='text-xl font-bold px-2 lg:px-14 hidden md:inline'>
               <span
                 className={`relative ${
                   event.match.teams[0].result.outcome === 'win'
@@ -63,8 +81,8 @@ const CompletedMatch = React.forwardRef(
               </span>
             </span>
           </div>
-          <div className='flex items-center w-24 md:w-1/3 justify-start  space-x-0'>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+          <div className='flex items-center w-24 md:w-1/3 justify-start space-x-0 md:space-x-4'>
+            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20  '>
               <Image
                 src={event.match.teams[1].image}
                 alt={event.match.teams[1].name}
@@ -90,6 +108,10 @@ const CompletedMatch = React.forwardRef(
             </h3>
           </div>
         </div>
+        <div className='w-36 flex-col hidden xs:flex'>
+          <span> {event.league.name} </span>
+          <span className='hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
+        </div>
       </div>
     );
   }
@@ -104,12 +126,25 @@ const UnstartedMatch = ({
   event: any;
   windowWidth: any;
 }) => {
+  const targetDate = dayjs.utc(event.startTime);
+  const startingHour = dayjs(targetDate).format('HH');
+  const startingMinute = dayjs(targetDate).format('mm');
+
   return (
     <Link href={`/predict?matchId=${event.match.id}`} className='w-full'>
       <div
-        className='flex items-center  font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
+        className='flex items-center font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
         key={event.match.id}
       >
+        <div className=' relative w-36 flex-col hidden xs:flex font-kanit'>
+          <span>
+            <span className='text-xl sm:text-3xl'>{startingHour}</span>
+            <span className='absolute text-xs sm:text-sm top-1 ml-1'>
+              {startingMinute}
+            </span>
+          </span>
+          <span className='font-mono text-accent-gold font-bold'>APPROX</span>
+        </div>
         <div className='flex w-full justify-center items-center flex-col md:flex-row'>
           <div className='flex flex-row-reverse md:flex-row w-24 md:w-1/3 items-center justify-end md:justify-end space-x-0 md:space-x-4'>
             <h3 className='text-xl font-bold'>
@@ -117,7 +152,7 @@ const UnstartedMatch = ({
                 ? event.match.teams[0].code
                 : event.match.teams[0].name}
             </h3>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 '>
               <Image
                 src={event.match.teams[0].image}
                 alt={event.match.teams[0].name}
@@ -125,14 +160,14 @@ const UnstartedMatch = ({
               />
             </div>
           </div>
-          <div className='flex flex-col w-1/8 items-center justify-center px-10'>
+          <div className=' flex-col w-1/8 items-center justify-center px-10 hidden md:flex'>
             <h3 className='text-xl font-bold px-10'>VS</h3>
             <button className='bg-accent-gold text-white py-1 px-2 rounded duration-200 hover:bg-[#a08b47]'>
               Predict Now
             </button>
           </div>
           <div className='flex items-center w-24 md:w-1/3 justify-start  space-x-0'>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20  '>
               <Image
                 src={event.match.teams[1].image}
                 alt={event.match.teams[1].name}
@@ -145,6 +180,10 @@ const UnstartedMatch = ({
                 : event.match.teams[1].name}
             </h3>
           </div>
+        </div>
+        <div className='w-36 flex-col hidden xs:flex'>
+          <span> {event.league.name} </span>
+          <span className='hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
         </div>
       </div>
     </Link>
@@ -165,7 +204,7 @@ const LiveMatch = ({
       target={'_blank'}
     >
       <div
-        className='flex relative items-center justify-center space-x-4 w-full border-y-4 border-red-700 animate-scale bg-secondary text-primary p-4'
+        className='flex relative items-center justify-center space-x-4 w-full border-y-4 border-red-700 duration-200 hover:bg-[#0b2c38] animate-scale bg-secondary text-primary p-4'
         key={event.match.id}
       >
         <div className='absolute top-1 left-0 ml-2 flex items-center justify-center gap-x-1'>
@@ -182,36 +221,44 @@ const LiveMatch = ({
           </svg>
           <span className='font-bold text-xl'>Live</span>
         </div>
-        <div className='flex w-full justify-center'>
-          <div className='flex w-1/3 items-center justify-end space-x-4'>
+        <div className='flex w-full justify-center items-center flex-col md:flex-row'>
+          <div className='flex w-24 md:w-1/3 items-center justify-end space-x-0 md:space-x-4 flex-row-reverse md:flex-row'>
             <h3 className='text-xl font-bold'>
               {windowWidth < 1024
                 ? event.match.teams[0].code
                 : event.match.teams[0].name}
             </h3>
-            <Image
-              src={event.match.teams[0].image}
-              alt={event.match.teams[0].name}
-              width={80}
-              height={80}
-            />
+            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 '>
+              <Image
+                src={event.match.teams[0].image}
+                alt={event.match.teams[0].name}
+                fill={true}
+                draggable
+              />
+            </div>
           </div>
           <div className='flex flex-col w-1/8 items-center justify-center'>
-            <h3 className='text-xl font-bold px-10'>VS</h3>
+            <h3 className='text-xl font-bold px-10 hidden md:inline'>VS</h3>
           </div>
-          <div className='flex items-center w-1/3 justify-start space-x-4'>
-            <Image
-              src={event.match.teams[1].image}
-              alt={event.match.teams[1].name}
-              width={80}
-              height={80}
-            />
+          <div className='flex items-center w-24 md:w-1/3 justify-start space-x-0 md:space-x-4'>
+            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20 '>
+              <Image
+                src={event.match.teams[1].image}
+                alt={event.match.teams[1].name}
+                fill={true}
+                draggable
+              />
+            </div>
             <h3 className='text-xl font-bold'>
               {windowWidth < 1024
                 ? event.match.teams[1].code
                 : event.match.teams[1].name}
             </h3>
           </div>
+        </div>
+        <div className=' flex-col hidden xs:flex'>
+          <span> {event.league.name} </span>
+          <span className='hidden md:inline'>{`Best of ${event.match.strategy.count}`}</span>
         </div>
       </div>
     </Link>
@@ -251,7 +298,6 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
         'en-US',
         {
           weekday: 'long',
-
           month: 'long',
           day: 'numeric',
         }
@@ -286,7 +332,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                 : null
             }
           >
-            <h1 className='absolute -top-2 left-5 text-2xl font-bold text-center  '>
+            <h1 className='absolute -top-2 left-5 text-xl sm:text-2xl font-bold text-center  '>
               {startingDay}
             </h1>
             {matches.map((match: any) => {

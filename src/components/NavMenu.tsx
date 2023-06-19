@@ -51,13 +51,13 @@ const NavMenu = () => {
             onClick={() => setMenuOpen(false)}
             className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
           >
-            Rewards
+            <Link href='/leaderboard'>Leaderboard</Link>
           </li>
           <li
             onClick={() => setMenuOpen(false)}
             className='relative mr-5 duration-300 cursor-pointer hover:bg-[#222] w-full rounded p-5 after:content-[""] after:bg-accent-gold after:rounded-sm after:duration-300 after:md:h-1 after:h-1 after:w-[0%] after:left-0 after:absolute after:-bottom-4 hover:after:w-full'
           >
-            About
+            <Link href='/about'>About</Link>
           </li>
           <li
             onClick={() => setMenuOpen(false)}

@@ -18,6 +18,10 @@ async function LeaderBoard() {
           <p className='text-2xl text-accent-gold text-center'>
             Please check back after week 2 of the Arabian League
           </p>
+          <p className='text-accent-gold text-center'>
+            (Here your predictions will be displayed along side a leaderboard
+            for whom those have the most points)
+          </p>
         </div>
       </section>
     </main>

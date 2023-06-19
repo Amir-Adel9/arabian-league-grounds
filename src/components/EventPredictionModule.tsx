@@ -10,6 +10,7 @@ import durationPlugin from 'dayjs/plugin/duration';
 import { handleLockIn } from '@/utils/actions/handleLockIn';
 import { SignedIn, SignedOut, SignInButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
@@ -55,16 +56,14 @@ const EventPredictionModule = ({
         <SignedIn>
           <button
             onClick={async () => {
-              if (!isSignedIn) {
-                router.push('/sign-in');
-                return;
-              }
+              toast.success('Prediction Locked In!');
 
               if (!selectedTeam || status === 'lockedIn') return;
               handleLockIn({
                 matchId: eventData.event.match.id,
                 winningTeam: selectedTeam.code,
                 userId: user?.id,
+                username: user?.username as string,
               });
             }}
             className={`absolute bottom-0 sm: h-full lg:h-auto text-base font-mono shadow-lg font-bold p-1 px-8 duration-500 rounded cursor-pointer ${
