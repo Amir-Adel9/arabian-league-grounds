@@ -128,6 +128,7 @@ export default async function Home() {
           <TalentsSlider talentsArray={talentsArray} />
         </div>
       </section>
+      hi
     </main>
   );
 }
