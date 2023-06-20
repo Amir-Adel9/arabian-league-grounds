@@ -40,4 +40,5 @@ export async function handleLockIn({
   });
   console.log(newPrediction);
   revalidatePath(`/match?Id=${matchId}`);
+  revalidatePath(`/leaderboard`);
 }
