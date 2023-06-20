@@ -10,6 +10,7 @@ import EventPredictionModule from '@/components/EventPredictionModule';
 import { db } from '@/db';
 import { prediction } from '@/db/schema';
 import { and, eq } from 'drizzle-orm';
+import { redirect } from 'next/navigation';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
@@ -17,6 +18,7 @@ dayjs.extend(durationPlugin);
 async function Predict(props: any) {
   const { searchParams } = props;
 
+  if (!searchParams.Id || searchParams.Id.length !== 18) redirect('/');
   const matchId = searchParams.Id;
 
   async function checkPredictionStatus() {
