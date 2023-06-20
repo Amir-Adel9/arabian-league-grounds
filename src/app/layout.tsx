@@ -12,7 +12,6 @@ import { db } from '@/db';
 import { prediction, user } from '@/db/schema';
 import { eq, sql } from 'drizzle-orm';
 import { requestParams } from '@/utils/requestParams';
-import { revalidatePath } from 'next/cache';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -29,7 +28,6 @@ export const metadata = {
 };
 
 async function fulfillPredictions() {
-  'use server';
   const pendingPredictions = await db
     .select()
     .from(prediction)
@@ -92,7 +90,6 @@ async function fulfillPredictions() {
         }
       });
   });
-  revalidatePath(`/leaderboard`);
 }
 
 fulfillPredictions();
@@ -125,7 +122,6 @@ export default async function RootLayout({
                     draggable={false}
                   />
                 </div>
-
                 <h1 className='font-bold duration-300 cursor-pointer hover:text-accent-gold text-xs xs:text-base md:text-base'>
                   Arabian League Grounds
                 </h1>
