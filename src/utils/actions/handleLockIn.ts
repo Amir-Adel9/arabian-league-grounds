@@ -38,7 +38,6 @@ export async function handleLockIn({
     userId: userId,
     username: username,
   });
-  console.log(newPrediction);
   revalidatePath(`/match?Id=${matchId}`);
   revalidatePath(`/leaderboard`);
 }
