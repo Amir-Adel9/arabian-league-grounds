@@ -7,7 +7,6 @@ import { isNotNull } from 'drizzle-orm';
 import Link from 'next/link';
 
 import Image from 'next/image';
-import { revalidatePath } from 'next/cache';
 
 const PredictionCard = ({
   prediction,
