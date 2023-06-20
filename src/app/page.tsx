@@ -112,7 +112,9 @@ export default async function Home() {
                   matchState === 'inProgress' &&
                   event.type !== 'show'
                 ) {
-                  return <></>;
+                  return (
+                    <HomeLiveMatchCard event={event} key={event.match.id} />
+                  );
                 }
               })}
             </div>
