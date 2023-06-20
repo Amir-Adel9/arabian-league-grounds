@@ -18,7 +18,7 @@ const HomeMatchCard = ({ event }: { event: any }) => {
   const formattedDate = dayjs(targetDate).format('DD/MM/YYYY HH:mm');
 
   return (
-    <Link href={`/predict?matchId=${event.match.id}`} className='w-full'>
+    <Link href={`/match?Id=${event.match.id}`} className='w-full'>
       <div
         className='relative border border-accent-gold flex h-full flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
         key={event.id}

@@ -131,7 +131,7 @@ const UnstartedMatch = ({
   const startingMinute = dayjs(targetDate).format('mm');
 
   return (
-    <Link href={`/predict?matchId=${event.match.id}`} className='w-full'>
+    <Link href={`/match?Id=${event.match.id}`} className='w-full'>
       <div
         className='flex items-center font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
         key={event.match.id}

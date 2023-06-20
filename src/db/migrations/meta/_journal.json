@@ -15,6 +15,20 @@
       "when": 1687182297757,
       "tag": "0002_curved_lady_mastermind",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1687196168281,
+      "tag": "0003_curious_alex_power",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1687199150985,
+      "tag": "0004_parched_marvel_boy",
+      "breakpoints": true
     }
   ]
 }
