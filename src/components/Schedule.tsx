@@ -357,12 +357,11 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                 );
               } else if (match.state === 'inProgress') {
                 return (
-                  // <LiveMatch
-                  //   event={match}
-                  //   key={match.id}
-                  //   windowWidth={windowWidth}
-                  // />
-                  <></>
+                  <LiveMatch
+                    event={match}
+                    key={match.id}
+                    windowWidth={windowWidth}
+                  />
                 );
               }
               return null;
