@@ -39,5 +39,4 @@ export async function handleLockIn({
     username: username,
   });
   revalidatePath(`/match?Id=${matchId}`);
-  revalidatePath(`/leaderboard`);
 }

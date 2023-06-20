@@ -149,7 +149,6 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
           <div className='flex justify-center mt-4 z-20'>
             <button className='bg-accent-gold text-white py-2 px-4 rounded flex items-center justify-center gap-x-2'>
               <span> Watch Now</span>
-
               <svg
                 width=''
                 height=''
