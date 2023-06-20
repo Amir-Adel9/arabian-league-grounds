@@ -59,7 +59,7 @@ export default async function Home() {
 
   return (
     <main className='relative flex min-h-screen flex-col items-center'>
-      {/* <section className='w-full min-h-screen relative flex flex-col justify-center items-center'>
+      <section className='w-full min-h-screen relative flex flex-col justify-center items-center'>
         <div className='absolute w-full h-full bg-primary opacity-80 z-[-10]'></div>
         <Image
           src='/background.jpg'
@@ -126,7 +126,7 @@ export default async function Home() {
         <div className='relative w-[85%] bg-secondary text-primary p-8 rounded-lg shadow-lg '>
           <TalentsSlider talentsArray={talentsArray} />
         </div>
-      </section> */}
+      </section>
       hi
     </main>
   );
