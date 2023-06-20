@@ -8,11 +8,13 @@ import { revalidatePath } from 'next/cache';
 export async function handleLockIn({
   matchId,
   winningTeam,
+  losingTeam,
   userId,
   username,
 }: {
   matchId: string;
   winningTeam: string;
+  losingTeam: string;
   userId: string | undefined;
   username: string | undefined;
 }) {
@@ -29,14 +31,13 @@ export async function handleLockIn({
     throw new Error('Prediction already exists');
   }
 
-  const newPrediction = await db
-    .insert(prediction)
-    .values({
-      matchId: matchId,
-      winningTeamId: winningTeam,
-      userId: userId,
-      username: username,
-    });
+  const newPrediction = await db.insert(prediction).values({
+    matchId: matchId,
+    winningTeamId: winningTeam,
+    losingTeamId: losingTeam,
+    userId: userId,
+    username: username,
+  });
   console.log(newPrediction);
-  revalidatePath(`/predict?matchId=${matchId}`);
+  revalidatePath(`/match?Id=${matchId}`);
 }

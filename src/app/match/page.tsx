@@ -17,7 +17,7 @@ dayjs.extend(durationPlugin);
 async function Predict(props: any) {
   const { searchParams } = props;
 
-  const matchId = searchParams.matchId;
+  const matchId = searchParams.Id;
 
   async function checkPredictionStatus() {
     const loggedInUser = await currentUser();

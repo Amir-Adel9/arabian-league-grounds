@@ -5,10 +5,9 @@ export default authMiddleware({
     '/',
     '/schedule',
     '/standings',
-    '/predict',
+    '/match',
     '/about',
-    '/sign-up',
-    '/sign-in',
+    '/leaderboard',
   ],
 });
 

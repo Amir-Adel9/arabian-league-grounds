@@ -62,6 +62,9 @@ const EventPredictionModule = ({
               handleLockIn({
                 matchId: eventData.event.match.id,
                 winningTeam: selectedTeam.code,
+                losingTeam: eventData.event.match.teams.find((team: any) => {
+                  return team.code !== selectedTeam.code;
+                }).code,
                 userId: user?.id,
                 username: user?.username as string,
               });
@@ -127,9 +130,7 @@ const EventPredictionModule = ({
               transition: 'background-color 0.5s ease-in-out',
             }}
           >
-            <SignInButton
-              redirectUrl={`/predict?matchId=${eventData.event.match.id}`}
-            >
+            <SignInButton redirectUrl={`/match?Id=${eventData.event.match.id}`}>
               <div>
                 <h1>
                   {!selectedTeam && status !== 'lockedIn'

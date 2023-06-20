@@ -8,6 +8,11 @@ import { currentUser } from '@clerk/nextjs';
 import NavMenu from '@/components/NavMenu';
 import { Toaster } from 'react-hot-toast';
 
+import { db } from '@/db';
+import { prediction, user } from '@/db/schema';
+import { eq, sql } from 'drizzle-orm';
+import { requestParams } from '@/utils/requestParams';
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 const kanit = Kanit({
@@ -19,8 +24,75 @@ const kanit = Kanit({
 export const metadata = {
   title: 'Arabian League Grounds',
   description:
-    'Your all-in-one Arabian League companion. Teams, Schedule, Standings, Rewards, and more!',
+    'Your all-in-one League of Legends Arabian League companion. Teams, Schedule, Standings, Leaderboards, Rewards, and more!',
 };
+
+async function fulfillPredictions() {
+  const pendingPredictions = await db
+    .select()
+    .from(prediction)
+    .where(eq(prediction.state, 'unfulfilled'));
+  console.log('pendingPredictions', pendingPredictions);
+  if (pendingPredictions.length === 0) return;
+
+  const winningTeams = pendingPredictions.map(async (currentPrediction) => {
+    const winningTeamId = currentPrediction.winningTeamId;
+
+    await fetch(
+      `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
+      requestParams
+    )
+      .then((res) => res.json())
+
+      .then((data) => {
+        return {
+          event: data.data.schedule.events.filter(
+            (event: any) => event.match.id === currentPrediction.matchId
+          )[0],
+        };
+      })
+      .then(async (event) => {
+        if (event.event.state !== 'completed') return;
+        if (event.event.match.teams[0].code === winningTeamId) {
+          if (event.event.match.teams[0].result.outcome === 'win') {
+            await db
+              .update(user)
+              .set({ points: sql`${user.points} + 100` })
+              .where(eq(user.clerkId, currentPrediction.userId as string));
+
+            await db
+              .update(prediction)
+              .set({ state: 'correct' })
+              .where(eq(prediction.id, currentPrediction.id));
+          } else {
+            await db
+              .update(prediction)
+              .set({ state: 'incorrect' })
+              .where(eq(prediction.id, currentPrediction.id));
+          }
+        } else {
+          if (event.event.match.teams[1].result.outcome === 'win') {
+            await db
+              .update(user)
+              .set({ points: sql`${user.points} + 100` })
+              .where(eq(user.clerkId, currentPrediction.userId as string));
+
+            await db
+              .update(prediction)
+              .set({ state: 'correct' })
+              .where(eq(prediction.id, currentPrediction.id));
+          } else {
+            await db
+              .update(prediction)
+              .set({ state: 'incorrect' })
+              .where(eq(prediction.id, currentPrediction.id));
+          }
+        }
+      });
+  });
+}
+
+fulfillPredictions();
 
 export default async function RootLayout({
   children,

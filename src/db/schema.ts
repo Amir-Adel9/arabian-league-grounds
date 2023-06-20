@@ -4,7 +4,7 @@ import {
   text,
   varchar,
   int,
-  boolean,
+  timestamp,
 } from 'drizzle-orm/mysql-core';
 
 export const user = mysqlTable('user', {
@@ -20,5 +20,7 @@ export const prediction = mysqlTable('prediction', {
   username: varchar('username', '255'),
   matchId: text('matchId'),
   winningTeamId: text('winningTeamId'),
-  fulfilled: boolean('fulfilled').default(false),
+  losingTeamId: text('losingTeamId'),
+  createdAt: timestamp('createdAt').defaultNow(),
+  state: text('fulfilled').default('unfulfilled'),
 });

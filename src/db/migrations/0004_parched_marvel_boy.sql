@@ -1,0 +1,1 @@
+ALTER TABLE `prediction` MODIFY COLUMN `fulfilled` text DEFAULT ('unfulfilled');
