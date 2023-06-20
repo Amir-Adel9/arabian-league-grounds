@@ -21,45 +21,45 @@ dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 export default async function Home() {
-  const loggedInUser = await currentUser();
+  // const loggedInUser = await currentUser();
 
-  if (loggedInUser) {
-    const { id, username } = loggedInUser;
-    console.log(id, username);
+  // if (loggedInUser) {
+  //   const { id, username } = loggedInUser;
+  //   console.log(id, username);
 
-    const existingUser = await db
-      .select()
-      .from(user)
-      .where(eq(user.clerkId, id));
-    console.log('existingUser', existingUser);
+  //   const existingUser = await db
+  //     .select()
+  //     .from(user)
+  //     .where(eq(user.clerkId, id));
+  //   console.log('existingUser', existingUser);
 
-    if (existingUser.length === 0) {
-      const newUser = await db
-        .insert(user)
-        .values({ clerkId: id, username: username });
-      console.log('newUser', newUser);
-    }
-  }
+  //   if (existingUser.length === 0) {
+  //     const newUser = await db
+  //       .insert(user)
+  //       .values({ clerkId: id, username: username });
+  //     console.log('newUser', newUser);
+  //   }
+  // }
 
-  const upcomingMatches = await fetch(
-    `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
-    requestParams
-  )
-    .then((res) => res.json())
-    .then((upcomingMatches) => {
-      const unStartedMatchesWithin7Days = upcomingMatches.data.schedule.events
-        .filter((event: any) => {
-          const matchState = event.state;
+  // const upcomingMatches = await fetch(
+  //   `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
+  //   requestParams
+  // )
+  //   .then((res) => res.json())
+  //   .then((upcomingMatches) => {
+  //     const unStartedMatchesWithin7Days = upcomingMatches.data.schedule.events
+  //       .filter((event: any) => {
+  //         const matchState = event.state;
 
-          return matchState === 'unstarted' || matchState === 'inProgress';
-        })
-        .slice(0, 8);
-      return unStartedMatchesWithin7Days;
-    });
+  //         return matchState === 'unstarted' || matchState === 'inProgress';
+  //       })
+  //       .slice(0, 8);
+  //     return unStartedMatchesWithin7Days;
+  //   });
 
   return (
     <main className='relative flex min-h-screen flex-col items-center'>
-      <section className='w-full min-h-screen relative flex flex-col justify-center items-center'>
+      {/* <section className='w-full min-h-screen relative flex flex-col justify-center items-center'>
         <div className='absolute w-full h-full bg-primary opacity-80 z-[-10]'></div>
         <Image
           src='/background.jpg'
@@ -126,7 +126,8 @@ export default async function Home() {
         <div className='relative w-[85%] bg-secondary text-primary p-8 rounded-lg shadow-lg '>
           <TalentsSlider talentsArray={talentsArray} />
         </div>
-      </section>
+      </section> */}
+      hi
     </main>
   );
 }
