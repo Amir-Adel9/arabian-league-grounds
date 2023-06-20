@@ -104,14 +104,12 @@ export default async function Home() {
           <div className='relative w-[85%] bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg'>
             <ViewSchedule />
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
-              {upcomingMatches.map((event: any) => {
+              {upcomingMatches.map((event: any, index: number) => {
                 const matchState = event.state;
                 if (matchState === 'unstarted') {
                   return <HomeMatchCard event={event} key={event.match.id} />;
                 } else if (matchState === 'inProgress') {
-                  return (
-                    <HomeLiveMatchCard event={event} key={event.match.id} />
-                  );
+                  return <></>;
                 }
               })}
             </div>
