@@ -108,13 +108,8 @@ export default async function Home() {
                 const matchState = event.state;
                 if (matchState === 'unstarted') {
                   return <HomeMatchCard event={event} key={event.match.id} />;
-                } else if (
-                  matchState === 'inProgress' &&
-                  event.type !== 'show'
-                ) {
-                  return (
-                    <HomeLiveMatchCard event={event} key={event.match.id} />
-                  );
+                } else if (matchState === 'inProgress') {
+                  return <HomeLiveMatchCard event={event} key={index} />;
                 }
               })}
             </div>
