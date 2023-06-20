@@ -101,10 +101,10 @@ const PredictionCard = ({
           <div>
             <div className='relative'>
               <h3 className='text-center font-bold text-xl flex-grow'>
-                {`${prediction.winningTeamId} Won `}
+                {`${prediction.losingTeamId} Won `}
               </h3>
               <h3 className='absolute w-36 left-[calc(50%-4.5rem)] text-center font-bold text-sm flex-grow'>
-                {`(You picked ${prediction.losingTeamId})`}
+                {`(You picked ${prediction.winningTeamId})`}
               </h3>
             </div>
           </div>
