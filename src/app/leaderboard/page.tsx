@@ -7,6 +7,7 @@ import { isNotNull } from 'drizzle-orm';
 import Link from 'next/link';
 
 import Image from 'next/image';
+import { revalidatePath } from 'next/cache';
 
 const PredictionCard = ({
   prediction,
@@ -141,6 +142,12 @@ const LeaderBoardCard = ({
     </>
   );
 };
+// async function revalidate() {
+//   'use server';
+//   revalidatePath('/leaderboard');
+// }
+
+// revalidate();
 
 async function LeaderBoard() {
   const loggedInUser = await currentUser();
@@ -231,7 +238,11 @@ async function LeaderBoard() {
         <div className='w-full lg:w-[30%] h-screen bg-secondary text-primary shadow-2xl overflow-y-auto no-scrollbar'>
           <h1 className='text-center font-bold text-2xl p-5'>
             Your Predictions
+            <p className='text-center font-bold text-xs'>
+              (Refresh if you think the predictions are out of date)
+            </p>
           </h1>
+
           {currentUserPredictions.length > 0 ? (
             <div>
               {currentUserPredictions
