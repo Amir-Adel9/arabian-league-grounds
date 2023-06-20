@@ -122,7 +122,6 @@ export default async function RootLayout({
                     draggable={false}
                   />
                 </div>
-
                 <h1 className='font-bold duration-300 cursor-pointer hover:text-accent-gold text-xs xs:text-base md:text-base'>
                   Arabian League Grounds
                 </h1>
