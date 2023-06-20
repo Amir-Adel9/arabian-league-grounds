@@ -106,10 +106,13 @@ export default async function Home() {
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
               {upcomingMatches.map((event: any, index: number) => {
                 const matchState = event.state;
-                if (matchState === 'unstarted' && event.type !== 'show') {
+                if (matchState === 'unstarted') {
                   return <HomeMatchCard event={event} key={event.match.id} />;
-                } else if (matchState === 'inProgress') {
-                  return <HomeLiveMatchCard event={event} key={index} />;
+                } else if (
+                  matchState === 'inProgress' &&
+                  event.type !== 'show'
+                ) {
+                  return <></>;
                 }
               })}
             </div>
