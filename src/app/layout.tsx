@@ -29,6 +29,7 @@ export const metadata = {
 };
 
 async function fulfillPredictions() {
+  'use server';
   const pendingPredictions = await db
     .select()
     .from(prediction)
