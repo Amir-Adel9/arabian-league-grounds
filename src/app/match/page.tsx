@@ -35,11 +35,6 @@ async function Predict(props: any) {
           )
         );
 
-      console.log(
-        matchId,
-        existingPrediction.map((prediction) => prediction.matchId)
-      );
-
       if (existingPrediction.length > 0) {
         return {
           status: 'lockedIn',

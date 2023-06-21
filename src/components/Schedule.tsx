@@ -12,8 +12,6 @@ dayjs.extend(durationPlugin);
 
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
-    console.log('event', event);
-
     const targetDate = dayjs.utc(event.startTime);
     const startingHour = dayjs(targetDate).format('HH');
     const startingMinute = dayjs(targetDate).format('mm');
@@ -347,7 +345,6 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                   />
                 );
               } else if (match.state === 'unstarted') {
-                console.log('match', match);
                 return (
                   <UnstartedMatch
                     event={match}

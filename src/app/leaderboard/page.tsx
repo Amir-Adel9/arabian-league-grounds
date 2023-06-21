@@ -151,7 +151,7 @@ const LeaderBoardCard = ({
 async function LeaderBoard() {
   const loggedInUser = await currentUser();
   const allPredictions = await db.select().from(prediction);
-  console.log('allpore', allPredictions);
+
   const IdsForUsersWithPredictions = await db
     .select({ userId: prediction.userId })
     .from(prediction)

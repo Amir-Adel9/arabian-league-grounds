@@ -32,7 +32,7 @@ async function fulfillPredictions() {
     .select()
     .from(prediction)
     .where(eq(prediction.state, 'unfulfilled'));
-  console.log('pendingPredictions', pendingPredictions);
+
   if (pendingPredictions.length === 0) return;
 
   const winningTeams = pendingPredictions.map(async (currentPrediction) => {
