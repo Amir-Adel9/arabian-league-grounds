@@ -54,7 +54,6 @@ async function fulfillPredictions() {
         };
       })
       .then(async (event: any) => {
-        console.log('eveve', event);
         if (event.type !== 'match') return;
         if (event.state !== 'completed') return;
         if (event.match.teams[0].code === winningTeamId) {
