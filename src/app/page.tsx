@@ -25,19 +25,19 @@ export default async function Home() {
 
   if (loggedInUser) {
     const { id, username } = loggedInUser;
-    console.log(id, username);
+
 
     const existingUser = await db
       .select()
       .from(user)
       .where(eq(user.clerkId, id));
-    console.log('existingUser', existingUser);
+
 
     if (existingUser.length === 0) {
       const newUser = await db
         .insert(user)
         .values({ clerkId: id, username: username });
-      console.log('newUser', newUser);
+
     }
   }
 
@@ -108,7 +108,7 @@ export default async function Home() {
                 const matchState = event.state;
                 if (matchState === 'unstarted') {
                   return <HomeMatchCard event={event} key={event.match.id} />;
-                } else if (matchState === 'inProgress') {
+                } else if (matchState === 'inProgress' || true) {
                   return <HomeLiveMatchCard event={event} key={index} />;
                 }
               })}

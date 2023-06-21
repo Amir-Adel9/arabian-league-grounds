@@ -28,8 +28,6 @@ const EventPredictionModule = ({
 
   const { status, prediction } = predictionStatus;
 
-  console.log('predictionStatus', predictionStatus);
-
   const [selectedTeam, setSelectedTeam] = useState<{
     name: string;
     code: string;

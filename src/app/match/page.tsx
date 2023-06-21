@@ -35,11 +35,6 @@ async function Predict(props: any) {
           )
         );
 
-      console.log(
-        matchId,
-        existingPrediction.map((prediction) => prediction.matchId)
-      );
-
       if (existingPrediction.length > 0) {
         return {
           status: 'lockedIn',
@@ -80,9 +75,10 @@ async function Predict(props: any) {
 
     .then((data) => {
       return {
-        event: data.data.schedule.events.filter(
-          (event: any) => event.match.id === matchId
-        )[0],
+        event: data.data.schedule.events.filter((event: any) => {
+          if (event.type !== 'match') return;
+          event.match.id === matchId;
+        })[0],
       };
     });
 

@@ -12,8 +12,6 @@ dayjs.extend(durationPlugin);
 
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
-    console.log('event', event);
-
     const targetDate = dayjs.utc(event.startTime);
     const startingHour = dayjs(targetDate).format('HH');
     const startingMinute = dayjs(targetDate).format('mm');
@@ -322,7 +320,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
   return (
     <div>
       {eventsByDate.map((event: any, index: any) => {
-        const { startingDay, matches } = event;
+        const { startingDay, matches, type } = event;
 
         return (
           <div
@@ -347,7 +345,6 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                   />
                 );
               } else if (match.state === 'unstarted') {
-                console.log('match', match);
                 return (
                   <UnstartedMatch
                     event={match}
@@ -355,7 +352,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                     windowWidth={windowWidth}
                   />
                 );
-              } else if (match.state === 'inProgress') {
+              } else if (match.state === 'inProgress' && type === 'match') {
                 return (
                   <LiveMatch
                     event={match}

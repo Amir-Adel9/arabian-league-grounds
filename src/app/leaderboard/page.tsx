@@ -151,7 +151,7 @@ const LeaderBoardCard = ({
 async function LeaderBoard() {
   const loggedInUser = await currentUser();
   const allPredictions = await db.select().from(prediction);
-  console.log('allpore', allPredictions);
+
   const IdsForUsersWithPredictions = await db
     .select({ userId: prediction.userId })
     .from(prediction)
@@ -258,7 +258,10 @@ async function LeaderBoard() {
                     .then((data) => {
                       return {
                         event: data.data.schedule.events.filter(
-                          (event: any) => event.match.id === prediction.matchId
+                          (event: any) => {
+                            if (event.type !== 'match') return;
+                            return event.match.id === prediction.matchId;
+                          }
                         )[0],
                       };
                     });

@@ -32,7 +32,7 @@ async function fulfillPredictions() {
     .select()
     .from(prediction)
     .where(eq(prediction.state, 'unfulfilled'));
-  console.log('pendingPredictions', pendingPredictions);
+
   if (pendingPredictions.length === 0) return;
 
   const winningTeams = pendingPredictions.map(async (currentPrediction) => {
@@ -46,14 +46,17 @@ async function fulfillPredictions() {
 
       .then((data) => {
         return {
-          event: data.data.schedule.events.filter(
-            (event: any) => event.match.id === currentPrediction.matchId
-          )[0],
+          event: data.data.schedule.events.filter((event: any) => {
+            console.log('eveve', event);
+            if (event.type !== 'match') return;
+            event.match.id === currentPrediction.matchId;
+          })[0],
         };
       })
-      .then(async (event) => {
-        if (event.event.state !== 'completed') return;
-        if (event.event.match.teams[0].code === winningTeamId) {
+      .then(async (event: any) => {
+        if (event.type !== 'match') return;
+        if (event.state !== 'completed') return;
+        if (event.match.teams[0].code === winningTeamId) {
           if (event.event.match.teams[0].result.outcome === 'win') {
             await db
               .update(user)
