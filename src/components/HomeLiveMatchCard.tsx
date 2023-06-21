@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const HomeLiveMatchCard = ({ event }: { event: any }) => {
-  if (event.type === 'show' || true) {
+  if (event.type === 'show') {
     return (
       <Link
         href='https://lolesports.com/live/arabian_league/lolesports_ar'
