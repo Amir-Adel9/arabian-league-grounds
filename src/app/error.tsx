@@ -14,15 +14,12 @@ function error() {
             draggable={false}
           />
           <h1 className='text-5xl font-bold text-accent-gold text-center'>
-            This page is under construction
+            This page is under construction or has encountered an error
           </h1>
           <p className='text-2xl text-accent-gold text-center'>
-            Please check back after week 2 of the Arabian League
+            Please check later
           </p>
-          <p className='text-accent-gold text-center'>
-            (Here your predictions will be displayed along side a leaderboard
-            for whom those have the most points)
-          </p>
+          <p className='text-accent-gold text-center'></p>
         </div>
       </section>
     </main>
