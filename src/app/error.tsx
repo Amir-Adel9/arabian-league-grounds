@@ -14,10 +14,10 @@ function error() {
             draggable={false}
           />
           <h1 className='text-5xl font-bold text-accent-gold text-center'>
-            This page is under construction or has encountered an error
+            This page has encountered an error
           </h1>
           <p className='text-2xl text-accent-gold text-center'>
-            Please check later
+            Please check back later
           </p>
           <p className='text-accent-gold text-center'></p>
         </div>
