@@ -76,7 +76,6 @@ async function Predict(props: any) {
     .then((data) => {
       return {
         event: data.data.schedule.events.filter((event: any) => {
-          console.log('eee', event);
           if (event.type !== 'match') return;
           return event.match.id === matchId;
         })[0],

@@ -45,18 +45,23 @@ async function fulfillPredictions() {
       .then((res) => res.json())
 
       .then((data) => {
-        return {
-          event: data.data.schedule.events.filter((event: any) => {
-            if (event.type !== 'match') return;
-            event.match.id === currentPrediction.matchId;
-          })[0],
-        };
+        const event = data.data.schedule.events.filter((event: any) => {
+          return (
+            event.match.id === currentPrediction.matchId &&
+            event.state === 'completed' &&
+            event.type === 'match'
+          );
+        })[0];
+
+        return event;
       })
       .then(async (event: any) => {
-        if (event.type !== 'match') return;
-        if (event.state !== 'completed') return;
+        if (!event) return;
+
+        console.log(event.match.teams);
         if (event.match.teams[0].code === winningTeamId) {
-          if (event.event.match.teams[0].result.outcome === 'win') {
+          if (event.match.teams[0].result.outcome === 'win') {
+            console.log('correct', event.match.teams[0]);
             await db
               .update(user)
               .set({ points: sql`${user.points} + 100` })
@@ -73,7 +78,7 @@ async function fulfillPredictions() {
               .where(eq(prediction.id, currentPrediction.id));
           }
         } else {
-          if (event.event.match.teams[1].result.outcome === 'win') {
+          if (event.match.teams[1].result.outcome === 'win') {
             await db
               .update(user)
               .set({ points: sql`${user.points} + 100` })

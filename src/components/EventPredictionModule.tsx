@@ -33,7 +33,6 @@ const EventPredictionModule = ({
     result: { outcome: string; gameWins: number };
   } | null>();
 
-  console.log('eee', eventData);
   const targetDate = dayjs.utc(eventData.event.startTime);
   const startingHour = dayjs(targetDate).format('HH:mm');
   const matchDate = new Date(eventData.event.startTime).toLocaleDateString(

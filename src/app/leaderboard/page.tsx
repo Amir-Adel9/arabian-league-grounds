@@ -198,6 +198,10 @@ async function LeaderBoard() {
     <main className='relative flex min-h-screen flex-col items-center'>
       <section className='w-full h-screen relative flex flex-col-reverse lg:flex-row  mt-24 items-center'>
         <div className='h-full w-full lg:w-[70%] relative overflow-x-auto shadow-md sm:rounded-lg'>
+          <h1 className='text-center font-bold p-5 text-red-700'>
+            Due to an occurring maintenance the points may not update right
+            away, check back soon.
+          </h1>
           <table className='w-full text-sm text-left'>
             <thead className='text-xs  uppercase bg-gray-50 '>
               <tr>
