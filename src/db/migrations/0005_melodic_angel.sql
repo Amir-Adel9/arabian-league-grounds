@@ -1,0 +1,1 @@
+ALTER TABLE `prediction` RENAME COLUMN `fulfilled` TO `state`;

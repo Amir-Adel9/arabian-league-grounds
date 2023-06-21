@@ -29,6 +29,20 @@
       "when": 1687199150985,
       "tag": "0004_parched_marvel_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1687376166277,
+      "tag": "0005_melodic_angel",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1687376333318,
+      "tag": "0006_rare_sharon_ventura",
+      "breakpoints": true
     }
   ]
 }
