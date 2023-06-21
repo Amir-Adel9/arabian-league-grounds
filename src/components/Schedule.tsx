@@ -320,7 +320,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
   return (
     <div>
       {eventsByDate.map((event: any, index: any) => {
-        const { startingDay, matches, type } = event;
+        const { startingDay, matches } = event;
 
         return (
           <div
@@ -352,7 +352,10 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                     windowWidth={windowWidth}
                   />
                 );
-              } else if (match.state === 'inProgress' && type === 'match') {
+              } else if (
+                match.state === 'inProgress' &&
+                match.type === 'match'
+              ) {
                 return (
                   <LiveMatch
                     event={match}
