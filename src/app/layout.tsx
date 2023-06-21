@@ -46,9 +46,10 @@ async function fulfillPredictions() {
 
       .then((data) => {
         return {
-          event: data.data.schedule.events.filter(
-            (event: any) => event.match.id === currentPrediction.matchId
-          )[0],
+          event: data.data.schedule.events.filter((event: any) => {
+            if (event.type !== 'match') return;
+            event.match.id === currentPrediction.matchId;
+          })[0],
         };
       })
       .then(async (event) => {
