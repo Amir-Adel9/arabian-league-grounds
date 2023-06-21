@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, use, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
@@ -9,7 +9,6 @@ import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
 import { handleLockIn } from '@/utils/actions/handleLockIn';
 import { SignedIn, SignedOut, SignInButton, useUser } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 dayjs.extend(utcPlugin);
@@ -22,9 +21,7 @@ const EventPredictionModule = ({
   eventData: any;
   predictionStatus: any;
 }) => {
-  const router = useRouter();
-
-  const { user, isSignedIn } = useUser();
+  const { user } = useUser();
 
   const { status, prediction } = predictionStatus;
 
@@ -36,6 +33,7 @@ const EventPredictionModule = ({
     result: { outcome: string; gameWins: number };
   } | null>();
 
+  console.log('eee', eventData);
   const targetDate = dayjs.utc(eventData.event.startTime);
   const startingHour = dayjs(targetDate).format('HH:mm');
   const matchDate = new Date(eventData.event.startTime).toLocaleDateString(
