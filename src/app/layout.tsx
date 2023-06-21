@@ -47,7 +47,6 @@ async function fulfillPredictions() {
       .then((data) => {
         return {
           event: data.data.schedule.events.filter((event: any) => {
-            console.log('eveve', event);
             if (event.type !== 'match') return;
             event.match.id === currentPrediction.matchId;
           })[0],
