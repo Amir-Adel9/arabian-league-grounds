@@ -174,10 +174,7 @@ export default async function RootLayout({
           <Analytics />
           <footer className='h-48 lg:h-24 w-full relative bg-secondary text-primary font-inter flex flex-col lg:flex-row items-center justify-between px-2 xs:px-6 lg:px-10 z-[500] border-t-[6px] border-t-accent-gold'>
             <div className='flex justify-center items-center gap-4 my-2 lg:my-0'>
-              <Link
-                href='https://github.com/Amir-Adel9/arabian-league-grounds'
-                target={'_blank'}
-              >
+              <Link href='https://github.com/Amir-Adel9' target={'_blank'}>
                 <svg
                   width='24px'
                   height='24px'
