@@ -55,11 +55,11 @@ async function Teams(props: any) {
           <Image src='/teamsbg.avif' alt='' fill={true} draggable={false} />
         </div>
         <TeamMatchesSlider teamMatches={teamMatches} />
-        <div className='flex flex-col justify-center items-center lg:flex-row gap-5 relative w-[85%] h-72 bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg my-36'>
+        <div className='flex flex-col justify-center items-center lg:flex-row gap-5 relative w-[85%] bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg my-36'>
           {team.players.map((player, index) => {
             return (
               <div
-                className='relative border border-accent-gold flex w-full h-full flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
+                className='relative border border-accent-gold flex w-full h-56 flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
                 key={index}
               >
                 <div className='absolute w-full h-full bg-secondary opacity-80 z-[10] top-0 left-0 rounded-lg '></div>
