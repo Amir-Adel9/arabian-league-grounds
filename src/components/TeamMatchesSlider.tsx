@@ -107,11 +107,11 @@ const TeamMatchesSlider = ({ teamMatches }: { teamMatches: any }) => {
           if (userDate.isSame(today, 'day')) {
             formattedDate = `Today, ${userDate.format('MMM DD')}`;
           } else if (userDate.isSame(tomorrow, 'day')) {
-            formattedDate = `Tomorrow, ${userDate.format('MMM DD')}`;
+            formattedDate = `Tomorrow`;
           } else if (userDate.isAfter(today) && userDate.isBefore(nextWeek)) {
-            formattedDate = userDate.format('dddd,  MMM DD');
+            formattedDate = userDate.format(' MMM DD');
           } else {
-            formattedDate = userDate.format('dddd, MMM DD');
+            formattedDate = userDate.format(' MMM DD');
           }
 
           const cutoffDate = dayjs.utc('2023-06-13T17:00:00Z');
