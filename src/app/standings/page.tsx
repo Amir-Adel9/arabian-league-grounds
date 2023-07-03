@@ -1,27 +1,12 @@
+import { requestParams } from '@/utils/requestParams';
 import Image from 'next/image';
+import Link from 'next/link';
 // old 109545777182748074
 // new 110422923164198764
 async function Standings() {
   const standings = await fetch(
-    'https://esports-api.lolesports.com/persisted/gw/getStandings?hl=en-US&tournamentId=110422923164198764',
-    {
-      headers: {
-        'x-api-key': `${process.env.API_KEY}`,
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:101.0) Gecko/20100101 Firefox/101.0',
-        Accept: '*/*',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'X-Requested-With',
-        'Sec-Fetch-Dest': 'empty',
-        'Sec-Fetch-Mode': 'cors',
-        'Sec-Fetch-Site': 'same-site',
-      },
-      referrer: 'https://lolesports.com/',
-      method: 'GET',
-      mode: 'cors',
-      next: { revalidate: 10 },
-    }
+    `https://esports-api.lolesports.com/persisted/gw/getStandings?hl=en-US&tournamentId=${process.env.NEXT_PUBLIC_TOURNAMENT_ID}`,
+    requestParams
   ).then((res) => res.json());
 
   return (
@@ -37,39 +22,42 @@ async function Standings() {
                 >
                   {ranking.teams.map((team: any, i: number) => {
                     return (
-                      <div
-                        className='flex items-center font-inter justify-start group hover:bg-[#0b2c38] duration-200 mt-2 space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'
+                      <Link
+                        href={`/teams/${team.slug}`}
                         key={team.id}
+                        className='w-full'
                       >
-                        <div className='flex flex-row items-center'>
-                          <span
-                            className={`text-3xl font-bold text-center mr-2 ${
-                              i !== 0
-                                ? 'group-hover:opacity-100 duration-200 opacity-0'
-                                : 'opacity-100'
-                            }`}
-                          >
-                            {ranking.ordinal}
-                          </span>
-                          <div className='flex flex-row items-center '>
-                            <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20'>
-                              <Image
-                                src={team.image}
-                                alt={team.name}
-                                fill={true}
-                                draggable={false}
-                              />
+                        <div className='flex items-center font-inter justify-start group hover:bg-[#0b2c38] duration-200 mt-2 space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4'>
+                          <div className='flex flex-row items-center'>
+                            <span
+                              className={`text-3xl font-bold text-center mr-2 ${
+                                i !== 0
+                                  ? 'group-hover:opacity-100 duration-200 opacity-0'
+                                  : 'opacity-100'
+                              }`}
+                            >
+                              {ranking.ordinal}
+                            </span>
+                            <div className='flex flex-row items-center '>
+                              <div className='relative w-10 h-10 md:w-16 md:h-16 lg:w-20 lg:h-20'>
+                                <Image
+                                  src={team.image}
+                                  alt={team.name}
+                                  fill={true}
+                                  draggable={false}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div className='flex flex-col items-start '>
+                            <h1 className='text-xl font-bold'>{team.name}</h1>
+                            <div className='flex text-sm font-bold text-accent-gold'>
+                              <span>{team.record.wins}W</span>-
+                              <span>{team.record.losses}L</span>
                             </div>
                           </div>
                         </div>
-                        <div className='flex flex-col items-start '>
-                          <h1 className='text-xl font-bold'>{team.name}</h1>
-                          <div className='flex text-sm font-bold text-accent-gold'>
-                            <span>{team.record.wins}W</span>-
-                            <span>{team.record.losses}L</span>
-                          </div>
-                        </div>
-                      </div>
+                      </Link>
                     );
                   })}
                 </div>

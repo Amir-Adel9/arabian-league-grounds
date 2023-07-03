@@ -11,15 +11,17 @@ import { db } from '@/db';
 import { prediction } from '@/db/schema';
 import { and, eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
+import Modal from '@/components/Modal';
+import CloseModal from '@/components/CloseModal';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 async function Predict(props: any) {
-  const { searchParams } = props;
+  const { params } = props;
 
-  if (!searchParams.Id || searchParams.Id.length !== 18) redirect('/');
-  const matchId = searchParams.Id;
+  if (!params.matchId || params.matchId.length !== 18) redirect('/');
+  const matchId = params.matchId;
 
   async function checkPredictionStatus() {
     const loggedInUser = await currentUser();
@@ -83,26 +85,44 @@ async function Predict(props: any) {
     });
 
   return (
-    <main className='relative flex min-h-screen flex-col items-center'>
-      <section className='w-full h-[calc(100vh-5.625rem)] mt-[calc(5.625rem)] border-t-[6px] z-[120] relative flex justify-center items-center flex-col lg:flex-row'>
-        <div className='w-full relative lg:w-1/2 h-full bg-transparent duration-500 group cursor-pointer flex flex-col items-center p-16 lg:p-32 text-accent-gold'>
-          <div className='absolute w-full h-full bg-accent-blue opacity-90 group-hover:bg-accent-blue group-hover:opacity-90 duration-500 z-[-5] top-0'></div>
-          <div className='absolute w-full h-full z-[-10] top-0'>
-            <Image src='/rivenbg.jpg' alt='' fill={true} draggable={false} />
+    <Modal>
+      <main className='relative flex h-screen flex-col items-center justify-center rounded '>
+        <section
+          style={{ height: '75%' }}
+          className='w-full  z-[120] relative flex justify-center items-center flex-col lg:flex-row rounded'
+        >
+          <CloseModal />
+          <div className='w-full relative lg:w-1/2 h-full bg-transparent duration-500 rounded-l-lg group flex flex-col items-center p-16 lg:p-32 text-accent-gold '>
+            <div className='absolute w-full h-full bg-accent-blue  opacity-90 rounded-l-lg group-hover:bg-accent-blue group-hover:opacity-90 duration-500 z-[-5] top-0 '></div>
+            <div className='absolute w-full h-full z-[-10] top-0 rounded-l-lg'>
+              <Image
+                src='/rivenbg.jpg'
+                alt=''
+                fill={true}
+                draggable={false}
+                className='rounded-l-lg'
+              />
+            </div>
           </div>
-        </div>
-        <div className='w-full relative lg:w-1/2 h-full bg-transparent duration-500 group cursor-pointer flex flex-col items-center p-16 lg:p-32 text-accent-blue'>
-          <div className='absolute w-full h-full bg-accent-gold opacity-90 group-hover:bg-accent-gold group-hover:opacity-90 duration-500 z-[-5] top-0'></div>
-          <div className='absolute w-full h-full z-[-10] top-0'>
-            <Image src='/yasuobg.jpg' alt='' fill={true} draggable={false} />
+          <div className='w-full relative lg:w-1/2 h-full bg-transparent duration-500 rounded-r-lg group flex flex-col items-center p-16 lg:p-32 text-accent-blue'>
+            <div className='absolute w-full h-full bg-accent-gold  opacity-90 rounded-r-lg group-hover:bg-accent-gold group-hover:opacity-90 duration-500 z-[-5] top-0'></div>
+            <div className='absolute w-full h-full z-[-10] top-0 rounded-r-lg'>
+              <Image
+                src='/yasuobg.jpg'
+                alt=''
+                fill={true}
+                draggable={false}
+                className='rounded-r-lg '
+              />
+            </div>
           </div>
-        </div>
-        <EventPredictionModule
-          eventData={eventData}
-          predictionStatus={predictionStatus}
-        />
-      </section>
-    </main>
+          <EventPredictionModule
+            eventData={eventData}
+            predictionStatus={predictionStatus}
+          />
+        </section>
+      </main>
+    </Modal>
   );
 }
 

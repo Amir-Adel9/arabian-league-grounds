@@ -1,24 +1,36 @@
 'use client';
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 import dayjs from 'dayjs';
 import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
+import timezone from 'dayjs/plugin/timezone';
 import Link from 'next/link';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
+dayjs.extend(timezone);
 
-const HomeMatchCard = ({ event }: { event: any }) => {
+const HomeMatchCard = ({
+  event,
+  userPredictions,
+}: {
+  event: any;
+  userPredictions: any;
+}) => {
   const now = dayjs.utc();
   const targetDate = dayjs.utc(event.startTime);
   const duration = dayjs.duration(targetDate.diff(now));
   const daysUntilMatch = duration.asDays();
-  const formattedDate = dayjs(targetDate).format('DD/MM/YYYY HH:mm');
+  const userDate = targetDate.tz(dayjs.tz.guess());
+  const formattedDate = userDate.format('DD/MM/YYYY HH:mm');
+
+  const userPredictionsForMatch = userPredictions.filter(
+    (prediction: any) => prediction.matchId === event.match.id
+  );
 
   return (
-    <Link href={`/match?Id=${event.match.id}`} className='w-full'>
+    <Link href={`/match/${event.match.id}`} className='w-full'>
       <div
         className='relative border border-accent-gold flex h-full flex-col justify-between rounded-lg shadow-lg p-4 cursor-pointer duration-200  hover:scale-105'
         key={event.id}
@@ -74,7 +86,11 @@ const HomeMatchCard = ({ event }: { event: any }) => {
         </div>
         <div className='flex justify-center mt-4 z-20'>
           <button className=' border border-accent-gold bg-accent-gold duration-200 text-white py-2 px-4 rounded hover:bg-[#8e7a3b]'>
-            Predict Now
+            <span>
+              {userPredictionsForMatch.length > 0
+                ? `#${userPredictionsForMatch[0].winningTeamId}_WIN`
+                : 'Predict Now'}
+            </span>
           </button>
         </div>
       </div>

@@ -10,14 +10,14 @@ export const talentsArray = [
     name: 'Adham',
     role: 'Analyst',
     imageUrl:
-      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/277354866_107335291934487_8073221321954356781_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=cRkuD1cMH5kAX9ZobN3&_nc_ht=scontent.fcai19-8.fna&oh=00_AfAtsnflHdvQlAjqrbFLN-2r5W8P_hzxB3DUEefyugCSrg&oe=64878B49',
+      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/277354866_107335291934487_8073221321954356781_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=RFDdibh5KBoAX_rnCHK&_nc_ht=scontent.fcai19-8.fna&oh=00_AfBulyqlN_BpR8y0dGNYY2Vm53SV2fxTGa2QR_hYEP0QoA&oe=64A72F49',
     twitterUrl: 'https://twitter.com/EsportsAdham',
   },
   {
     name: 'Dattura',
     role: 'Analyst',
     imageUrl:
-      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/334122223_714916666762469_1988393306685080214_n.jpg?stp=cp6_dst-jpg&_nc_cat=105&ccb=1-7&_nc_sid=174925&_nc_ohc=wuDsPNzwKbUAX9VQS-U&_nc_ht=scontent.fcai19-8.fna&oh=00_AfCpTQjikGBpKppwUpaU1UHCRzQ7s62LG-Npcnx0RZZ3vw&oe=6493E55B',
+      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/334122223_714916666762469_1988393306685080214_n.jpg?stp=cp6_dst-jpg&_nc_cat=105&ccb=1-7&_nc_sid=174925&_nc_ohc=ksr-qhxcLioAX8iBuPP&_nc_ht=scontent.fcai19-8.fna&oh=00_AfA928Ato1b2WsMSGhwaZCZnxrzXm-753IEFZ2h6se5bgA&oe=64A7ABDB',
     twitterUrl: 'https://twitter.com/Dattura6',
   },
   {
@@ -31,7 +31,7 @@ export const talentsArray = [
     name: 'Maro',
     role: 'Caster',
     imageUrl:
-      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/313435200_5343749432420670_509232201801109575_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=qxPxO028yZgAX_gTieA&_nc_ht=scontent.fcai19-8.fna&oh=00_AfC-r_JHp1_nTdXm2FVt5CPDCNHFDIH9D0apslqJtfXILg&oe=6487AC06',
+      'https://scontent.fcai19-8.fna.fbcdn.net/v/t39.30808-6/313407803_187788067148125_390701840189497622_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=174925&_nc_ohc=GWvPLIojL2AAX8xAvG3&_nc_ht=scontent.fcai19-8.fna&oh=00_AfAGNBneKLjCghBkJz5uMOpfNdPStYf6KAxJuWfxQGZIbg&oe=64A76945',
     twitterUrl: 'https://twitter.com/theguyincurls',
   },
   {

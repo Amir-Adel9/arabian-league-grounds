@@ -8,6 +8,15 @@ import Link from 'next/link';
 
 import Image from 'next/image';
 
+import dayjs from 'dayjs';
+import utcPlugin from 'dayjs/plugin/utc';
+import durationPlugin from 'dayjs/plugin/duration';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(timezone);
+dayjs.extend(utcPlugin);
+dayjs.extend(durationPlugin);
+
 const PredictionCard = ({
   prediction,
   eventData,
@@ -17,9 +26,29 @@ const PredictionCard = ({
 }) => {
   const { state } = prediction;
 
+  const targetDate = dayjs.utc(eventData.event.startTime);
+  const userDate = targetDate.tz(dayjs.tz.guess());
+  const matchHour = userDate.format('HH:mm');
+
+  const today = dayjs().startOf('day');
+  const tomorrow = dayjs().add(1, 'day').startOf('day');
+  const nextWeek = dayjs().add(1, 'week').startOf('day');
+
+  let formattedDate;
+
+  if (userDate.isSame(today, 'day')) {
+    formattedDate = `Today, ${userDate.format('MMM DD')}`;
+  } else if (userDate.isSame(tomorrow, 'day')) {
+    formattedDate = `Tomorrow, ${userDate.format('MMM DD')}`;
+  } else if (userDate.isAfter(today) && userDate.isBefore(nextWeek)) {
+    formattedDate = userDate.format('dddd,  MMM DD');
+  } else {
+    formattedDate = userDate.format('dddd, MMM DD');
+  }
+
   if (state === 'unfulfilled') {
     return (
-      <Link href={`/match?Id=${eventData.event.match.id}`} className='w-full'>
+      <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
         <div className='flex  w-full items-center justify-center bg-accent-blue border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-[#0b2c38] '>
           <div className='flex w-full flex-row items-center justify-center '>
             <div className='relative w-10 h-10 md:w-20 md:h-20 '>
@@ -39,6 +68,7 @@ const PredictionCard = ({
                 ? `#${eventData.event.match.teams[1].code}_WIN?`
                 : 'No winner yet'}
             </h1>
+            <h1 className='text-center'>{formattedDate}</h1>
           </div>
           <div className='flex w-full flex-row items-center justify-center '>
             <div className='relative w-10 h-10 md:w-20 md:h-20 '>
@@ -54,7 +84,7 @@ const PredictionCard = ({
     );
   } else if (state === 'correct') {
     return (
-      <Link href={`/match?Id=${eventData.event.match.id}`} className='w-full'>
+      <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
         <div className='flex  w-full items-center justify-center bg-green-900 border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-green-950 '>
           <div className='flex w-full flex-row items-center justify-center '>
             <div className='relative w-10 h-10 md:w-20 md:h-20 '>
@@ -87,7 +117,7 @@ const PredictionCard = ({
     );
   } else {
     return (
-      <Link href={`/match?Id=${eventData.event.match.id}`} className='w-full'>
+      <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
         <div className='flex  w-full items-center justify-center bg-red-900 border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-red-950'>
           <div className='flex w-full flex-row items-center justify-center '>
             <div className='relative w-10 h-10 md:w-20 md:h-20 '>

@@ -31,13 +31,14 @@ export async function handleLockIn({
     throw new Error('Prediction already exists');
   }
 
-  const newPrediction = await db.insert(prediction).values({
+  await db.insert(prediction).values({
     matchId: matchId,
     winningTeamId: winningTeam,
     losingTeamId: losingTeam,
     userId: userId,
     username: username,
   });
-  revalidatePath(`/match?Id=${matchId}`);
+  revalidatePath(`/match/${matchId}`);
   revalidatePath(`/leaderboard`);
+  revalidatePath(`/`);
 }

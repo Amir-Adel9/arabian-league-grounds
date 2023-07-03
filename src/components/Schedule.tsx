@@ -6,15 +6,19 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
+import timezone from 'dayjs/plugin/timezone';
 
+dayjs.extend(timezone);
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 const CompletedMatch = React.forwardRef(
   ({ event, windowWidth }: { event: any; windowWidth: any }, ref: any) => {
     const targetDate = dayjs.utc(event.startTime);
-    const startingHour = dayjs(targetDate).format('HH');
+    const userDate = targetDate.tz(dayjs.tz.guess());
+    const startingHour = dayjs(userDate).format('HH');
     const startingMinute = dayjs(targetDate).format('mm');
+
     return (
       <div
         className='flex items-center  font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
@@ -119,17 +123,24 @@ CompletedMatch.displayName = 'CompletedMatch';
 
 const UnstartedMatch = ({
   event,
+  userPredictions,
   windowWidth,
 }: {
   event: any;
+  userPredictions: any;
   windowWidth: any;
 }) => {
   const targetDate = dayjs.utc(event.startTime);
-  const startingHour = dayjs(targetDate).format('HH');
+  const userDate = targetDate.tz(dayjs.tz.guess());
+  const startingHour = dayjs(userDate).format('HH');
   const startingMinute = dayjs(targetDate).format('mm');
 
+  const userPredictionsForMatch = userPredictions.filter(
+    (prediction: any) => prediction.matchId === event.match.id
+  );
+
   return (
-    <Link href={`/match?Id=${event.match.id}`} className='w-full'>
+    <Link href={`/match/${event.match.id}`} className='w-full'>
       <div
         className='flex items-center font-inter justify-center space-x-4 w-full border-y-4 border-accent-gold bg-accent-blue text-primary p-4 duration-200 hover:bg-[#0b2c38]'
         key={event.match.id}
@@ -162,7 +173,11 @@ const UnstartedMatch = ({
           <div className=' flex-col w-1/8 items-center justify-center px-10 hidden md:flex'>
             <h3 className='text-xl font-bold px-10'>VS</h3>
             <button className='bg-accent-gold text-white py-1 px-2 rounded duration-200 hover:bg-[#a08b47]'>
-              Predict Now
+              <span>
+                {userPredictionsForMatch.length > 0
+                  ? `#${userPredictionsForMatch[0].winningTeamId}_WIN`
+                  : 'Predict Now'}
+              </span>
             </button>
           </div>
           <div className='flex items-center w-24 md:w-1/3 justify-start  space-x-0'>
@@ -265,7 +280,13 @@ const LiveMatch = ({
   );
 };
 
-const ScheduleTable = ({ schedule }: { schedule: any }) => {
+const ScheduleTable = ({
+  schedule,
+  userPredictions,
+}: {
+  schedule: any;
+  userPredictions: any;
+}) => {
   const lastCompletedMatchRef = useRef<HTMLDivElement | null>(null);
   const [windowWidth, setWindowWidth] = useState<number>(0);
 
@@ -294,21 +315,32 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
 
   const eventsByDate = Object.values(
     schedule.data.schedule.events.reduce((acc: any, match: any) => {
-      const startingDay = new Date(match.startTime).toLocaleDateString(
-        'en-US',
-        {
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric',
-        }
-      );
-      if (!acc[startingDay]) {
-        acc[startingDay] = {
-          startingDay,
+      const targetDate = dayjs.utc(match.startTime);
+      const userDate = targetDate.tz(dayjs.tz.guess());
+
+      const today = dayjs().startOf('day');
+      const tomorrow = dayjs().add(1, 'day').startOf('day');
+      const nextWeek = dayjs().add(1, 'week').startOf('day');
+
+      let formattedDate;
+
+      if (userDate.isSame(today, 'day')) {
+        formattedDate = `Today, ${userDate.format('MMMM DD')}`;
+      } else if (userDate.isSame(tomorrow, 'day')) {
+        formattedDate = `Tomorrow, ${userDate.format('MMMM DD')}`;
+      } else if (userDate.isAfter(today) && userDate.isBefore(nextWeek)) {
+        formattedDate = userDate.format('dddd,  MMMM DD');
+      } else {
+        formattedDate = userDate.format('dddd, MMMM DD');
+      }
+
+      if (!acc[formattedDate]) {
+        acc[formattedDate] = {
+          formattedDate,
           matches: [],
         };
       }
-      acc[startingDay].matches.push(match);
+      acc[formattedDate].matches.push(match);
       return acc;
     }, {})
   );
@@ -320,12 +352,12 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
   return (
     <div>
       {eventsByDate.map((event: any, index: any) => {
-        const { startingDay, matches } = event;
+        const { formattedDate, matches } = event;
 
         return (
           <div
             className='relative mb-7 flex flex-col items-center justify-center space-y-4 w-full bg-primary text-secondary p-4'
-            key={startingDay}
+            key={formattedDate}
             ref={
               index === eventsWithCompletedMatches.length - 1
                 ? lastCompletedMatchRef
@@ -333,7 +365,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
             }
           >
             <h1 className='absolute -top-2 left-5 text-xl sm:text-2xl font-bold text-center  '>
-              {startingDay}
+              {formattedDate}
             </h1>
             {matches.map((match: any) => {
               if (match.state === 'completed') {
@@ -350,6 +382,7 @@ const ScheduleTable = ({ schedule }: { schedule: any }) => {
                     event={match}
                     key={match.id}
                     windowWidth={windowWidth}
+                    userPredictions={userPredictions}
                   />
                 );
               } else if (
