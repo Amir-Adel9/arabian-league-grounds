@@ -20,7 +20,7 @@ const NavMenu = () => {
       <div
         className={`fixed w-full h-full bg-secondary  top-0 left-0 rounded-lg ${
           !menuOpen
-            ? 'opacity-0 translate-x-[50rem]'
+            ? 'opacity-0 translate-x-[90rem]'
             : 'opacity-80 translate-x-0'
         } duration-500 `}
       ></div>

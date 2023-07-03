@@ -51,9 +51,11 @@ const EventPredictionModule = ({
         <SignedIn>
           <button
             onClick={async () => {
-              toast.success('Prediction Locked In!');
-
-              if (!selectedTeam || status === 'lockedIn') return;
+              if (status === 'lockedIn')
+                return toast.error('You have already locked in!');
+              if (!selectedTeam) return toast.error('Please select a team!');
+              if (eventData.event.state === 'completed')
+                return toast.error('This match has already been played!');
               handleLockIn({
                 matchId: eventData.event.match.id,
                 winningTeam: selectedTeam.code,
@@ -63,6 +65,7 @@ const EventPredictionModule = ({
                 userId: user?.id,
                 username: user?.username as string,
               });
+              toast.success('Prediction Locked In!');
             }}
             className={`absolute bottom-0 sm: h-full lg:h-auto text-base font-mono shadow-lg font-bold p-1 px-8 duration-500 rounded cursor-pointer ${
               selectedTeam === eventData.event.match.teams[0] ||
@@ -164,7 +167,7 @@ const EventPredictionModule = ({
         objectFit='cover'
         objectPosition='center'
       />
-      <div className='w-full h-full relative flex flex-col lg:flex-row text-primary z-50'>
+      <div className='w-full h-full relative flex flex-col lg:flex-row text-primary z-50 '>
         <div
           onClick={() => {
             if (status === 'lockedIn') return;
@@ -175,7 +178,7 @@ const EventPredictionModule = ({
             prediction[0].winningTeamId === eventData.event.match.teams[0].code
               ? 'bg-accent-blue opacity-80'
               : ''
-          } hover:bg-accent-blue hover:opacity-80 duration-500 cursor-pointer`}
+          } hover:bg-accent-blue hover:opacity-80 duration-500 cursor-pointer rounded`}
         >
           <div className='relative w-20 h-20 md:w-40 md:h-40 '>
             <Image
@@ -199,7 +202,7 @@ const EventPredictionModule = ({
             prediction[0].winningTeamId === eventData.event.match.teams[1].code
               ? 'bg-accent-gold opacity-80'
               : ''
-          } hover:bg-accent-gold hover:opacity-80 duration-500 cursor-pointer`}
+          } hover:bg-accent-gold hover:opacity-80 duration-500 cursor-pointer rounded`}
         >
           <div className='relative w-20 h-20 md:w-40 md:h-40 '>
             <Image
