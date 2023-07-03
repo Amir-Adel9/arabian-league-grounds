@@ -5,11 +5,13 @@ export default authMiddleware({
     '/',
     '/schedule',
     '/standings',
-    '/match',
+    '/match/:matchId',
     '/about',
     '/leaderboard',
+    '/teams/:slug',
   ],
 });
+console.log('authMiddleware', authMiddleware);
 
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
