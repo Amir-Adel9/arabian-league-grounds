@@ -24,6 +24,7 @@ async function Teams(props: any) {
     .then((res) => res.json())
     .then((data) => {
       const matchesWithTeam = data.data.schedule.events.filter((event: any) => {
+        if (event.type !== 'match') return false;
         const matchTeams = event.match.teams;
         const teamNames = matchTeams.map((team: any) => team.name);
         return teamNames.includes(team.teamName);
