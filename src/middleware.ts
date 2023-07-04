@@ -11,7 +11,6 @@ export default authMiddleware({
     '/teams/:slug',
   ],
 });
-console.log('authMiddleware', authMiddleware);
 
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
