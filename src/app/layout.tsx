@@ -46,6 +46,7 @@ async function fulfillPredictions() {
 
       .then((data) => {
         const event = data.data.schedule.events.filter((event: any) => {
+          if (event.type !== 'match') return;
           return (
             event.match.id === currentPrediction.matchId &&
             event.state === 'completed' &&
