@@ -5,7 +5,7 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
   if (event.type === 'show') {
     return (
       <Link
-        href='https://lolesports.com/live/arabian_league/lolesports_ar'
+        href='https://www.twitch.tv/lolesports_ar'
         className='h-full'
         target={'_blank'}
       >
@@ -83,7 +83,7 @@ const HomeLiveMatchCard = ({ event }: { event: any }) => {
   } else {
     return (
       <Link
-        href='https://lolesports.com/live/arabian_league/lolesports_ar'
+        href='https://www.twitch.tv/lolesports_ar'
         className='h-full'
         target={'_blank'}
       >

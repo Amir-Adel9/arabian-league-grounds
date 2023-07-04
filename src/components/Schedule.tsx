@@ -214,7 +214,7 @@ const LiveMatch = ({
 }) => {
   return (
     <Link
-      href='https://lolesports.com/live/arabian_league/lolesports_ar'
+      href='https://www.twitch.tv/lolesports_ar'
       className='w-full'
       target={'_blank'}
     >
