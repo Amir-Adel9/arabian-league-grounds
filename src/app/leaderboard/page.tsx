@@ -232,7 +232,7 @@ async function LeaderBoard() {
             Due to an occurring maintenance the points may not update right
             away, check back soon.
           </h1> */}
-          {/* <table className='w-full text-sm text-left'>
+          <table className='w-full text-sm text-left'>
             <thead className='text-xs  uppercase bg-gray-50 '>
               <tr>
                 <th scope='col' className='px-6 py-3'>
@@ -266,8 +266,8 @@ async function LeaderBoard() {
                 }
               )}
             </tbody>
-          </table> */}
-          <div className='relative z-10 flex flex-col items-center justify-center'>
+          </table>
+          {/* <div className='relative z-10 flex flex-col items-center justify-center'>
             <Image
               src='/dinger.gif'
               alt='dinger Image'
@@ -282,7 +282,7 @@ async function LeaderBoard() {
               Please check back later
             </p>
             <p className='text-accent-gold text-center'></p>
-          </div>
+          </div> */}
         </div>
         <div className='w-full lg:w-[30%] h-screen bg-secondary text-primary shadow-2xl overflow-y-auto no-scrollbar'>
           <h1 className='text-center font-bold text-2xl p-5'>
