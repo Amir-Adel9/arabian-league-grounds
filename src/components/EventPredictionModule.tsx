@@ -128,7 +128,7 @@ const EventPredictionModule = ({
               transition: 'background-color 0.5s ease-in-out',
             }}
           >
-            <SignInButton redirectUrl={`/match?Id=${eventData.event.match.id}`}>
+            <SignInButton redirectUrl={`/match/${eventData.event.match.id}`}>
               <div>
                 <h1>
                   {!selectedTeam && status !== 'lockedIn'
