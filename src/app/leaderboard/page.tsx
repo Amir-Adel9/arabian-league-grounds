@@ -17,15 +17,97 @@ dayjs.extend(timezone);
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
-const PredictionCard = ({
+const CorrectPredictionCard = ({
   prediction,
   eventData,
 }: {
   prediction: any;
   eventData: any;
 }) => {
-  const { state } = prediction;
+  return (
+    <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
+      <div className='flex  w-full items-center justify-center bg-green-900 border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-green-950 '>
+        <div className='flex w-full flex-row items-center justify-center '>
+          <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <Image
+              src={eventData.event.match.teams[0].image}
+              alt={eventData.event.match.teams[0].code}
+              fill={true}
+            />
+          </div>
+        </div>
+        <div className='relative'>
+          <h3 className='text-center font-bold text-xl flex-grow'>
+            {`${prediction.winningTeamId} Won `}
+          </h3>
+          <h3 className='absolute w-36 left-[calc(50%-4.5rem)] text-center font-bold text-sm flex-grow'>
+            {`(You picked ${prediction.winningTeamId})`}
+          </h3>
+        </div>
+        <div className='flex w-full flex-row items-center justify-center '>
+          <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <Image
+              src={eventData.event.match.teams[1].image}
+              alt={eventData.event.match.teams[1].code}
+              fill={true}
+            />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
 
+const IncorrectPredictionCard = ({
+  prediction,
+  eventData,
+}: {
+  prediction: any;
+  eventData: any;
+}) => {
+  return (
+    <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
+      <div className='flex  w-full items-center justify-center bg-red-900 border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-red-950'>
+        <div className='flex w-full flex-row items-center justify-center '>
+          <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <Image
+              src={eventData.event.match.teams[0].image}
+              alt={eventData.event.match.teams[0].code}
+              fill={true}
+            />
+          </div>
+        </div>
+        <div>
+          <div className='relative'>
+            <h3 className='text-center font-bold text-xl flex-grow'>
+              {`${prediction.losingTeamId} Won `}
+            </h3>
+            <h3 className='absolute w-36 left-[calc(50%-4.5rem)] text-center font-bold text-sm flex-grow'>
+              {`(You picked ${prediction.winningTeamId})`}
+            </h3>
+          </div>
+        </div>
+        <div className='flex w-full flex-row items-center justify-center '>
+          <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <Image
+              src={eventData.event.match.teams[1].image}
+              alt={eventData.event.match.teams[1].code}
+              fill={true}
+            />
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+const UnfulfilledPredictionCard = ({
+  prediction,
+  eventData,
+}: {
+  prediction: any;
+  eventData: any;
+}) => {
   const targetDate = dayjs.utc(eventData.event.startTime);
   const userDate = targetDate.tz(dayjs.tz.guess());
   const matchHour = userDate.format('HH:mm');
@@ -46,111 +128,40 @@ const PredictionCard = ({
     formattedDate = userDate.format('dddd, MMM DD');
   }
 
-  if (state === 'unfulfilled') {
-    return (
-      <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
-        <div className='flex  w-full items-center justify-center bg-accent-blue border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-[#0b2c38] '>
-          <div className='flex w-full flex-row items-center justify-center '>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
-              <Image
-                src={eventData.event.match.teams[0].image}
-                alt={eventData.event.match.teams[0].code}
-                fill={true}
-              />
-            </div>
-          </div>
-          <div>
-            <h1 className='text-center font-bold text-xl p-5'>
-              {prediction.winningTeamId === eventData.event.match.teams[0].code
-                ? `#${eventData.event.match.teams[0].code}_WIN?`
-                : prediction.winningTeamId ===
-                  eventData.event.match.teams[1].code
-                ? `#${eventData.event.match.teams[1].code}_WIN?`
-                : 'No winner yet'}
-            </h1>
-            <h1 className='text-center'>{formattedDate}</h1>
-          </div>
-          <div className='flex w-full flex-row items-center justify-center '>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
-              <Image
-                src={eventData.event.match.teams[1].image}
-                alt={eventData.event.match.teams[1].code}
-                fill={true}
-              />
-            </div>
+  return (
+    <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
+      <div className='flex  w-full items-center justify-center bg-accent-blue border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-[#0b2c38] '>
+        <div className='flex w-full flex-row items-center justify-center '>
+          <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <Image
+              src={eventData.event.match.teams[0].image}
+              alt={eventData.event.match.teams[0].code}
+              fill={true}
+            />
           </div>
         </div>
-      </Link>
-    );
-  } else if (state === 'correct') {
-    return (
-      <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
-        <div className='flex  w-full items-center justify-center bg-green-900 border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-green-950 '>
-          <div className='flex w-full flex-row items-center justify-center '>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
-              <Image
-                src={eventData.event.match.teams[0].image}
-                alt={eventData.event.match.teams[0].code}
-                fill={true}
-              />
-            </div>
-          </div>
-          <div className='relative'>
-            <h3 className='text-center font-bold text-xl flex-grow'>
-              {`${prediction.winningTeamId} Won `}
-            </h3>
-            <h3 className='absolute w-36 left-[calc(50%-4.5rem)] text-center font-bold text-sm flex-grow'>
-              {`(You picked ${prediction.winningTeamId})`}
-            </h3>
-          </div>
-          <div className='flex w-full flex-row items-center justify-center '>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
-              <Image
-                src={eventData.event.match.teams[1].image}
-                alt={eventData.event.match.teams[1].code}
-                fill={true}
-              />
-            </div>
+        <div>
+          <h1 className='text-center font-bold text-xl p-5'>
+            {prediction.winningTeamId === eventData.event.match.teams[0].code
+              ? `#${eventData.event.match.teams[0].code}_WIN?`
+              : prediction.winningTeamId === eventData.event.match.teams[1].code
+              ? `#${eventData.event.match.teams[1].code}_WIN?`
+              : 'No winner yet'}
+          </h1>
+          <h1 className='text-center'>{formattedDate}</h1>
+        </div>
+        <div className='flex w-full flex-row items-center justify-center '>
+          <div className='relative w-10 h-10 md:w-20 md:h-20 '>
+            <Image
+              src={eventData.event.match.teams[1].image}
+              alt={eventData.event.match.teams[1].code}
+              fill={true}
+            />
           </div>
         </div>
-      </Link>
-    );
-  } else {
-    return (
-      <Link href={`/match/${eventData.event.match.id}`} className='w-full'>
-        <div className='flex  w-full items-center justify-center bg-red-900 border-accent-gold border-y cursor-pointer p-4 duration-200 hover:bg-red-950'>
-          <div className='flex w-full flex-row items-center justify-center '>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
-              <Image
-                src={eventData.event.match.teams[0].image}
-                alt={eventData.event.match.teams[0].code}
-                fill={true}
-              />
-            </div>
-          </div>
-          <div>
-            <div className='relative'>
-              <h3 className='text-center font-bold text-xl flex-grow'>
-                {`${prediction.losingTeamId} Won `}
-              </h3>
-              <h3 className='absolute w-36 left-[calc(50%-4.5rem)] text-center font-bold text-sm flex-grow'>
-                {`(You picked ${prediction.winningTeamId})`}
-              </h3>
-            </div>
-          </div>
-          <div className='flex w-full flex-row items-center justify-center '>
-            <div className='relative w-10 h-10 md:w-20 md:h-20 '>
-              <Image
-                src={eventData.event.match.teams[1].image}
-                alt={eventData.event.match.teams[1].code}
-                fill={true}
-              />
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
-  }
+      </div>
+    </Link>
+  );
 };
 
 const LeaderBoardCard = ({
@@ -296,7 +307,7 @@ async function LeaderBoard() {
             <div>
               {currentUserPredictions
                 .sort((a: any, b: any) => {
-                  return a.createdAt - b.createdAt;
+                  return a.state - b.state;
                 })
                 .map(async (prediction: any) => {
                   const eventData = await fetch(
@@ -315,13 +326,32 @@ async function LeaderBoard() {
                         )[0],
                       };
                     });
-                  return (
-                    <PredictionCard
-                      key={prediction.id}
-                      prediction={prediction}
-                      eventData={eventData}
-                    />
-                  );
+
+                  if (prediction.state === 'correct') {
+                    return (
+                      <CorrectPredictionCard
+                        key={prediction.id}
+                        eventData={eventData}
+                        prediction={prediction}
+                      />
+                    );
+                  } else if (prediction.state === 'incorrect') {
+                    return (
+                      <IncorrectPredictionCard
+                        key={prediction.id}
+                        eventData={eventData}
+                        prediction={prediction}
+                      />
+                    );
+                  } else {
+                    return (
+                      <UnfulfilledPredictionCard
+                        key={prediction.id}
+                        eventData={eventData}
+                        prediction={prediction}
+                      />
+                    );
+                  }
                 })}
             </div>
           ) : (
