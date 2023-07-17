@@ -22,42 +22,6 @@ dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
 
 export default async function Home() {
-  const loggedInUser = await currentUser();
-
-  if (loggedInUser) {
-    const { id, username } = loggedInUser;
-
-    const existingUser = await db
-      .select()
-      .from(user)
-      .where(eq(user.clerkId, id));
-
-    if (existingUser.length === 0) {
-      await db.insert(user).values({ clerkId: id, username: username });
-    }
-  }
-
-  const userPredictions = await db
-    .select()
-    .from(prediction)
-    .where(eq(prediction.userId, loggedInUser?.id ? loggedInUser.id : ''));
-
-  const upcomingMatches = await fetch(
-    `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
-    requestParams
-  )
-    .then((res) => res.json())
-    .then((upcomingMatches) => {
-      const unStartedMatchesWithin7Days = upcomingMatches.data.schedule.events
-        .filter((event: any) => {
-          const matchState = event.state;
-
-          return matchState === 'unstarted' || matchState === 'inProgress';
-        })
-        .slice(0, 8);
-      return unStartedMatchesWithin7Days;
-    });
-
   return (
     <main className='relative flex min-h-screen flex-col items-center'>
       <section className='w-full min-h-screen relative flex flex-col justify-center items-center'>
@@ -104,23 +68,22 @@ export default async function Home() {
           </h2>
           <div className='relative w-[85%] bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg'>
             <ViewSchedule />
-            <Suspense fallback={<span>Loading...</span>}>
-              <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
-                {upcomingMatches.map((event: any, index: number) => {
-                  const matchState = event.state;
-                  if (matchState === 'unstarted') {
-                    return (
-                      <HomeMatchCard
-                        event={event}
-                        key={event.match.id}
-                        userPredictions={userPredictions}
-                      />
-                    );
-                  } else if (matchState === 'inProgress') {
-                    return <HomeLiveMatchCard event={event} key={index} />;
-                  }
-                })}
-              </div>
+            <Suspense
+              fallback={
+                <div className='text-xl relative w-full flex flex-col gap-5 justify-center items-center text-primary '>
+                  <Image
+                    src='/dinger.gif'
+                    alt='dinger Image'
+                    width={260}
+                    height={260}
+                    draggable={false}
+                  />
+                  Loading...
+                </div>
+              }
+            >
+              {/* @ts-ignore */}
+              <UpcomingMatches />
             </Suspense>
           </div>
         </div>
@@ -137,5 +100,63 @@ export default async function Home() {
         </div>
       </section>
     </main>
+  );
+}
+
+async function UpcomingMatches({}) {
+  const loggedInUser = await currentUser();
+
+  if (loggedInUser) {
+    const { id, username } = loggedInUser;
+
+    const existingUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.clerkId, id));
+
+    if (existingUser.length === 0) {
+      await db.insert(user).values({ clerkId: id, username: username });
+    }
+  }
+
+  const userPredictions = await db
+    .select()
+    .from(prediction)
+    .where(eq(prediction.userId, loggedInUser?.id ? loggedInUser.id : ''));
+
+  const upcomingMatches = await fetch(
+    `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
+    requestParams
+  )
+    .then((res) => res.json())
+    .then((upcomingMatches) => {
+      const unStartedMatchesWithin7Days = upcomingMatches.data.schedule.events
+        .filter((event: any) => {
+          const matchState = event.state;
+
+          return matchState === 'unstarted' || matchState === 'inProgress';
+        })
+        .slice(0, 8);
+      return unStartedMatchesWithin7Days;
+    });
+
+  return (
+    <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
+      {upcomingMatches.map((event: any, index: number) => {
+        if (!event) return <div>eee</div>;
+        const matchState = event.state;
+        if (matchState === 'unstarted') {
+          return (
+            <HomeMatchCard
+              event={event}
+              key={event.match.id}
+              userPredictions={userPredictions}
+            />
+          );
+        } else if (matchState === 'inProgress') {
+          return <HomeLiveMatchCard event={event} key={index} />;
+        }
+      })}
+    </div>
   );
 }

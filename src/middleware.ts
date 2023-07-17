@@ -9,6 +9,7 @@ export default authMiddleware({
     '/about',
     '/leaderboard',
     '/teams/:slug',
+    '/stats',
   ],
 });
 
