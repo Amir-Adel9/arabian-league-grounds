@@ -23,6 +23,8 @@ export const metadata = {
     'Your all-in-one League of Legends Arabian League companion. Teams, Schedule, Standings, Leaderboards, Rewards, and more!',
 };
 
+fulfillPredictions();
+
 export default async function RootLayout({
   children,
   modal,
@@ -158,5 +160,3 @@ export default async function RootLayout({
     </ClerkProvider>
   );
 }
-
-fulfillPredictions();
