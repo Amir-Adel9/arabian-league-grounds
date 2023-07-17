@@ -103,7 +103,6 @@ export default async function Home() {
           </h2>
           <div className='relative w-[85%] bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg'>
             <ViewSchedule />
-
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
               {upcomingMatches.map((event: any, index: number) => {
                 const matchState = event.state;
