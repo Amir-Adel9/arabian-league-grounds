@@ -83,7 +83,7 @@ const HomeMatchCard = ({
           </h3>
         </div>
         <div className='flex flex-row items-center justify-center z-20'>
-          <HomeCardMatchDate matchDate={formattedDate} />
+          {/* <HomeCardMatchDate matchDate={formattedDate} /> */}
         </div>
         <div className='flex justify-center mt-4 z-20'>
           <button className=' border border-accent-gold bg-accent-gold duration-200 text-white py-2 px-4 rounded hover:bg-[#8e7a3b]'>
