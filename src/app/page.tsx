@@ -142,7 +142,6 @@ async function UpcomingMatches() {
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
       {upcomingMatches.map((event: any, index: number) => {
-        console.log(event);
         const matchState = event.state;
         if (matchState === 'unstarted') {
           return (
