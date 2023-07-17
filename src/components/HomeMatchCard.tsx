@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 
 import dayjs from 'dayjs';
@@ -5,7 +6,6 @@ import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
 import timezone from 'dayjs/plugin/timezone';
 import Link from 'next/link';
-import HomeCardMatchDate from './HomeCardMatchDate';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
@@ -23,8 +23,7 @@ const HomeMatchCard = ({
   const duration = dayjs.duration(targetDate.diff(now));
   const daysUntilMatch = duration.asDays();
   const userDate = targetDate.tz(dayjs.tz.guess());
-  const correctDate = userDate.add(1, 'hour');
-  const formattedDate = correctDate.format('DD/MM/YYYY HH:mm');
+  const formattedDate = userDate.format('DD/MM/YYYY HH:mm');
 
   const userPredictionsForMatch = userPredictions.filter(
     (prediction: any) => prediction.matchId === event.match.id
@@ -83,7 +82,7 @@ const HomeMatchCard = ({
           </h3>
         </div>
         <div className='flex flex-row items-center justify-center z-20'>
-          {/* <HomeCardMatchDate matchDate={formattedDate} /> */}
+          <p className='text-accent-gold text-center'>Date: {formattedDate}</p>
         </div>
         <div className='flex justify-center mt-4 z-20'>
           <button className=' border border-accent-gold bg-accent-gold duration-200 text-white py-2 px-4 rounded hover:bg-[#8e7a3b]'>
