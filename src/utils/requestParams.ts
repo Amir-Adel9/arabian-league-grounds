@@ -14,5 +14,4 @@ export const requestParams = {
   referrer: 'https://lolesports.com/',
   method: 'GET',
   mode: 'cors',
-  next: { revalidate: 10 },
 } as RequestInit;

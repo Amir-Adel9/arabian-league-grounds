@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
 import timezone from 'dayjs/plugin/timezone';
+import { Suspense } from 'react';
 
 dayjs.extend(timezone);
 dayjs.extend(utcPlugin);
@@ -182,17 +183,193 @@ const LeaderBoardCard = ({
     </>
   );
 };
-// async function revalidate() {
-//   'use server';
-//   revalidatePath('/leaderboard');
-// }
-
-// revalidate();
 
 async function LeaderBoard() {
-  const loggedInUser = await currentUser();
-  const allPredictions = await db.select().from(prediction);
+  return (
+    <main className='relative flex min-h-screen flex-col items-center'>
+      <section className='w-full h-screen relative flex flex-col-reverse lg:flex-row  mt-24 items-center'>
+        <div className='h-full w-full lg:w-[70%] relative overflow-x-auto shadow-md sm:rounded-lg'>
+          {/* <h1 className='text-center font-bold p-5 text-red-700'>
+            Due to an occurring maintenance the points may not update right
+            away, check back soon.
+          </h1> */}
+          <Suspense
+            fallback={
+              <div className='text-xl relative w-full h-full flex flex-col gap-5 justify-center items-center text-primary '>
+                <span className='text-secondary font-bold text-xl'>
+                  Loading...
+                </span>
+              </div>
+            }
+          >
+            <table className='w-full text-sm text-left'>
+              <thead className='text-xs  uppercase bg-gray-50 '>
+                <tr>
+                  <th scope='col' className='px-6 py-3'>
+                    Rank
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Username
+                  </th>
+                  <th scope='col' className='px-6 py-3'>
+                    Points
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* @ts-ignore */}
+                <LeaderBoardTable />
+              </tbody>
+            </table>
+          </Suspense>
+          {/* <div className='relative z-10 flex flex-col items-center justify-center'>
+            <Image
+              src='/dinger.gif'
+              alt='dinger Image'
+              width={260}
+              height={260}
+              draggable={false}
+            />
+            <h1 className='text-5xl font-bold text-accent-gold text-center'>
+              The leaderboard is currently under maintenance
+            </h1>
+            <p className='text-2xl text-accent-gold text-center'>
+              Please check back later
+            </p>
+            <p className='text-accent-gold text-center'></p>
+          </div> */}
+        </div>
+        <div className='w-full lg:w-[30%] h-screen bg-secondary text-primary shadow-2xl overflow-y-auto no-scrollbar'>
+          <h1 className='text-center font-bold text-2xl p-5'>
+            Your Predictions
+            <p className='text-center font-bold text-xs'></p>
+          </h1>
+          <Suspense
+            fallback={
+              <div className='text-xl relative w-full h-[calc(100%-130px)] flex flex-col gap-5 justify-center items-center text-primary '>
+                <Image
+                  src='/dinger.gif'
+                  alt='dinger Image'
+                  width={260}
+                  height={260}
+                  draggable={false}
+                />
+                Loading...
+              </div>
+            }
+          >
+            {/* @ts-ignore */}
+            <Predictions />
+          </Suspense>
+        </div>
+      </section>
+    </main>
+  );
+}
 
+export default LeaderBoard;
+
+async function Predictions() {
+  const loggedInUser = await currentUser();
+
+  if (!loggedInUser) {
+    return (
+      <div className='flex h-full w-full justify-center items-center'>
+        <div className='flex flex-col justify-center items-center'>
+          <Image
+            src='/dinger.gif'
+            alt='dinger Image'
+            width={260}
+            height={260}
+            draggable={false}
+          />
+          <h1 className='text-center font-bold text-2xl p-5'>
+            Please login to view your predictions
+          </h1>
+        </div>
+      </div>
+    );
+  }
+
+  const currentUserPredictions = await db
+    .select()
+    .from(prediction)
+    .where(eq(prediction.userId, loggedInUser?.id));
+
+  return (
+    <>
+      {currentUserPredictions.length > 0 ? (
+        <div>
+          {currentUserPredictions
+            .sort((a: any, b: any) => {
+              return a.state - b.state;
+            })
+            .map(async (prediction: any) => {
+              const eventData = await fetch(
+                `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
+                requestParams
+              )
+                .then((res) => res.json())
+
+                .then((data) => {
+                  return {
+                    event: data.data.schedule.events.filter((event: any) => {
+                      if (event.type !== 'match') return;
+                      return event.match.id === prediction.matchId;
+                    })[0],
+                  };
+                });
+
+              if (prediction.state === 'correct') {
+                return (
+                  <CorrectPredictionCard
+                    key={prediction.id}
+                    eventData={eventData}
+                    prediction={prediction}
+                  />
+                );
+              } else if (prediction.state === 'incorrect') {
+                return (
+                  <IncorrectPredictionCard
+                    key={prediction.id}
+                    eventData={eventData}
+                    prediction={prediction}
+                  />
+                );
+              } else {
+                return (
+                  <UnfulfilledPredictionCard
+                    key={prediction.id}
+                    eventData={eventData}
+                    prediction={prediction}
+                  />
+                );
+              }
+            })}
+        </div>
+      ) : (
+        <div className='flex h-full w-full justify-center items-center'>
+          <div className='flex flex-col justify-center items-center'>
+            <Image
+              src='/dinger.gif'
+              alt='dinger Image'
+              width={260}
+              height={260}
+              draggable={false}
+            />
+            <h1 className='text-center font-bold text-2xl p-5'>
+              {loggedInUser
+                ? 'You have not made any predictions yet'
+                : 'Please login to view your predictions'}
+            </h1>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+async function LeaderBoardTable() {
   const IdsForUsersWithPredictions = await db
     .select({ userId: prediction.userId })
     .from(prediction)
@@ -231,173 +408,24 @@ async function LeaderBoard() {
     return b.points - a.points;
   });
 
-  const currentUserPredictions = allPredictions.filter(
-    (prediction) => prediction.userId === loggedInUser?.id
-  );
-
   return (
-    <main className='relative flex min-h-screen flex-col items-center'>
-      <section className='w-full h-screen relative flex flex-col-reverse lg:flex-row  mt-24 items-center'>
-        <div className='h-full w-full lg:w-[70%] relative overflow-x-auto shadow-md sm:rounded-lg'>
-          {/* <h1 className='text-center font-bold p-5 text-red-700'>
-            Due to an occurring maintenance the points may not update right
-            away, check back soon.
-          </h1> */}
-          <table className='w-full text-sm text-left'>
-            <thead className='text-xs  uppercase bg-gray-50 '>
-              <tr>
-                <th scope='col' className='px-6 py-3'>
-                  Rank
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Username
-                </th>
-                <th scope='col' className='px-6 py-3'>
-                  Points
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {uniqueUsersWithDescendingPoints.map(
-                (uniqueUser: any, index: number) => {
-                  return (
-                    <tr
-                      className={`border-b  ${
-                        (index + 1) % 2 === 0 ? 'bg-gray-50' : 'bg-white'
-                      }`}
-                      key={index}
-                    >
-                      <LeaderBoardCard
-                        user={uniqueUser}
-                        userIndex={index + 1}
-                        key={index}
-                      />
-                    </tr>
-                  );
-                }
-              )}
-            </tbody>
-          </table>
-          {/* <div className='relative z-10 flex flex-col items-center justify-center'>
-            <Image
-              src='/dinger.gif'
-              alt='dinger Image'
-              width={260}
-              height={260}
-              draggable={false}
+    <>
+      {uniqueUsersWithDescendingPoints.map((uniqueUser: any, index: number) => {
+        return (
+          <tr
+            className={`border-b  ${
+              (index + 1) % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+            }`}
+            key={index}
+          >
+            <LeaderBoardCard
+              user={uniqueUser}
+              userIndex={index + 1}
+              key={index}
             />
-            <h1 className='text-5xl font-bold text-accent-gold text-center'>
-              The leaderboard is currently under maintenance
-            </h1>
-            <p className='text-2xl text-accent-gold text-center'>
-              Please check back later
-            </p>
-            <p className='text-accent-gold text-center'></p>
-          </div> */}
-        </div>
-        <div className='w-full lg:w-[30%] h-screen bg-secondary text-primary shadow-2xl overflow-y-auto no-scrollbar'>
-          <h1 className='text-center font-bold text-2xl p-5'>
-            Your Predictions
-            <p className='text-center font-bold text-xs'>
-              (Refresh if you think the predictions are out of date)
-            </p>
-          </h1>
-
-          {currentUserPredictions.length > 0 ? (
-            <div>
-              {currentUserPredictions
-                .sort((a: any, b: any) => {
-                  return a.state - b.state;
-                })
-                .map(async (prediction: any) => {
-                  const eventData = await fetch(
-                    `https://esports-api.lolesports.com/persisted/gw/getSchedule?hl=en-US&leagueId=${process.env.NEXT_PUBLIC_LEAGUE_ID}`,
-                    requestParams
-                  )
-                    .then((res) => res.json())
-
-                    .then((data) => {
-                      return {
-                        event: data.data.schedule.events.filter(
-                          (event: any) => {
-                            if (event.type !== 'match') return;
-                            return event.match.id === prediction.matchId;
-                          }
-                        )[0],
-                      };
-                    });
-
-                  if (prediction.state === 'correct') {
-                    return (
-                      <CorrectPredictionCard
-                        key={prediction.id}
-                        eventData={eventData}
-                        prediction={prediction}
-                      />
-                    );
-                  } else if (prediction.state === 'incorrect') {
-                    return (
-                      <IncorrectPredictionCard
-                        key={prediction.id}
-                        eventData={eventData}
-                        prediction={prediction}
-                      />
-                    );
-                  } else {
-                    return (
-                      <UnfulfilledPredictionCard
-                        key={prediction.id}
-                        eventData={eventData}
-                        prediction={prediction}
-                      />
-                    );
-                  }
-                })}
-            </div>
-          ) : (
-            <div className='flex h-full w-full justify-center items-center'>
-              <div className='flex flex-col justify-center items-center'>
-                <Image
-                  src='/dinger.gif'
-                  alt='dinger Image'
-                  width={260}
-                  height={260}
-                  draggable={false}
-                />
-                <h1 className='text-center font-bold text-2xl p-5'>
-                  {loggedInUser
-                    ? 'You have not made any predictions yet'
-                    : 'Please login to view your predictions'}
-                </h1>
-              </div>
-            </div>
-          )}
-        </div>
-      </section>
-    </main>
+          </tr>
+        );
+      })}
+    </>
   );
 }
-
-export default LeaderBoard;
-
-/* 
-  <div className='relative z-10 flex flex-col items-center justify-center'>
-          <Image
-            src='/dinger.gif'
-            alt='dinger Image'
-            width={260}
-            height={260}
-            draggable={false}
-          />
-          <h1 className='text-5xl font-bold text-accent-gold text-center'>
-            This page is under construction
-          </h1>
-          <p className='text-2xl text-accent-gold text-center'>
-            Please check back after week 2 of the Arabian League
-          </p>
-          <p className='text-accent-gold text-center'>
-            (Here your predictions will be displayed along side a leaderboard
-            for whom those have the most points)
-          </p>
-  </div>
-*/
