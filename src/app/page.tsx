@@ -102,8 +102,7 @@ export default async function Home() {
     </main>
   );
 }
-
-async function UpcomingMatches({}) {
+async function UpcomingMatches() {
   const loggedInUser = await currentUser();
 
   if (loggedInUser) {
@@ -143,7 +142,7 @@ async function UpcomingMatches({}) {
   return (
     <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
       {upcomingMatches.map((event: any, index: number) => {
-        if (!event) return <div>eee</div>;
+        console.log(event);
         const matchState = event.state;
         if (matchState === 'unstarted') {
           return (
