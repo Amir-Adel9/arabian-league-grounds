@@ -8,6 +8,9 @@ import { currentUser } from '@clerk/nextjs';
 import NavMenu from '@/components/NavMenu';
 import { Toaster } from 'react-hot-toast';
 import { fulfillPredictions } from '@/utils/fulfillPredictions';
+import { db } from '@/db';
+import { eq } from 'drizzle-orm';
+import { user } from '@/db/schema';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
@@ -32,7 +35,20 @@ export default async function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-  const user = await currentUser();
+  const loggedInUser = await currentUser();
+
+  if (loggedInUser) {
+    const { id, username } = loggedInUser;
+
+    const existingUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.clerkId, id));
+
+    if (existingUser.length === 0) {
+      await db.insert(user).values({ clerkId: id, username: username });
+    }
+  }
 
   return (
     <ClerkProvider>
