@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import dayjs from 'dayjs';
 import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
@@ -11,8 +13,16 @@ dayjs.extend(timezone);
 
 const HomeCardMatchDate = ({ matchDate }: { matchDate: any }) => {
   const targetDate = dayjs.utc(matchDate);
-  const userDate = targetDate.tz(dayjs.tz.guess());
-  const formattedDate = userDate.format('DD/MM/YYYY HH:mm');
+  const [formattedDate, setFormattedDate] = useState(
+    targetDate.add(3, 'hour').format('DD/MM/YYYY HH:mm')
+  );
+
+  useEffect(() => {
+    const userDate = targetDate.local();
+    const newFormattedDate = userDate.format('DD/MM/YYYY HH:mm');
+    setFormattedDate(newFormattedDate);
+  }, []);
+
   return <p className='text-accent-gold text-center'>Date: {formattedDate}</p>;
 };
 

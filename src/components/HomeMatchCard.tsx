@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 
 import dayjs from 'dayjs';
@@ -7,7 +6,6 @@ import durationPlugin from 'dayjs/plugin/duration';
 import timezone from 'dayjs/plugin/timezone';
 import Link from 'next/link';
 import HomeCardMatchDate from './HomeCardMatchDate';
-import { useEffect, useState } from 'react';
 
 dayjs.extend(utcPlugin);
 dayjs.extend(durationPlugin);
@@ -21,16 +19,6 @@ const HomeMatchCard = ({
   userPredictions: any;
 }) => {
   const targetDate = dayjs.utc(event.startTime);
-  const [formattedDate, setFormattedDate] = useState(
-    targetDate.add(3, 'hour').format('DD/MM/YYYY HH:mm')
-  );
-
-  useEffect(() => {
-    const userDate = targetDate.local();
-    const newFormattedDate = userDate.format('DD/MM/YYYY HH:mm');
-    setFormattedDate(newFormattedDate);
-  }, []);
-
   const now = dayjs.utc();
   const duration = dayjs.duration(targetDate.diff(now));
   const daysUntilMatch = duration.asDays();
@@ -93,7 +81,7 @@ const HomeMatchCard = ({
         </div>
         <div className='flex flex-row items-center justify-center z-20'>
           <span className='text-accent-gold text-center'>
-            Date: {formattedDate}
+            <HomeCardMatchDate matchDate={event.startTime} />
           </span>
         </div>
         <div className='flex justify-center mt-4 z-20'>
