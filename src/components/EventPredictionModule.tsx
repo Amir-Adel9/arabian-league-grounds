@@ -54,7 +54,10 @@ const EventPredictionModule = ({
               if (status === 'lockedIn')
                 return toast.error('You have already locked in!');
               if (!selectedTeam) return toast.error('Please select a team!');
-              if (eventData.event.state === 'completed')
+              if (
+                eventData.event.state === 'completed' ||
+                eventData.event.state === 'inProgress'
+              )
                 return toast.error('This match has already been played!');
               handleLockIn({
                 matchId: eventData.event.match.id,
