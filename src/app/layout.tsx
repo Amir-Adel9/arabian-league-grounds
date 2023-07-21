@@ -91,7 +91,7 @@ export default async function RootLayout({
                   <Link href='/about'>About</Link>
                 </li>
                 <li>
-                  {!user ? (
+                  {!loggedInUser ? (
                     <div className='bg-accent-gold p-2 px-6 border border-accent-gold cursor-pointer rounded font-bold font-kanit duration-200 hover:bg-secondary'>
                       <SignInButton />
                     </div>
