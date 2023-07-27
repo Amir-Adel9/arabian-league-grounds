@@ -1,17 +1,20 @@
 'use client';
 import { useCallback, useRef, useEffect, MouseEventHandler } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Modal({ children }: { children: React.ReactNode }) {
   const overlay = useRef(null);
   const wrapper = useRef(null);
   const router = useRouter();
-  const pathname = usePathname();
+
+  let count = 0;
 
   const onDismiss = useCallback(() => {
-    console.log(pathname);
+    if (count === 0) {
+      router.back();
+      count++;
+    }
     router.refresh();
-    router.back();
   }, [router]);
 
   const onClick: MouseEventHandler = useCallback(
