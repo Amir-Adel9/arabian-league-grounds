@@ -7,7 +7,7 @@ import Image from 'next/image';
 import dayjs from 'dayjs';
 import utcPlugin from 'dayjs/plugin/utc';
 import durationPlugin from 'dayjs/plugin/duration';
-import { handleLockIn } from '@/utils/actions/handleLockIn';
+// import { handleLockIn } from '@/utils/functions/handleLockIn';
 import { SignedIn, SignedOut, SignInButton, useUser } from '@clerk/nextjs';
 import toast from 'react-hot-toast';
 
@@ -59,14 +59,29 @@ const EventPredictionModule = ({
                 eventData.event.state === 'inProgress'
               )
                 return toast.error('This match has already been played!');
-              handleLockIn({
-                matchId: eventData.event.match.id,
-                winningTeam: selectedTeam.code,
-                losingTeam: eventData.event.match.teams.find((team: any) => {
-                  return team.code !== selectedTeam.code;
-                }).code,
-                userId: user?.id,
-                username: user?.username as string,
+              // handleLockIn({
+              //   matchId: eventData.event.match.id,
+              //   winningTeam: selectedTeam.code,
+              //   losingTeam: eventData.event.match.teams.find((team: any) => {
+              //     return team.code !== selectedTeam.code;
+              //   }).code,
+              //   userId: user?.id,
+              //   username: user?.username as string,
+              // });
+              fetch('/api/predict', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  matchId: eventData.event.match.id,
+                  winningTeam: selectedTeam.code,
+                  losingTeam: eventData.event.match.teams.find((team: any) => {
+                    return team.code !== selectedTeam.code;
+                  }).code,
+                  userId: user?.id,
+                  username: user?.username as string,
+                }),
               });
               toast.success('Prediction Locked In!');
             }}

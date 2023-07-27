@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { currentUser } from '@clerk/nextjs';
 import NavMenu from '@/components/NavMenu';
 import { Toaster } from 'react-hot-toast';
-import { fulfillPredictions } from '@/utils/fulfillPredictions';
+import { fulfillPredictions } from '@/utils/functions/fulfillPredictions';
 import { db } from '@/db';
 import { eq } from 'drizzle-orm';
 import { user } from '@/db/schema';

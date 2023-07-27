@@ -1,7 +1,7 @@
 import { db } from '@/db';
 import { prediction, user } from '@/db/schema';
 import { eq, sql, and } from 'drizzle-orm';
-import { requestParams } from './requestParams';
+import { requestParams } from '../requestParams';
 
 export async function fulfillPredictions() {
   const completedMatches = await fetch(

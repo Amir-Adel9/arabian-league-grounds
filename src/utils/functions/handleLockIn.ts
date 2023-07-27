@@ -1,5 +1,3 @@
-'use server';
-
 import { db } from '@/db';
 import { and, eq } from 'drizzle-orm';
 import { prediction } from '@/db/schema';
