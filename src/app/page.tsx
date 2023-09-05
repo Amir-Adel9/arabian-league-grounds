@@ -69,7 +69,7 @@ export default async function Home() {
           <div className='relative w-[85%] bg-secondary text-primary p-4 xs:p-8 rounded-lg shadow-lg'>
             <ViewSchedule />
 
-            <Suspense
+            {/* <Suspense
               fallback={
                 <div className='text-2xl text-accent-gold relative w-full flex flex-col gap-5 justify-center items-center  '>
                   <Image
@@ -83,9 +83,19 @@ export default async function Home() {
                 </div>
               }
             >
-              {/* @ts-expect-error Server Component */}
+              @ts-expect-error Server Component
               <UpcomingMatches />
-            </Suspense>
+            </Suspense> */}
+            <div className='text-2xl text-accent-gold relative w-full flex flex-col gap-5 justify-center items-center '>
+              <Image
+                src='/dinger.gif'
+                alt='dinger Image'
+                width={260}
+                height={260}
+                draggable={false}
+              />
+              Nothing to currently show.
+            </div>
           </div>
         </div>
       </section>
