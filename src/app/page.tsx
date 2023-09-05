@@ -127,41 +127,49 @@ const UpcomingMatches = async () => {
         .slice(0, 8);
     });
 
-  console.log(upcomingMatches);
-
   return (
-    <div
-      className={`${
-        upcomingMatches.length !== 0 ? 'grid' : 'flex justify-center'
-      } grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 `}
-    >
-      {upcomingMatches.length !== 0 ? (
-        upcomingMatches.map((event: any, index: number) => {
-          const matchState = event.state;
-          if (matchState === 'unstarted') {
-            return (
-              <HomeMatchCard
-                event={event}
-                key={event.match.id}
-                userPredictions={userPredictions}
-              />
-            );
-          } else if (matchState === 'inProgress') {
-            return <HomeLiveMatchCard event={event} key={index} />;
-          }
-        })
-      ) : (
-        <div className='text-2xl text-accent-gold relative w-full flex flex-col gap-5 justify-center items-center '>
-          <Image
-            src='/dinger.gif'
-            alt='dinger Image'
-            width={260}
-            height={260}
-            draggable={false}
-          />
-          Nothing to currently show.
-        </div>
-      )}
+    // <div
+    //   className={`${
+    //     upcomingMatches.length !== 0 ? 'grid' : 'flex justify-center'
+    //   } grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 `}
+    // >
+    //   {upcomingMatches.length !== 0 ? (
+    //     upcomingMatches.map((event: any, index: number) => {
+    //       const matchState = event.state;
+    //       if (matchState === 'unstarted') {
+    //         return (
+    //           <HomeMatchCard
+    //             event={event}
+    //             key={event.match.id}
+    //             userPredictions={userPredictions}
+    //           />
+    //         );
+    //       } else if (matchState === 'inProgress') {
+    //         return <HomeLiveMatchCard event={event} key={index} />;
+    //       }
+    //     })
+    //   ) : (
+    //     <div className='text-2xl text-accent-gold relative w-full flex flex-col gap-5 justify-center items-center '>
+    //       <Image
+    //         src='/dinger.gif'
+    //         alt='dinger Image'
+    //         width={260}
+    //         height={260}
+    //         draggable={false}
+    //       />
+    //       Nothing to currently show.
+    //     </div>
+    //   )}
+    // </div>
+    <div className='text-2xl text-accent-gold relative w-full flex flex-col gap-5 justify-center items-center '>
+      <Image
+        src='/dinger.gif'
+        alt='dinger Image'
+        width={260}
+        height={260}
+        draggable={false}
+      />
+      Nothing to currently show.
     </div>
   );
 };
