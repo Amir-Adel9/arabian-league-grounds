@@ -50,6 +50,34 @@ export default async function RootLayout({
     }
   }
 
+  const Construction = () => {
+    return (
+      <section className='w-full min-h-screen relative flex flex-col justify-center items-center'>
+        <div className='absolute w-full h-full bg-primary opacity-80 z-[-10]'></div>
+        <Image
+          src='/background.jpg'
+          alt='Background Image'
+          className='w-full h-full z-[-20]'
+          layout='fill'
+          objectFit='cover'
+          draggable={false}
+          objectPosition='center'
+        />
+        <div className='text-4xl font-bold text-accent-gold relative w-full flex flex-col gap-5 justify-center items-center '>
+          <Image
+            src='/dinger.gif'
+            alt='dinger Image'
+            className='animate-bounce-y'
+            width={260}
+            height={260}
+            draggable={false}
+          />
+          ???
+        </div>
+      </section>
+    );
+  };
+
   return (
     <ClerkProvider>
       <html
@@ -57,7 +85,7 @@ export default async function RootLayout({
         className={`${inter.variable} ${kanit.variable} font-kanit`}
       >
         <body className={kanit.variable}>
-          <header
+          {/* <header
             className='h-24 fixed w-full bg-secondary text-primary font-inter flex items-center justify-between px-2 xs:px-6 lg:px-10 z-[500] border-b-[6px] border-b-accent-gold'
             id='header'
           >
@@ -111,11 +139,12 @@ export default async function RootLayout({
             </nav>
             <NavMenu />
           </header>
-          <Toaster position='top-center' reverseOrder={false} />
-          {children}
-          {modal}
+          <Toaster position='top-center' reverseOrder={false} /> */}
+          <Construction />
+          {/* {children} */}
+          {/* {modal} */}
           <Analytics />
-          <footer className='h-48 lg:h-24 w-full relative bg-secondary text-primary font-inter flex flex-col lg:flex-row items-center justify-between px-2 xs:px-6 lg:px-10 z-[500] border-t-[6px] border-t-accent-gold'>
+          {/* <footer className='h-48 lg:h-24 w-full relative bg-secondary text-primary font-inter flex flex-col lg:flex-row items-center justify-between px-2 xs:px-6 lg:px-10 z-[500] border-t-[6px] border-t-accent-gold'>
             <div className='flex justify-center items-center gap-4 my-2 lg:my-0'>
               <Link href='https://github.com/Amir-Adel9' target={'_blank'}>
                 <svg
@@ -170,7 +199,7 @@ export default async function RootLayout({
             <p className='text-xs xs:text-base md:text-base my-2 lg:my-0'>
               &copy; 2023 Arabian League Grounds
             </p>
-          </footer>
+          </footer> */}
         </body>
       </html>
     </ClerkProvider>

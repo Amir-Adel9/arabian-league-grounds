@@ -86,7 +86,6 @@ const NavMenu = () => {
           )}
         </div>
       </div>
-
       {!menuOpen ? (
         <svg
           width='42px'
