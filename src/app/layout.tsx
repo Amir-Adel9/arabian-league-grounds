@@ -26,7 +26,7 @@ export const metadata = {
     'Your all-in-one League of Legends Arabian League companion. Teams, Schedule, Standings, Leaderboards, Rewards, and more!',
 };
 
-fulfillPredictions();
+// fulfillPredictions();
 
 export default async function RootLayout({
   children,
@@ -35,20 +35,20 @@ export default async function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }) {
-  const loggedInUser = await currentUser();
+  // const loggedInUser = await currentUser();
 
-  if (loggedInUser) {
-    const { id, username } = loggedInUser;
+  // if (loggedInUser) {
+  //   const { id, username } = loggedInUser;
 
-    const existingUser = await db
-      .select()
-      .from(user)
-      .where(eq(user.clerkId, id));
+  //   const existingUser = await db
+  //     .select()
+  //     .from(user)
+  //     .where(eq(user.clerkId, id));
 
-    if (existingUser.length === 0) {
-      await db.insert(user).values({ clerkId: id, username: username });
-    }
-  }
+  //   if (existingUser.length === 0) {
+  //     await db.insert(user).values({ clerkId: id, username: username });
+  //   }
+  // }
 
   const Construction = () => {
     return (
